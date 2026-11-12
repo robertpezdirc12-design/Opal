@@ -149,7 +149,13 @@ def register(
 class IsolatedOpal:
     def __init__(self, testcase: unittest.TestCase):
         self.testcase = testcase
-        self.temp = tempfile.TemporaryDirectory(prefix="opal-setup-live-")
+        # Windows: antivirus scans freshly written SQLite files and can hold
+        # them past the kill+wait window, so teardown deletion may transiently
+        # fail. ignore_cleanup_errors lets the test result carry the actual
+        # assertions; the OS sweeps the leftover temp dir later.
+        self.temp = tempfile.TemporaryDirectory(
+            prefix="opal-setup-live-", ignore_cleanup_errors=os.name == "nt",
+        )
         self.root = Path(self.temp.name)
         self.config_root = self.root / "xdg-config"
         self.setup_path = self.config_root / "opal" / "setup.token"
@@ -282,6 +288,19 @@ class IsolatedOpal:
     def stop(self) -> None:
         self.stop_process()
         self.log.close()
+        if os.name == "nt":
+            # A force-killed process can release its file handles a beat after
+            # wait() returns, so the tree removal races the OS. Retry across
+            # that window instead of failing the test on teardown alone.
+            deadline = time.monotonic() + 10
+            while True:
+                try:
+                    self.temp.cleanup()
+                    return
+                except (PermissionError, OSError):
+                    if time.monotonic() >= deadline:
+                        raise
+                    time.sleep(0.5)
         self.temp.cleanup()
 
     def stop_process(self) -> None:

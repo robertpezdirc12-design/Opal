@@ -728,6 +728,30 @@ fn buildSupported(b: *std.Build) void {
 
     b.installArtifact(exe);
 
+    // Windows runtime DLLs. opal.exe imports libmpv-2.dll / libsqlite3-0.dll,
+    // and torrent_wrapper.dll pulls in libtorrent, openssl and the libstdc++
+    // runtime — all MSYS2 DLLs that live in MINGW_PREFIX/bin. Installing them
+    // beside the exe makes `zig build` / `-Dheadless=true` products launch from
+    // their own directory (USB copies, test prefixes) without requiring MSYS2
+    // on PATH. Optional per DLL: a prefix without a piece (e.g. no mpv package)
+    // still installs the rest instead of failing the whole build.
+    if (is_windows) {
+        const runtime_dlls = [_][]const u8{
+            "libmpv-2.dll",           "libsqlite3-0.dll",
+            "libgcc_s_seh-1.dll",     "libstdc++-6.dll",
+            "libwinpthread-1.dll",    "libtorrent-rasterbar.dll",
+            "libssl-3-x64.dll",       "libcrypto-3-x64.dll",
+        };
+        for (runtime_dlls) |dll| {
+            const dll_src = b.fmt("{s}/bin/{s}", .{ mingw_prefix, dll });
+            std.Io.Dir.cwd().access(b.graph.io, dll_src, .{}) catch continue;
+            b.getInstallStep().dependOn(&b.addInstallBinFile(
+                .{ .cwd_relative = dll_src },
+                dll,
+            ).step);
+        }
+    }
+
     // opal-mcp: the Model Context Protocol server agents launch over stdio. It
     // is std-only on purpose (no GUI, no libmpv/libtorrent), so it starts
     // instantly and cannot become a second player. See docs/agent-native.md.
