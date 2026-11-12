@@ -873,6 +873,11 @@ pub const MediaPlayer = struct {
         self.current_user_agent_len = 0;
         @memset(&self.current_header_fields, 0);
         self.current_header_fields_len = 0;
+        // Catalog subtitle sidecar: allocator.create leaves the struct
+        // undefined (declaration defaults do not apply), so the FILE_LOADED
+        // consumer must never see garbage here. load() stages it per file.
+        @memset(&self.catalog_sub, 0);
+        self.catalog_sub_len = 0;
         self.current_loopback_stream = false;
         self.youtube_default_retry_pending = false;
         self.youtube_fast_active = false;
