@@ -737,10 +737,13 @@ fn buildSupported(b: *std.Build) void {
     // still installs the rest instead of failing the whole build.
     if (is_windows) {
         const runtime_dlls = [_][]const u8{
-            "libmpv-2.dll",           "libsqlite3-0.dll",
-            "libgcc_s_seh-1.dll",     "libstdc++-6.dll",
-            "libwinpthread-1.dll",    "libtorrent-rasterbar.dll",
-            "libssl-3-x64.dll",       "libcrypto-3-x64.dll",
+            "libmpv-2.dll",        "libsqlite3-0.dll",
+            "libgcc_s_seh-1.dll",  "libstdc++-6.dll",
+            "libwinpthread-1.dll", "libtorrent-rasterbar.dll",
+            "libssl-3-x64.dll",    "libcrypto-3-x64.dll",
+            // libmpv hard-imports the Vulkan loader even when no Vulkan
+            // device exists — without it the whole exe fails to load.
+            "vulkan-1.dll",
         };
         for (runtime_dlls) |dll| {
             const dll_src = b.fmt("{s}/bin/{s}", .{ mingw_prefix, dll });
