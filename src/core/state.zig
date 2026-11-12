@@ -22,7 +22,7 @@ const anime_schedule_pure = @import("../services/anime_schedule_pure.zig");
 pub const GridMode = enum { auto, cols_1, cols_2, cols_3, cols_4 };
 pub const ContentProvider = enum { mpv, comic_viewer };
 pub const VideoFillMode = enum { fit, balanced, cover };
-pub const DrawerTab = enum { Search, Downloads, TMDB, YouTube, Queue, Comics, Anime, Podcasts, Radio, History, RSS, Jellyfin, Plex, Plugins, Logs, Settings, AI, Web, Audiobooks, Opds, Novels, Vndb, Drama, Iptv, Music, Wallpapers };
+pub const DrawerTab = enum { Search, Downloads, TMDB, YouTube, Queue, Comics, Anime, Podcasts, Radio, History, RSS, Jellyfin, Plex, Plugins, Logs, Settings, AI, Web, Audiobooks, Opds, Novels, Vndb, Drama, Iptv, Music, Wallpapers, WebLinks };
 pub const SettingsTab = enum { General, Playback, Network, Subtitles, Storage, WebUi, Scripts, AI, LangLearn, FileAssoc, LiveTv, Profiles, About };
 pub const TmdbView = enum { Trending, Search, Favorites, Watchlist, Watching };
 pub const TmdbCategory = enum { trending, now_playing, top_rated, upcoming, popular };
@@ -2032,6 +2032,7 @@ pub fn navigateToTabNow(tab: DrawerTab) void {
             app.browse_source = .Wallpapers;
             app.router.navigate(.browse);
         },
+        .WebLinks => {}, // own surface — no router/browse mapping
         .Music => {
             app.browse_source = .Music;
             app.router.navigate(.browse);
