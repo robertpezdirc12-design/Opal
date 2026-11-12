@@ -1,19 +1,36 @@
 const std = @import("std");
 const state = @import("../core/state.zig");
-const c = @import("../core/c.zig");
 
 // ══════════════════════════════════════════════════════════
-// Cast — Send media to Chromecast/DLNA using external tools
-// Requires: catt (pip install catt) or castnow (npm i -g castnow)
+// Cast — Send media to TV/streamers.
+//
+// Two transports live here:
+//   • Chromecast — via the external `catt` tool (pip install catt), optional.
+//   • DLNA/UPnP AVTransport — NATIVE, no external tools: SSDP M-SEARCH finds
+//     MediaRenderers on the LAN, the device description XML gives us the
+//     AVTransport control URL, and two SOAP calls (SetAVTransportURI + Play)
+//     start playback. This is what most Samsung/LG/Philips and Android TVs
+//     answer to, so cast works out of the box without installing anything.
 // ══════════════════════════════════════════════════════════
 
 const alloc = @import("../core/alloc.zig").allocator;
+const http = @import("../core/http.zig");
+const io_global = @import("../core/io_global.zig");
+const workers = @import("../core/workers.zig");
 
 pub const CastDevice = struct {
     name: [64]u8 = std.mem.zeroes([64]u8),
     name_len: usize = 0,
     ip: [46]u8 = std.mem.zeroes([46]u8),
     ip_len: usize = 0,
+    /// DLNA devices carry the AVTransport control URL here; catt devices
+    /// (control_url_len == 0) are cast by shelling out to catt.
+    control_url: [512]u8 = std.mem.zeroes([512]u8),
+    control_url_len: usize = 0,
+
+    pub fn isDlna(self: *const CastDevice) bool {
+        return self.control_url_len > 0;
+    }
 };
 
 pub var devices: [16]CastDevice = undefined;
@@ -24,51 +41,65 @@ pub var is_scanning: std.atomic.Value(bool) = std.atomic.Value(bool).init(false)
 pub var is_casting: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
 pub var active_device_idx: ?usize = null;
 
-/// Discover cast devices using `catt scan`
+fn storeDevice(name: []const u8, ip: []const u8, control_url: ?[]const u8) void {
+    if (device_count >= devices.len) return;
+    var dev = &devices[device_count];
+    dev.* = .{};
+    const nlen = @min(name.len, dev.name.len - 1);
+    @memcpy(dev.name[0..nlen], name[0..nlen]);
+    dev.name_len = nlen;
+    const ilen = @min(ip.len, dev.ip.len - 1);
+    @memcpy(dev.ip[0..ilen], ip[0..ilen]);
+    dev.ip_len = ilen;
+    if (control_url) |cu| {
+        const clen = @min(cu.len, dev.control_url.len - 1);
+        @memcpy(dev.control_url[0..clen], cu[0..clen]);
+        dev.control_url_len = clen;
+    }
+    device_count += 1;
+}
+
+/// Discover cast devices: `catt scan` (Chromecast, optional tool) merged with
+/// the native SSDP/DLNA discovery (works everywhere, no tools needed).
 pub fn scanDevices() void {
     if (is_scanning.load(.acquire)) return;
     is_scanning.store(true, .release);
     device_count = 0;
 
-    if (@import("../core/workers.zig").spawnLegacy(struct {
+    if (workers.spawnLegacy(struct {
         fn worker() void {
             defer is_scanning.store(false, .release);
 
-            const argv = [_][]const u8{ "catt", "scan", "-t", "5" };
-            var child = @import("../core/io_global.zig").Child.init(&argv, alloc);
+            // ── catt (Chromecast) — optional ──
+            // catt 0.13+ has no timeout option on `scan` — plain scan, the UI
+            // polls is_scanning for completion.
+            const argv = [_][]const u8{ "catt", "scan" };
+            var child = io_global.Child.init(&argv, alloc);
             child.stdout_behavior = .Pipe;
             child.stderr_behavior = .Ignore;
-            child.spawn() catch {
-                state.showToast("Install catt: pip install catt");
-                return;
-            };
+            if (child.spawn()) |_| {
+                var buf: [4096]u8 = undefined;
+                const n = if (child.stdout) |*stdout| io_global.readAll(stdout, &buf) catch 0 else 0;
+                _ = child.wait() catch {};
 
-            var buf: [4096]u8 = undefined;
-            const n = if (child.stdout) |*stdout| @import("../core/io_global.zig").readAll(stdout, &buf) catch 0 else 0;
-            _ = child.wait() catch {};
-
-            if (n == 0) return;
-
-            // Parse output: each line is "DeviceName - IP:port"
-            var lines = std.mem.splitScalar(u8, buf[0..n], '\n');
-            while (lines.next()) |line| {
-                if (line.len < 5 or device_count >= 16) continue;
-                if (std.mem.indexOf(u8, line, " - ")) |dash_pos| {
-                    const name = line[0..dash_pos];
-                    const ip_part = line[dash_pos + 3 ..];
-                    // Strip port if present
-                    const ip = if (std.mem.indexOf(u8, ip_part, ":")) |col| ip_part[0..col] else ip_part;
-
-                    var dev = &devices[device_count];
-                    const nlen = @min(name.len, 63);
-                    @memcpy(dev.name[0..nlen], name[0..nlen]);
-                    dev.name_len = nlen;
-                    const ilen = @min(ip.len, 45);
-                    @memcpy(dev.ip[0..ilen], ip[0..ilen]);
-                    dev.ip_len = ilen;
-                    device_count += 1;
+                // Parse output: each line is "DeviceName - IP:port"
+                var lines = std.mem.splitScalar(u8, buf[0..n], '\n');
+                while (lines.next()) |line| {
+                    if (line.len < 5) continue;
+                    if (std.mem.indexOf(u8, line, " - ")) |dash_pos| {
+                        const name = line[0..dash_pos];
+                        const ip_part = line[dash_pos + 3 ..];
+                        // Strip port if present
+                        const ip = if (std.mem.indexOf(u8, ip_part, ":")) |col| ip_part[0..col] else ip_part;
+                        storeDevice(name, ip, null);
+                    }
                 }
+            } else |_| {
+                // catt not installed — native DLNA below still runs.
             }
+
+            // ── native DLNA (SSDP + AVTransport) ──
+            dlnaScan();
 
             if (device_count > 0) {
                 var msg: [64]u8 = undefined;
@@ -78,8 +109,208 @@ pub fn scanDevices() void {
                 state.showToast("No cast devices found");
             }
         }
-    }.worker, .{})) |t| @import("../core/workers.zig").release(t) else |_| {}
+    }.worker, .{})) |t| workers.release(t) else |_| {}
 }
+
+// ── native DLNA (SSDP + UPnP AVTransport) ────────────────
+
+/// First value of `tag` inside `src` (no namespaces, trimmed). UPnP device
+/// description XML is small and regular — a scan beats dragging in a parser.
+fn xmlValue(src: []const u8, tag: []const u8) ?[]const u8 {
+    var open_buf: [48]u8 = undefined;
+    const open = std.fmt.bufPrint(&open_buf, "<{s}>", .{tag}) catch return null;
+    const start = std.mem.indexOf(u8, src, open) orelse return null;
+    const rest = src[start + open.len ..];
+    var close_buf: [48]u8 = undefined;
+    const close = std.fmt.bufPrint(&close_buf, "</{s}>", .{tag}) catch return null;
+    const end = std.mem.indexOf(u8, rest, close) orelse return null;
+    return std.mem.trim(u8, rest[0..end], " \t\r\n");
+}
+
+/// Escape `src` into `out` so it is a valid XML text node (URLs carry &).
+fn xmlEscape(src: []const u8, out: []u8) ?[]const u8 {
+    var w: usize = 0;
+    for (src) |ch| {
+        const rep: ?[]const u8 = switch (ch) {
+            '&' => "&amp;",
+            '<' => "&lt;",
+            '>' => "&gt;",
+            '"' => "&quot;",
+            else => null,
+        };
+        if (rep) |r| {
+            if (w + r.len > out.len) return null;
+            @memcpy(out[w .. w + r.len], r);
+            w += r.len;
+        } else {
+            if (w + 1 > out.len) return null;
+            out[w] = ch;
+            w += 1;
+        }
+    }
+    return out[0..w];
+}
+
+/// The AVTransport control URL from a device description document, absolutized
+/// against `location` (the URL the document was fetched from).
+fn avtransportControlUrl(location: []const u8, xml: []const u8, out: []u8) ?[]const u8 {
+    // The <service> block for AVTransport: everything between its serviceType
+    // marker and the closing </service> holds this service's controlURL.
+    const st = std.mem.indexOf(u8, xml, "urn:schemas-upnp-org:service:AVTransport:1") orelse return null;
+    const block_end = std.mem.indexOf(u8, xml[st..], "</service>") orelse (xml.len - st);
+    const block = xml[st .. st + block_end];
+    const raw = xmlValue(block, "controlURL") orelse return null;
+
+    // Absolutize against the location's scheme://host[:port] prefix.
+    const scheme_end = std.mem.indexOf(u8, location, "://") orelse return null;
+    const host_start = scheme_end + 3;
+    const path_start = std.mem.indexOfScalar(u8, location[host_start..], '/') orelse location.len;
+    const base_len = host_start + path_start;
+    if (raw.len == 0 or base_len + raw.len + 1 > out.len) return null;
+    if (std.mem.startsWith(u8, raw, "http://") or std.mem.startsWith(u8, raw, "https://")) {
+        if (raw.len > out.len) return null;
+        @memcpy(out[0..raw.len], raw);
+        return out[0..raw.len];
+    }
+    if (raw[0] != '/') {
+        out[base_len] = '/';
+        const after = base_len + 1;
+        if (after + raw.len > out.len) return null;
+        @memcpy(out[after .. after + raw.len], raw);
+        return out[0 .. after + raw.len];
+    }
+    @memcpy(out[base_len .. base_len + raw.len], raw);
+    return out[0 .. base_len + raw.len];
+}
+
+/// SSDP M-SEARCH for MediaRenderers, then one HTTP GET per device to read the
+/// friendlyName + AVTransport control URL. Appends to `devices`.
+fn dlnaScan() void {
+    const io = io_global.io();
+    const local = std.Io.net.IpAddress.parseIp4("0.0.0.0", 0) catch return;
+    var sock = local.bind(io, .{ .mode = .dgram }) catch return;
+    defer sock.close(io);
+
+    const msearch =
+        "M-SEARCH * HTTP/1.1\r\n" ++
+        "HOST: 239.255.255.250:1900\r\n" ++
+        "MAN: \"ssdp:discover\"\r\n" ++
+        "MX: 3\r\n" ++
+        "ST: urn:schemas-upnp-org:device:MediaRenderer:1\r\n" ++
+        "\r\n";
+    var maddr = std.Io.net.IpAddress.parseIp4("239.255.255.250", 1900) catch return;
+    // Two sends: single-shot discovery routinely misses slow responders.
+    sock.send(io, &maddr, msearch) catch return;
+    sock.send(io, &maddr, msearch) catch {};
+
+    var locations: [8][]const u8 = undefined;
+    var location_count: usize = 0;
+    var loc_buf: [8][256]u8 = undefined;
+
+    const deadline = io_global.monotonicMilliTimestamp() + 4500;
+    while (io_global.monotonicMilliTimestamp() < deadline and location_count < locations.len) {
+        var rbuf: [1500]u8 = undefined;
+        const msg = sock.receiveTimeout(
+            io,
+            &rbuf,
+            .{ .duration = .{ .raw = .fromMilliseconds(300), .clock = .awake } },
+        ) catch continue;
+        const resp = msg.data;
+        // Response lines are case-varied; find LOCATION case-insensitively.
+        var it = std.mem.splitScalar(u8, resp, '\n');
+        while (it.next()) |line| {
+            const ll = std.mem.trim(u8, line, " \r");
+            if (ll.len < 10 or ll.len > 250) continue;
+            if (std.ascii.startsWithIgnoreCase(ll, "LOCATION:")) {
+                const loc = std.mem.trim(u8, ll["LOCATION:".len..], " \r");
+                if (loc.len == 0 or !std.mem.startsWith(u8, loc, "http")) continue;
+                // Dedupe by URL — a device answers once per ST/MX cycle.
+                var dup = false;
+                for (locations[0..location_count]) |seen| {
+                    if (std.mem.eql(u8, seen, loc)) dup = true;
+                }
+                if (dup) continue;
+                @memcpy(loc_buf[location_count][0..loc.len], loc);
+                locations[location_count] = loc_buf[location_count][0..loc.len];
+                location_count += 1;
+            }
+        }
+    }
+
+    // One bounded HTTP GET per device description document.
+    for (locations[0..location_count]) |loc| {
+        if (device_count >= devices.len) break;
+        var xbuf: [16 * 1024]u8 = undefined;
+        const xml = http.fetch(loc, &xbuf, .{ .timeout_secs = 4 }) orelse continue;
+        const name = xmlValue(xml, "friendlyName") orelse "DLNA device";
+        var cbuf: [512]u8 = undefined;
+        const control = avtransportControlUrl(loc, xml, &cbuf) orelse continue;
+
+        // ip: the host part of the location (diagnostics only — the control
+        // URL is what cast uses).
+        const scheme_end = std.mem.indexOf(u8, loc, "://") orelse continue;
+        const host_start = scheme_end + 3;
+        const path_start = std.mem.indexOfScalarPos(u8, loc, host_start, '/') orelse loc.len;
+        storeDevice(name, loc[host_start..path_start], control);
+    }
+}
+
+/// One SOAP action against an AVTransport control URL.
+fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) bool {
+    var envelope_buf: [4096]u8 = undefined;
+    const envelope = std.fmt.bufPrint(
+        &envelope_buf,
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ++
+            "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" " ++
+            "s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" ++
+            "<s:Body>{s}</s:Body></s:Envelope>",
+        .{body},
+    ) catch return false;
+
+    var action_buf: [128]u8 = undefined;
+    const soapaction = std.fmt.bufPrint(
+        &action_buf,
+        "\"urn:schemas-upnp-org:service:AVTransport:1#{s}\"",
+        .{action},
+    ) catch return false;
+
+    var rbuf: [8 * 1024]u8 = undefined;
+    var status: ?std.http.Status = null;
+    _ = http.fetch(control_url, &rbuf, .{
+        .method = .POST,
+        .payload = envelope,
+        .content_type = "text/xml; charset=\"utf-8\"",
+        .extra_headers = &.{.{ .name = "SOAPACTION", .value = soapaction }},
+        .timeout_secs = 6,
+        .status_out = &status,
+    }) orelse return false;
+    return status == .ok;
+}
+
+fn dlnaCast(control_url: []const u8, url: []const u8) bool {
+    var uri_buf: [2048]u8 = undefined;
+    const uri = xmlEscape(url, &uri_buf) orelse return false;
+    var body_buf: [2560]u8 = undefined;
+    const set_body = std.fmt.bufPrint(
+        &body_buf,
+        "<u:SetAVTransportURI xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+            "<InstanceID>0</InstanceID><CurrentURI>{s}</CurrentURI>" ++
+            "<CurrentURIMetaData></CurrentURIMetaData></u:SetAVTransportURI>",
+        .{uri},
+    ) catch return false;
+    if (!soapAction(control_url, "SetAVTransportURI", set_body)) return false;
+
+    var play_buf: [512]u8 = undefined;
+    const play_body = std.fmt.bufPrint(
+        &play_buf,
+        "<u:Play xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+            "<InstanceID>0</InstanceID><Speed>1</Speed></u:Play>",
+        .{},
+    ) catch return false;
+    return soapAction(control_url, "Play", play_body);
+}
+
+// ── cast / stop ──────────────────────────────────────────
 
 /// Cast `url` to a discovered device.
 ///
@@ -97,21 +328,38 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
     is_casting.store(true, .release);
     active_device_idx = device_idx;
     const device_name = devices[device_idx].name[0..devices[device_idx].name_len];
+    const dlna_control: ?[]const u8 = if (devices[device_idx].isDlna())
+        devices[device_idx].control_url[0..devices[device_idx].control_url_len]
+    else
+        null;
 
     // Allocate copies for the thread
     const url_copy = alloc.dupe(u8, url) catch return;
     const name_copy = alloc.dupe(u8, device_name) catch return;
+    const control_copy: ?[]u8 = if (dlna_control) |cu| (alloc.dupe(u8, cu) catch return) else null;
 
-    if (@import("../core/workers.zig").spawnLegacy(struct {
-        fn worker(u: []const u8, dev: []const u8) void {
+    if (workers.spawnLegacy(struct {
+        fn worker(u: []const u8, dev: []const u8, control: ?[]u8) void {
             defer {
                 is_casting.store(false, .release);
                 alloc.free(u);
                 alloc.free(dev);
+                if (control) |cc| alloc.free(cc);
             }
 
-            const argv = [_][]const u8{ "catt", "-d", dev, "cast", u };
-            var child = @import("../core/io_global.zig").Child.init(&argv, alloc);
+            if (control) |cc| {
+                // Native DLNA: push the URL, then Play.
+                if (dlnaCast(cc, u)) {
+                    state.showToast("Casting to TV…");
+                } else {
+                    state.showToast("Cast failed (TV refused)");
+                }
+                return;
+            }
+
+            // Chromecast via catt 0.13+: options go after the subcommand.
+            const argv = [_][]const u8{ "catt", "cast", "-d", dev, u };
+            var child = io_global.Child.init(&argv, alloc);
             child.stdout_behavior = .Inherit;
             child.stderr_behavior = .Inherit;
             child.spawn() catch {
@@ -122,7 +370,7 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
             state.showToast("Casting…");
             _ = child.wait() catch {};
         }
-    }.worker, .{ url_copy, name_copy })) |t| @import("../core/workers.zig").release(t) else |_| {}
+    }.worker, .{ url_copy, name_copy, control_copy })) |t| workers.release(t) else |_| {}
 }
 
 /// Cast whatever the active player is showing. CALLER MUST HOLD
@@ -138,15 +386,38 @@ pub fn castActive(device_idx: usize) void {
 
 /// Stop casting
 pub fn stopCast() void {
-    if (@import("../core/workers.zig").spawnLegacy(struct {
-        fn worker() void {
-            const argv = [_][]const u8{ "catt", "stop" };
-            var child = @import("../core/io_global.zig").Child.init(&argv, alloc);
-            child.spawn() catch return;
-            _ = child.wait() catch {};
+    // Snapshot the active DLNA control URL before clearing state.
+    var control_copy: ?[]u8 = null;
+    if (active_device_idx) |idx| {
+        if (idx < device_count and devices[idx].isDlna()) {
+            control_copy = alloc.dupe(
+                u8,
+                devices[idx].control_url[0..devices[idx].control_url_len],
+            ) catch null;
+        }
+    }
+
+    if (workers.spawnLegacy(struct {
+        fn worker(control: ?[]u8) void {
+            defer if (control) |cc| alloc.free(cc);
+            if (control) |cc| {
+                var stop_buf: [512]u8 = undefined;
+                const stop_body = std.fmt.bufPrint(
+                    &stop_buf,
+                    "<u:Stop xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                        "<InstanceID>0</InstanceID></u:Stop>",
+                    .{},
+                ) catch return;
+                _ = soapAction(cc, "Stop", stop_body);
+            } else {
+                const argv = [_][]const u8{ "catt", "stop" };
+                var child = io_global.Child.init(&argv, alloc);
+                child.spawn() catch return;
+                _ = child.wait() catch {};
+            }
             is_casting.store(false, .release);
             active_device_idx = null;
             state.showToast("Cast stopped");
         }
-    }.worker, .{})) |t| @import("../core/workers.zig").release(t) else |_| {}
+    }.worker, .{control_copy})) |t| workers.release(t) else |_| {}
 }

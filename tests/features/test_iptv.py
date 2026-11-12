@@ -283,7 +283,7 @@ def test_iptv_catalog():
             f'"id": "{i}"' in _src("data/plugins-manifest.json")
             for i in ("tdtchannels", "pluto-tv", "samsung-tvplus", "plex-tv", "roku-tv", "tubi-tv")
         ),
-        "distinct sources stay opt-in": srcs.count(".default_on = true") <= 4,
+        "FAST sources ship default-on": srcs.count(".default_on = true") >= 8,
     }
 
     missing = [k for k, ok in checks.items() if not ok]

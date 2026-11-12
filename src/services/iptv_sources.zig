@@ -23,8 +23,9 @@
 //!     literally iptv-org's country lists, so they add zero distinct streams.
 //!   • distinct catalogs — TDTChannels (official Spanish/PT DTT) and the FAST
 //!     providers (Pluto TV, Samsung TV+, Plex, Roku, Tubi) carry their OWN
-//!     streams, largely disjoint from iptv-org and from each other. These are
-//!     the real coverage add and are all opt-in.
+//!     streams, largely disjoint from iptv-org and from each other. The FAST
+//!     providers ship default-on so the offer spans free movies, series, kids
+//!     and sports out of the box; TDTChannels stays opt-in (regional).
 //!
 //! Pure (no core imports) so the registry and its helpers are unit-testable.
 
@@ -127,8 +128,9 @@ pub const SOURCES = [_]Source{
     },
     // FAST providers via BuddyChewChew/app-m3u-generator (GitHub Actions –
     // regenerated regularly). Each is a legal free ad-supported streaming
-    // catalog with its OWN HLS streams; spot-checked live 2026-07. Community
-    // build, so opt-in.
+    // catalog with its OWN HLS streams; spot-checked live 2026-07. Shipped
+    // default-on so a fresh install spans free movies, series, kids and sports
+    // without a settings trip.
     .{
         .id = "pluto-tv",
         .name = "Pluto TV (FAST, all regions)",
@@ -137,6 +139,7 @@ pub const SOURCES = [_]Source{
         .region = "Global",
         .note = "Pluto TV free ad-supported channels, all regions.",
         .approx = 2819,
+        .default_on = true,
     },
     .{
         .id = "samsung-tvplus",
@@ -146,6 +149,7 @@ pub const SOURCES = [_]Source{
         .region = "Global",
         .note = "Samsung TV Plus free channels. A few regions geo-block.",
         .approx = 2573,
+        .default_on = true,
     },
     .{
         .id = "plex-tv",
@@ -155,6 +159,7 @@ pub const SOURCES = [_]Source{
         .region = "Global",
         .note = "Plex free ad-supported live channels.",
         .approx = 2880,
+        .default_on = true,
     },
     .{
         .id = "roku-tv",
@@ -164,6 +169,7 @@ pub const SOURCES = [_]Source{
         .region = "Global",
         .note = "The Roku Channel free live TV.",
         .approx = 353,
+        .default_on = true,
     },
     .{
         .id = "tubi-tv",
@@ -173,6 +179,7 @@ pub const SOURCES = [_]Source{
         .region = "Global",
         .note = "Tubi free ad-supported live channels.",
         .approx = 179,
+        .default_on = true,
     },
     // ── Direct-stream movies (no torrents) ──
     // A bundled VOD catalog of public-domain feature films played as direct
@@ -278,7 +285,7 @@ test "defaults are a small clean set incl. iptv-org, no stale or duplicate sourc
         try std.testing.expect(!std.mem.eql(u8, s.id, "iptv-org-index"));
     }
     try std.testing.expect(has_iptv_org); // the original source is always on
-    try std.testing.expect(defaults >= 2 and defaults <= 4); // a handful, not everything
+    try std.testing.expect(defaults >= 2 and defaults <= 8); // global catalogs + the FAST set
 }
 
 test "INGEST_CAP clears every source's volume with headroom (no silent truncation)" {
@@ -294,19 +301,23 @@ test "INGEST_CAP clears every source's volume with headroom (no silent truncatio
     }
 }
 
-test "distinct catalog sources present, opt-in, https m3u" {
-    // The non-iptv-org additions must stay in the registry, be m3u playlists on
-    // https, and default OFF (curation keeps the default set small + clean).
-    const distinct = [_][]const u8{
-        "tdtchannels", "pluto-tv", "samsung-tvplus", "plex-tv", "roku-tv", "tubi-tv",
-    };
-    for (distinct) |id| {
+test "distinct catalog sources present, https m3u, FAST default-on" {
+    // The non-iptv-org additions must stay in the registry and be https m3u
+    // playlists. The FAST providers ship default-on (free movies, series,
+    // kids and sports out of the box); regional TDTChannels stays opt-in.
+    const fast = [_][]const u8{ "pluto-tv", "samsung-tvplus", "plex-tv", "roku-tv", "tubi-tv" };
+    for (fast) |id| {
         const s = byId(id) orelse return error.MissingDistinctSource;
         try std.testing.expect(s.kind == .m3u);
         try std.testing.expect(std.mem.startsWith(u8, s.url, "https://"));
-        try std.testing.expect(!s.default_on); // opt-in, never a default
+        try std.testing.expect(s.default_on);
         try std.testing.expect(s.approx > 0);
     }
+    const tdt = byId("tdtchannels") orelse return error.MissingDistinctSource;
+    try std.testing.expect(tdt.kind == .m3u);
+    try std.testing.expect(std.mem.startsWith(u8, tdt.url, "https://"));
+    try std.testing.expect(!tdt.default_on); // regional — opt-in
+    try std.testing.expect(tdt.approx > 0);
 }
 
 test "byId finds and misses" {
