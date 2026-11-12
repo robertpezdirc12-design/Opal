@@ -4560,6 +4560,7 @@ pub fn playResolvedItem(item: *const ResolvedItem) void {
                 "",
                 item.http_ua[0..item.http_ua_len],
                 &hdrs,
+                "",
             );
         },
         .music => {

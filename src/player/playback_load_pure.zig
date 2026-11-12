@@ -62,6 +62,10 @@ pub const Request = struct {
     prepared_header_fields: []const u8 = "",
     /// Optional external audio stream paired with a video-only URL.
     audio_file: []const u8 = "",
+    /// Optional external subtitle sidecar (e.g. archive.org's auto-generated
+    /// `.asr.srt` for a public-domain film). Added as a `sub-file` option on the
+    /// same loadfile entry; the player selects it after FILE_LOADED.
+    sub_file: []const u8 = "",
     /// Display title for transport controls when `url` is an opaque proxy URL.
     media_title: []const u8 = "",
     /// This request is served by Opal's bounded torrent loopback proxy.
@@ -190,6 +194,7 @@ pub const FileOptions = struct {
     cache_pause_initial: [:0]const u8,
     network_timeout: [:0]const u8,
     audio_file: []const u8,
+    sub_file: []const u8,
     media_title: []const u8,
 };
 
@@ -265,9 +270,26 @@ pub fn dispatch(sink: anytype, request: Request) bool {
         .cache_pause_initial = cachePauseInitial(request.url, request.loopback_stream),
         .network_timeout = networkTimeout(request.loopback_stream),
         .audio_file = request.audio_file,
+        .sub_file = request.sub_file,
         .media_title = request.media_title,
     });
     return true;
+}
+
+test "dispatch carries the sub-file sidecar on the loadfile entry" {
+    var sink: FakeSink = .{};
+    try std.testing.expect(dispatch(&sink, .{
+        .url = "https://archive.org/download/id/film.mp4",
+        .sub_file = "https://archive.org/download/id/film.asr.srt",
+    }));
+    try std.testing.expectEqualStrings(
+        "https://archive.org/download/id/film.asr.srt",
+        sink.events[sink.len - 1].sub_file_slice(),
+    );
+    // An ordinary load has no sidecar.
+    sink.len = 0;
+    try std.testing.expect(dispatch(&sink, .{ .url = "https://cdn.example/live.m3u8" }));
+    try std.testing.expectEqual(@as(usize, 0), sink.events[sink.len - 1].sub_file_len);
 }
 
 const EventKind = enum { set_option, load_file };
@@ -286,6 +308,8 @@ const FakeEvent = struct {
     header_fields_len: usize = 0,
     network_timeout: [8]u8 = undefined,
     network_timeout_len: usize = 0,
+    sub_file: [256]u8 = undefined,
+    sub_file_len: usize = 0,
 
     fn nameSlice(self: *const FakeEvent) []const u8 {
         return self.name[0..self.name_len];
@@ -305,6 +329,10 @@ const FakeEvent = struct {
 
     fn networkTimeoutSlice(self: *const FakeEvent) []const u8 {
         return self.network_timeout[0..self.network_timeout_len];
+    }
+
+    fn sub_file_slice(self: *const FakeEvent) []const u8 {
+        return self.sub_file[0..self.sub_file_len];
     }
 };
 
@@ -332,6 +360,8 @@ const FakeSink = struct {
         @memcpy(event.header_fields[0..event.header_fields_len], options.header_fields[0..event.header_fields_len]);
         event.network_timeout_len = @min(options.network_timeout.len, event.network_timeout.len);
         @memcpy(event.network_timeout[0..event.network_timeout_len], options.network_timeout[0..event.network_timeout_len]);
+        event.sub_file_len = @min(options.sub_file.len, event.sub_file.len);
+        @memcpy(event.sub_file[0..event.sub_file_len], options.sub_file[0..event.sub_file_len]);
         self.events[self.len] = event;
         self.len += 1;
     }

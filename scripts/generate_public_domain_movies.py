@@ -16,6 +16,16 @@ Provenance (all legal, public-domain content):
             the same selection rule Opal's own archive.org resolver
             backend uses (src/services/archive_pure.zig, pickBestVideoFile).
 
+Subtitles: archive.org auto-generates machine (`asr`) SRT sidecars for
+many items (~40% of the bulk cut). Each film that has one carries it as a
+`subs="…"` EXTINF attribute (largest subtitled video wins — timing matches
+the item's best-quality file); Opal's player selects it on FILE_LOADED.
+
+Subtitles: archive.org auto-generates machine (`asr`) SRT sidecars for
+many items (~40% of the bulk cut). Each film that has one carries it as a
+`subs="…"` EXTINF attribute (largest subtitled video wins — timing matches
+the item's best-quality file); Opal's player selects it on FILE_LOADED.
+
 Usage:
     python3 scripts/generate_public_domain_movies.py [rows]   # default 500
 
@@ -198,6 +208,57 @@ def pick_best_video(files: list[dict]) -> str | None:
     return None
 
 
+# Extensions that can sit under an archive.org `*.asr.srt` transcription.
+SUB_VIDEO_EXTS = (".mp4", ".m4v", ".mkv", ".webm", ".ogv", ".avi", ".mpg", ".mpeg", ".ts")
+
+
+def pick_best_subtitle(files: list[dict]) -> str | None:
+    """ASR subtitle sidecar transcribed from the item's best subtitled video.
+
+    archive.org names machine-generated SRTs after the video they came from —
+    `NightOfTheLivingDead_DVD5.asr.srt` transcribes
+    `NightOfTheLivingDead_DVD5.mp4`. The chosen video (largest mp4) and the
+    subtitled video (often an older derivative) usually differ, so the rule is
+    NOT stem-matching against the chosen video: prefer the sidecar whose OWN
+    stem has the largest video on the item (best transcription, correct
+    timing), tie-broken by the SRT's size. One film → one sidecar.
+    """
+    video_size_by_stem: dict[str, int] = {}
+    for f in files:
+        name = f.get("name") or ""
+        low = name.lower()
+        stem = None
+        for ext in SUB_VIDEO_EXTS:
+            if low.endswith(ext):
+                stem = name[: -len(ext)]
+                break
+        if stem is None:
+            continue
+        try:
+            size = int(str(f.get("size") or "0"))
+        except ValueError:
+            size = 0
+        if size > video_size_by_stem.get(stem, 0):
+            video_size_by_stem[stem] = size
+
+    best: str | None = None
+    best_rank = (0, 0)
+    for f in files:
+        name = f.get("name") or ""
+        if not name.lower().endswith(".asr.srt"):
+            continue
+        stem = name[: -len(".asr.srt")]
+        try:
+            size = int(str(f.get("size") or "0"))
+        except ValueError:
+            size = 0
+        rank = (video_size_by_stem.get(stem, 0), size)
+        if rank > best_rank:
+            best_rank = rank
+            best = name
+    return best
+
+
 def resolve_item(identifier: str) -> dict | None:
     """Best direct-play URL + canonical title/year for an archive item."""
     try:
@@ -213,7 +274,24 @@ def resolve_item(identifier: str) -> dict | None:
         "url": url,
         "title": clean_title(str(md.get("title") or identifier)),
         "year": _year_from(md),
+        "sub": sub_url_from_meta(identifier, meta),
     }
+
+
+def fetch_sub_for(identifier: str) -> str | None:
+    """Subtitle sidecar URL for an already-resolved (seed) archive item."""
+    try:
+        meta = json.loads(http_get(METADATA_URL.format(identifier=identifier)))
+    except Exception:
+        return None
+    return sub_url_from_meta(identifier, meta)
+
+
+def sub_url_from_meta(identifier: str, meta: dict) -> str | None:
+    sub_name = pick_best_subtitle(meta.get("files") or [])
+    if not sub_name:
+        return None
+    return f"https://archive.org/download/{identifier}/{urllib.parse.quote(sub_name, safe='/')}"
 
 
 def _year_from(md: dict) -> int | None:
@@ -253,6 +331,7 @@ def parse_seed(text: str) -> list[dict]:
                 # The seed's genre groups are dropped in favour of uniform
                 # decade grouping across the whole bundled catalog.
                 "identifier": url.split("/download/", 1)[1].split("/", 1)[0],
+                "sub": None,
             }
         )
     return entries
@@ -273,6 +352,13 @@ def main() -> int:
             alive = list(ex.map(url_alive, [c["url"] for c in candidates]))
         seed = [c for c, ok in zip(candidates, alive) if ok]
         print(f"seed: {len(seed)} live entries from OnlineM3U/publicdomainm3u")
+        # Enrich seeds with their item's ASR subtitle sidecar (metadata fetch
+        # per entry; the seed only carries stream URLs, never the files list).
+        with cf.ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            subs = list(ex.map(fetch_sub_for, [c["identifier"] for c in seed]))
+        for entry, sub in zip(seed, subs):
+            entry["sub"] = sub
+        print(f"seed subs: {sum(1 for s in subs if s)} of {len(seed)} entries")
     except Exception as exc:  # noqa: BLE001 — seed is optional
         print(f"warn: seed playlist unavailable ({exc}); continuing without it", file=sys.stderr)
 
@@ -307,6 +393,7 @@ def main() -> int:
                     "logo": f"https://archive.org/services/img/{doc['identifier']}",
                     "url": resolved["url"],
                     "identifier": doc["identifier"],
+                    "sub": resolved.get("sub"),
                 }
             )
     print(f"resolved: {len(items)} playable items")
@@ -343,11 +430,15 @@ def main() -> int:
         "# Film content is public domain; streams are served by archive.org.\n"
     )
     lines = [header]
+    with_subs = 0
     for e in merged:
         logo = f' tvg-logo="{e["logo"]}"' if e["logo"] else ""
+        sub = f' subs="{e["sub"]}"' if e.get("sub") else ""
+        if sub:
+            with_subs += 1
         year = f" ({e['year']})" if e["year"] else ""
         lines.append(
-            f'#EXTINF:-1{logo} group-title="{decade_of(e["year"])}",{e["title"]}{year}\n'
+            f'#EXTINF:-1{logo}{sub} group-title="{decade_of(e["year"])}",{e["title"]}{year}\n'
             f'{e["url"]}\n'
         )
     OUT_PATH.write_text("".join(lines), encoding="utf-8")
@@ -355,7 +446,7 @@ def main() -> int:
     decades: dict[str, int] = {}
     for e in merged:
         decades[decade_of(e["year"])] = decades.get(decade_of(e["year"]), 0) + 1
-    print(f"wrote {OUT_PATH} — {len(merged)} films")
+    print(f"wrote {OUT_PATH} — {len(merged)} films ({with_subs} with ASR subtitles)")
     for decade in sorted(decades):
         print(f"  {decade}: {decades[decade]}")
     return 0

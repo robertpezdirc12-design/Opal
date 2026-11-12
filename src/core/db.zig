@@ -583,10 +583,19 @@ fn createTables() void {
         \\  country TEXT,
         \\  user_agent TEXT,
         \\  referrer TEXT,
+        \\  sub_url TEXT,
         \\  ts INTEGER DEFAULT (strftime('%s','now')),
         \\  PRIMARY KEY (kind, url_hash)
         \\)
     );
+    // sub_url rides the display snapshot for favorites/recents (added after the
+    // table shipped); same pragma-guarded back-fill as the catalog column.
+    if (tableExists("iptv_channels")) {
+        const rec_sub_stmt = prepare("SELECT 1 FROM pragma_table_info('iptv_channels') WHERE name='sub_url'");
+        defer finalize(rec_sub_stmt);
+        if (rec_sub_stmt != null and step(rec_sub_stmt) != c.SQLITE_ROW)
+            exec("ALTER TABLE iptv_channels ADD COLUMN sub_url TEXT");
+    }
 
     // Unified cross-vertical read-model: every vertical writes progress +
     // favorites here (a denormalized display snapshot), so the home surface + a
@@ -843,6 +852,7 @@ fn createTables() void {
         \\  referrer TEXT,
         \\  nsfw INTEGER DEFAULT 0,
         \\  quality_tier INTEGER DEFAULT 0,
+        \\  sub_url TEXT,
         \\  UNIQUE (source_id, url_hash)
         \\)
     );
@@ -856,6 +866,14 @@ fn createTables() void {
         defer finalize(stmt);
         if (stmt != null and step(stmt) != c.SQLITE_ROW)
             exec("ALTER TABLE iptv_catalog ADD COLUMN quality_tier INTEGER DEFAULT 0");
+        // sub_url (external subtitle sidecar, e.g. archive.org .asr.srt for the
+        // public-domain VOD source) was added with the catalog sub schema. Same
+        // disposable-cache story as quality_tier: absent until the next 24h SWR
+        // re-ingest fills it in.
+        const sub_stmt = prepare("SELECT 1 FROM pragma_table_info('iptv_catalog') WHERE name='sub_url'");
+        defer finalize(sub_stmt);
+        if (sub_stmt != null and step(sub_stmt) != c.SQLITE_ROW)
+            exec("ALTER TABLE iptv_catalog ADD COLUMN sub_url TEXT");
     }
     // name_lc drives the search LIKE (lowercased at ingest so the query need not
     // call lower() per row); country/category drive the drill-in facets.

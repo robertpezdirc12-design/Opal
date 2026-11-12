@@ -119,7 +119,7 @@ pub fn drain() void {
                 headers[header_count] = .{ .name = "Origin", .value = origin_buf[0..origin_len] };
                 header_count += 1;
             }
-            @import("browser.zig").loadContentDirectMetaHeaders(url, art_buf[0..art_len], title_buf[0..title_len], "", ua_buf[0..ua_len], headers[0..header_count]);
+            @import("browser.zig").loadContentDirectMetaHeaders(url, art_buf[0..art_len], title_buf[0..title_len], "", ua_buf[0..ua_len], headers[0..header_count], "");
             logs.pushLog("info", "open", "Playing stream from paired browser", false);
             state.showToast("Playing in Opal");
             first = false;

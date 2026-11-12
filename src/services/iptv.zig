@@ -694,6 +694,13 @@ pub fn playChannel(idx: usize) void {
     const reflen = @min(ch.referrer_len, ref_buf.len);
     @memcpy(ref_buf[0..reflen], ch.referrer[0..reflen]);
 
+    // VOD entries (public-domain movies) carry an archive.org `.asr.srt`
+    // sidecar; snapshot it too for the same no-aliasing reason — the player
+    // hooks it with `sub-add select` once the file is loaded.
+    var sub_url_buf: [512]u8 = undefined;
+    const sublen = @min(ch.sub_url_len, sub_url_buf.len);
+    @memcpy(sub_url_buf[0..sublen], ch.sub_url[0..sublen]);
+
     // Send an Origin matching the Referer's site alongside it — CDNs that gate
     // on Referer usually gate on Origin too, and a missing Origin is the single
     // most common remaining 403 on HLS. Derivation is pure + unit-tested.
@@ -708,7 +715,7 @@ pub fn playChannel(idx: usize) void {
         .{ .name = "Origin", .value = origin },
     };
 
-    @import("browser.zig").loadContentDirectMetaHeaders(url_buf[0..ulen], "", name_buf[0..nlen], sub, ua_buf[0..ualen], &hdrs);
+    @import("browser.zig").loadContentDirectMetaHeaders(url_buf[0..ulen], "", name_buf[0..nlen], sub, ua_buf[0..ualen], &hdrs, sub_url_buf[0..sublen]);
     // Record into recents (a display snapshot incl. play hints, so it replays
     // with the right headers). Snapshot the row by value first — recordRecent
     // must not read the live results[] row a re-fetch could rewrite.

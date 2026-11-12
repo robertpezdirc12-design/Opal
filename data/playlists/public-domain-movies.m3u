@@ -10,13 +10,13 @@
 #   bulk — archive.org 'Feature Films' collection, top 500 by downloads
 # Regenerated 2026-11-12 — scripts/generate_public_domain_movies.py
 # Film content is public domain; streams are served by archive.org.
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGreatTrainRobbery_555" group-title="1900s",The Great Train Robbery (1903)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGreatTrainRobbery_555" subs="https://archive.org/download/TheGreatTrainRobbery_555/TheGreatTrainRobbery.asr.srt" group-title="1900s",The Great Train Robbery (1903)
 https://archive.org/download/TheGreatTrainRobbery_555/TheGreatTrainRobbery.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/silent-jugendspiele-aka-games-of-youth" group-title="1900s",Jugendspiele AKA Games of Youth (1906)
 https://archive.org/download/silent-jugendspiele-aka-games-of-youth/Jugendspiele%20AKA%20Games%20of%20Youth.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/FrankensteinfullMovie" group-title="1910s",Frankenstein (1910)
 https://archive.org/download/FrankensteinfullMovie/Frankenstein1910_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Wonderful_Wizard_of_Oz" group-title="1910s",The Wonderful Wizard of Oz (1910)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Wonderful_Wizard_of_Oz" subs="https://archive.org/download/The_Wonderful_Wizard_of_Oz/WonderfulWizardofOz1910.asr.srt" group-title="1910s",The Wonderful Wizard of Oz (1910)
 https://archive.org/download/The_Wonderful_Wizard_of_Oz/WonderfulWizardofOz1910.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/CC_1914_12_05_AFairExchange" group-title="1910s",Charlie Chaplin's "A Fair Exchange" (1914)
 https://archive.org/download/CC_1914_12_05_AFairExchange/CC_1914_12_05_AFairExchange_512kb.mp4
@@ -74,15 +74,15 @@ https://archive.org/download/TarzanoftheApes1918AndyDivx/TarzanoftheApes1918Andy
 https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/The_Cabinet_of_Dr._Caligari_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/DrJekyllandMrHyde" group-title="1920s",Dr. Jekyll and Mr. Hyde (1920)
 https://archive.org/download/DrJekyllandMrHyde/DrJekyllandMrHyde_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/last_of_the_mohicans_1920" group-title="1920s",Last of the Mohicans (1920)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/last_of_the_mohicans_1920" subs="https://archive.org/download/last_of_the_mohicans_1920/last_of_the_mohicans_silent.asr.srt" group-title="1920s",Last of the Mohicans (1920)
 https://archive.org/download/last_of_the_mohicans_1920/last_of_the_mohicans_silent.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/markofzorro-1920" group-title="1920s",Mark of Zorro (1920)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/markofzorro-1920" subs="https://archive.org/download/markofzorro-1920/markofzorro.asr.srt" group-title="1920s",Mark of Zorro (1920)
 https://archive.org/download/markofzorro-1920/markofzorro.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/OneWeek" group-title="1920s",One Week (1920)
 https://archive.org/download/OneWeek/One_Week_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGolem_893" group-title="1920s",The Golem (1920)
 https://archive.org/download/TheGolem_893/TheGolem_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/PublicdomainTheLastoftheMohicans" group-title="1920s",The Last of the Mohicans (1920)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/PublicdomainTheLastoftheMohicans" subs="https://archive.org/download/PublicdomainTheLastoftheMohicans/Last_of_the_Mohicans.asr.srt" group-title="1920s",The Last of the Mohicans (1920)
 https://archive.org/download/PublicdomainTheLastoftheMohicans/Last_of_the_Mohicans.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGoat" group-title="1920s",The Goat (1921)
 https://archive.org/download/TheGoat/The_Goat_512kb.mp4
@@ -112,11 +112,11 @@ https://archive.org/download/silent-cockeyed-gems-from-the-memory-of-a-nutty-cam
 https://archive.org/download/silent-episodes-in-the-life-of-a-gin-bottle/Episodes%20in%20the%20Life%20of%20a%20Gin%20Bottle.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/silent-santa-claus" group-title="1920s",Santa Claus (1925)
 https://archive.org/download/silent-santa-claus/Santa%20Claus.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/The_Lost_World_%281925%29_-_film_poster.jpg/330px-The_Lost_World_%281925%29_-_film_poster.jpg" group-title="1920s",The Lost World (1925)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/The_Lost_World_%281925%29_-_film_poster.jpg/330px-The_Lost_World_%281925%29_-_film_poster.jpg" subs="https://archive.org/download/lost_world/lost_world.asr.srt" group-title="1920s",The Lost World (1925)
 https://archive.org/download/lost_world/lost_world_512kb.mp4
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/The_Phantom_of_the_Opera_%281925_film%29.jpg/330px-The_Phantom_of_the_Opera_%281925_film%29.jpg" group-title="1920s",The Phantom of the Opera (1925)
 https://archive.org/download/ThePhantomoftheOpera/Phantom_of_the_Opera_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWizardOfOz1925" group-title="1920s",The Wizard Of Oz 1925 (1925)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWizardOfOz1925" subs="https://archive.org/download/TheWizardOfOz1925/LarrySemonsWizardOfOzsilent1925.asr.srt" group-title="1920s",The Wizard Of Oz 1925 (1925)
 https://archive.org/download/TheWizardOfOz1925/LarrySemonsWizardOfOzsilent1925.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/The_General_Buster_Keaton" group-title="1920s",The General (complete & clearer) (1926)
 https://archive.org/download/The_General_Buster_Keaton/The_General.mp4
@@ -128,13 +128,13 @@ https://archive.org/download/TheGeneral/The_General_512kb.mp4
 https://archive.org/download/seductionerotikon1929/Seductionerotikon1929.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ChelovekskinoapparatomManWithAMovieCamera" group-title="1920s",Chelovek s kinoapparatom (Man With A Movie Camera) (1929)
 https://archive.org/download/ChelovekskinoapparatomManWithAMovieCamera/Chelovek_s_kino-apparatom_512kb.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Ironmaskposter.jpg/330px-Ironmaskposter.jpg" group-title="1920s",The Iron Mask (1929)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Ironmaskposter.jpg/330px-Ironmaskposter.jpg" subs="https://archive.org/download/iron_mask/iron_mask.asr.srt" group-title="1920s",The Iron Mask (1929)
 https://archive.org/download/iron_mask/iron_mask_512kb.mp4
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/The_Thirteenth_Chair_FilmPoster.jpeg/330px-The_Thirteenth_Chair_FilmPoster.jpeg" group-title="1920s",The Thirteenth Chair (1929)
 https://archive.org/download/the-thirteenth-chair_1929/the-thirteenth-chair_1929.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/abraham_lincoln" group-title="1930s",Abraham Lincoln (1930)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/abraham_lincoln" subs="https://archive.org/download/abraham_lincoln/abraham_lincoln.asr.srt" group-title="1930s",Abraham Lincoln (1930)
 https://archive.org/download/abraham_lincoln/abraham_lincoln.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/africa_speaks" group-title="1930s",Africa Speaks (1930)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/africa_speaks" subs="https://archive.org/download/africa_speaks/africa_speaks.asr.srt" group-title="1930s",Africa Speaks (1930)
 https://archive.org/download/africa_speaks/africa_speaks.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BeauIdeal" group-title="1930s",Beau Ideal (1931)
 https://archive.org/download/BeauIdeal/BeauIdeal.mp4
@@ -146,19 +146,19 @@ https://archive.org/download/Indiscreet/Indiscreet.mp4
 https://archive.org/download/QuevivaMexico/Que.viva.Mexico_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/SvengaliJohnBarrymoreBKCap1931" group-title="1930s",Svengali (1931)
 https://archive.org/download/SvengaliJohnBarrymoreBKCap1931/SvengaliJohnBarrymoreBKCap1931.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bird_of_Paradise_1932" group-title="1930s",Bird of Paradise (1932)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bird_of_Paradise_1932" subs="https://archive.org/download/Bird_of_Paradise_1932/BirdofParadise.asr.srt" group-title="1930s",Bird of Paradise (1932)
 https://archive.org/download/Bird_of_Paradise_1932/BirdofParadise_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/farewell_to_arms_ipod" group-title="1930s",Farewell to Arms (1932)
 https://archive.org/download/farewell_to_arms_ipod/farewell_to_arms.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Mr-Robinson-Crusoe-1932.jpg/330px-Mr-Robinson-Crusoe-1932.jpg" group-title="1930s",Mr. Robinson Crusoe (1932)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Mr-Robinson-Crusoe-1932.jpg/330px-Mr-Robinson-Crusoe-1932.jpg" subs="https://archive.org/download/mr_robinson_crusoe/mr._robinson_crusoe.asr.srt" group-title="1930s",Mr. Robinson Crusoe (1932)
 https://archive.org/download/mr_robinson_crusoe/video_512kb.mp4
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Most_Dangerous_Game_poster.jpg/330px-Most_Dangerous_Game_poster.jpg" group-title="1930s",The Most Dangerous Game (1932)
 https://archive.org/download/TheMostDangerousGame/TheMostDangerousGame_512kb.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Poster_-_White_Zombie_01_Crisco_restoration.jpg/330px-Poster_-_White_Zombie_01_Crisco_restoration.jpg" group-title="1930s",White Zombie (1932)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Poster_-_White_Zombie_01_Crisco_restoration.jpg/330px-Poster_-_White_Zombie_01_Crisco_restoration.jpg" subs="https://archive.org/download/white_zombie/white_zombie.asr.srt" group-title="1930s",White Zombie (1932)
 https://archive.org/download/white_zombie/white_zombie_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/MushAndMilk" group-title="1930s",Mush and Milk (1933)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/MushAndMilk" subs="https://archive.org/download/MushAndMilk/MushnMilk.asr.srt" group-title="1930s",Mush and Milk (1933)
 https://archive.org/download/MushAndMilk/MushnMilk_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/oliver_twist" group-title="1930s",Oliver Twist (1933)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/oliver_twist" subs="https://archive.org/download/oliver_twist/oliver_twist.asr.srt" group-title="1930s",Oliver Twist (1933)
 https://archive.org/download/oliver_twist/oliver_twist.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/PhiloVanceTheKennelMurderCase1933" group-title="1930s",Philo Vance - The Kennel Murder Case (1933)
 https://archive.org/download/PhiloVanceTheKennelMurderCase1933/PhiloVanceTheKennelMurderCase1933.mp4
@@ -166,13 +166,13 @@ https://archive.org/download/PhiloVanceTheKennelMurderCase1933/PhiloVanceTheKenn
 https://archive.org/download/RidersofDestiny_/RidersofDestiny.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/SagebrushTrail" group-title="1930s",Sagebrush Trail (1933)
 https://archive.org/download/SagebrushTrail/SagebrushTrail.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGhoul" group-title="1930s",The Ghoul (1933)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGhoul" subs="https://archive.org/download/TheGhoul/TheGhoul_1933.asr.srt" group-title="1930s",The Ghoul (1933)
 https://archive.org/download/TheGhoul/TheGhoul_1933.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Vampirebat.jpg/330px-Vampirebat.jpg" group-title="1930s",The Vampire Bat (1933)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Vampirebat.jpg/330px-Vampirebat.jpg" subs="https://archive.org/download/TheVampireBat/TheVampireBat.asr.srt" group-title="1930s",The Vampire Bat (1933)
 https://archive.org/download/TheVampireBat/TheVampireBat_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BlueSteel" group-title="1930s",Blue Steel (1934)
 https://archive.org/download/BlueSteel/BlueSteel.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/girl_o_my_dreams" group-title="1930s",Girl o' My Dreams (1934)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/girl_o_my_dreams" subs="https://archive.org/download/girl_o_my_dreams/girl_o_my_dreams.asr.srt" group-title="1930s",Girl o' My Dreams (1934)
 https://archive.org/download/girl_o_my_dreams/girl_o_my_dreams.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/RandyRidesAlone" group-title="1930s",Randy Rides Alone (1934)
 https://archive.org/download/RandyRidesAlone/RandyRideAlone.mp4
@@ -186,7 +186,7 @@ https://archive.org/download/TheManFromUtah/TheManFromUtah.mp4
 https://archive.org/download/TheScarletPimpernel/TheScarletPimpernel.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Star_Packer" group-title="1930s",The Star Packer (1934)
 https://archive.org/download/The_Star_Packer/The_Star_Packer.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/west_of_the_divide" group-title="1930s",West of the Divide (1934)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/west_of_the_divide" subs="https://archive.org/download/west_of_the_divide/west_of_the_divide.asr.srt" group-title="1930s",West of the Divide (1934)
 https://archive.org/download/west_of_the_divide/west_of_the_divide.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ZouzouAkaZouZoudecember211934" group-title="1930s",Zouzou AKA Zou Zou (1934)
 https://archive.org/download/ZouzouAkaZouZoudecember211934/Zouzou1934MarcAllgretJosephineBakerEnFranais.mp4
@@ -196,27 +196,27 @@ https://archive.org/download/ParadiseCanyon/ParadiseCanyon.mp4
 https://archive.org/download/RainbowValley/RainbowValley.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Rocky_Mountain_Mystery_1935" group-title="1930s",Rocky Mountain Mystery (1935)
 https://archive.org/download/Rocky_Mountain_Mystery_1935/Rocky_Mountain_Mystery_1935.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Scrooge_1935" group-title="1930s",Scrooge (1935)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Scrooge_1935" subs="https://archive.org/download/Scrooge_1935/Scrooge_1935.asr.srt" group-title="1930s",Scrooge (1935)
 https://archive.org/download/Scrooge_1935/Scrooge_1935.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/texas_terror_1935" group-title="1930s",Texas Terror (1935)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/texas_terror_1935" subs="https://archive.org/download/texas_terror_1935/texas_terror_1935.asr.srt" group-title="1930s",Texas Terror (1935)
 https://archive.org/download/texas_terror_1935/texas_terror_1935.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/transatlantic_tunnel" group-title="1930s",Transatlantic Tunnel (1935)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/transatlantic_tunnel" subs="https://archive.org/download/transatlantic_tunnel/trans_atlantic_tunnel.asr.srt" group-title="1930s",Transatlantic Tunnel (1935)
 https://archive.org/download/transatlantic_tunnel/trans_atlantic_tunnel.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/A_Man_Betrayed_movie" group-title="1930s",A Man Betrayed (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/A_Man_Betrayed_movie" subs="https://archive.org/download/A_Man_Betrayed_movie/Man_Betrayed.asr.srt" group-title="1930s",A Man Betrayed (1936)
 https://archive.org/download/A_Man_Betrayed_movie/Man_Betrayed.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/aces_and_eights" group-title="1930s",Aces and Eights (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/aces_and_eights" subs="https://archive.org/download/aces_and_eights/aces_and_eights.asr.srt" group-title="1930s",Aces and Eights (1936)
 https://archive.org/download/aces_and_eights/aces_and_eights.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/AsYouLikeIt1936" group-title="1930s",As You Like It (1936)
 https://archive.org/download/AsYouLikeIt1936/AsYouLikeIt.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_big_show" group-title="1930s",Big Show – The (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_big_show" subs="https://archive.org/download/the_big_show/the_big_show.asr.srt" group-title="1930s",Big Show – The (1936)
 https://archive.org/download/the_big_show/the_big_show.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/border_patrolman" group-title="1930s",Border Patrolman (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/border_patrolman" subs="https://archive.org/download/border_patrolman/border_patrolman.asr.srt" group-title="1930s",Border Patrolman (1936)
 https://archive.org/download/border_patrolman/border_patrolman.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/calvary" group-title="1930s",Cavalry (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/calvary" subs="https://archive.org/download/calvary/calvary.asr.srt" group-title="1930s",Cavalry (1936)
 https://archive.org/download/calvary/calvary.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/DanielBoone1936" group-title="1930s",Daniel Boone (1936)
 https://archive.org/download/DanielBoone1936/DanielBoone1936.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/disorder_in_the_court" group-title="1930s",Disorder in the Court (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/disorder_in_the_court" subs="https://archive.org/download/disorder_in_the_court/disorder_in_the_court.asr.srt" group-title="1930s",Disorder in the Court (1936)
 https://archive.org/download/disorder_in_the_court/disorder_in_the_court.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Great_Guy.avi" group-title="1930s",Great Guy (1936)
 https://archive.org/download/Great_Guy.avi/Great_Guy.mp4
@@ -224,25 +224,25 @@ https://archive.org/download/Great_Guy.avi/Great_Guy.mp4
 https://archive.org/download/Marihuana-the_Devils_Weed/Marihuana.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/MyManGodfrey1936" group-title="1930s",My Man Godfrey (1936)
 https://archive.org/download/MyManGodfrey1936/MyManGodfrey1936.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/oh_susanna" group-title="1930s",Oh – Susanna! (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/oh_susanna" subs="https://archive.org/download/oh_susanna/oh_susanna.asr.srt" group-title="1930s",Oh – Susanna! (1936)
 https://archive.org/download/oh_susanna/oh_susanna.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/phantom_ship" group-title="1930s",Phantom Ship – The (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/phantom_ship" subs="https://archive.org/download/phantom_ship/phantom_ship.asr.srt" group-title="1930s",Phantom Ship – The (1936)
 https://archive.org/download/phantom_ship/phantom_ship.mp4
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Popeye_Meets_Sinbad.PNG/330px-Popeye_Meets_Sinbad.PNG" group-title="1930s",Popeye the Sailor meets Sinbad the Sailor (1936)
 https://archive.org/download/Popeye_meetsSinbadtheSailor/Popeye_meetsSinbadtheSailor_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/rogues_tavern" group-title="1930s",Rogue's Tavern (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/rogues_tavern" subs="https://archive.org/download/rogues_tavern/rogues_tavern.asr.srt" group-title="1930s",Rogue's Tavern (1936)
 https://archive.org/download/rogues_tavern/rogues_tavern.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Sabotage_1936" group-title="1930s",Sabotage (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Sabotage_1936" subs="https://archive.org/download/Sabotage_1936/Sabotage.asr.srt" group-title="1930s",Sabotage (1936)
 https://archive.org/download/Sabotage_1936/Sabotage.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hitchcock_Secret_Agent" group-title="1930s",Secret Agent (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hitchcock_Secret_Agent" subs="https://archive.org/download/Hitchcock_Secret_Agent/Secret_Agent.asr.srt" group-title="1930s",Secret Agent (1936)
 https://archive.org/download/Hitchcock_Secret_Agent/Secret_Agent.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/amazing_adventure" group-title="1930s",The Amazing Adventure (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/amazing_adventure" subs="https://archive.org/download/amazing_adventure/amazing_adventuarchive.asr.srt" group-title="1930s",The Amazing Adventure (1936)
 https://archive.org/download/amazing_adventure/amazing_adventuarchive.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheArizonaRaiders" group-title="1930s",The Arizona Raiders (1936)
 https://archive.org/download/TheArizonaRaiders/TheArizonaRaiders.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The.Dark.Hour" group-title="1930s",The Dark Hour (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The.Dark.Hour" subs="https://archive.org/download/The.Dark.Hour/The_Dark_Hour.asr.srt" group-title="1930s",The Dark Hour (1936)
 https://archive.org/download/The.Dark.Hour/The_Dark_Hour.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/things_to_come_ipod" group-title="1930s",Things to Come (1936)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/things_to_come_ipod" subs="https://archive.org/download/things_to_come_ipod/thingstocome.asr.srt" group-title="1930s",Things to Come (1936)
 https://archive.org/download/things_to_come_ipod/thingstocome.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Winds_of_the_Wasteland" group-title="1930s",Winds of the Wasteland (1936)
 https://archive.org/download/Winds_of_the_Wasteland/Winds_of_the_Wasteland.mp4
@@ -262,427 +262,427 @@ https://archive.org/download/Hell_Town/Hell_Town.mp4
 https://archive.org/download/king_solomans_mine/king_solomans_mine.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/NothingSacred" group-title="1930s",Nothing Sacred (1937)
 https://archive.org/download/NothingSacred/NothingSacred.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/slave_in_bondage" group-title="1930s",Slaves in Bondage (1937)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/slave_in_bondage" subs="https://archive.org/download/slave_in_bondage/slaves_in_bondage.asr.srt" group-title="1930s",Slaves in Bondage (1937)
 https://archive.org/download/slave_in_bondage/slaves_in_bondage.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/YoungandInnocentTheGirlWasYoung" group-title="1930s",Young and Innocent (The Girl Was Young) (1937)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/YoungandInnocentTheGirlWasYoung" subs="https://archive.org/download/YoungandInnocentTheGirlWasYoung/Young_and_Innocent.asr.srt" group-title="1930s",Young and Innocent (The Girl Was Young) (1937)
 https://archive.org/download/YoungandInnocentTheGirlWasYoung/Young_and_Innocent.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BillytheKidReturns" group-title="1930s",Billy the Kid Returns (1938)
 https://archive.org/download/BillytheKidReturns/BillytheKidReturns.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/call_of_the_yukon" group-title="1930s",Call of the Yukon (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/call_of_the_yukon" subs="https://archive.org/download/call_of_the_yukon/call_of_the_yukon.asr.srt" group-title="1930s",Call of the Yukon (1938)
 https://archive.org/download/call_of_the_yukon/call_of_the_yukon.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/charlie_chaplin_film_fest" group-title="1930s",Charlie Chaplin Festival (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/charlie_chaplin_film_fest" subs="https://archive.org/download/charlie_chaplin_film_fest/charlie_chaplin_film_fest.asr.srt" group-title="1930s",Charlie Chaplin Festival (1938)
 https://archive.org/download/charlie_chaplin_film_fest/charlie_chaplin_film_fest.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/ChildBride" group-title="1930s",Child Bride (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/ChildBride" subs="https://archive.org/download/ChildBride/Child_Bride.asr.srt" group-title="1930s",Child Bride (1938)
 https://archive.org/download/ChildBride/Child_Bride.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Pygmalion" group-title="1930s",Pygmalion (1938)
 https://archive.org/download/Pygmalion/Pygmalion.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/reefer_madness1938" group-title="1930s",Reefer Madness (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/reefer_madness1938" subs="https://archive.org/download/reefer_madness1938/reefer_madness1938.asr.srt" group-title="1930s",Reefer Madness (1938)
 https://archive.org/download/reefer_madness1938/reefer_madness1938.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/six_gun_trail" group-title="1930s",Six Gun Trail (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/six_gun_trail" subs="https://archive.org/download/six_gun_trail/six_gun_trail.asr.srt" group-title="1930s",Six Gun Trail (1938)
 https://archive.org/download/six_gun_trail/six_gun_trail.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/sunset_murder_case" group-title="1930s",Sunset Murder Case (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/sunset_murder_case" subs="https://archive.org/download/sunset_murder_case/sunset_murder_case.asr.srt" group-title="1930s",Sunset Murder Case (1938)
 https://archive.org/download/sunset_murder_case/sunset_murder_case.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/tarzan_and_the_green_goddess" group-title="1930s",Tarzan and the Green Goddess (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/tarzan_and_the_green_goddess" subs="https://archive.org/download/tarzan_and_the_green_goddess/tarzan_and_the_green_goddess.asr.srt" group-title="1930s",Tarzan and the Green Goddess (1938)
 https://archive.org/download/tarzan_and_the_green_goddess/tarzan_and_the_green_goddess.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/tarzans_revenge" group-title="1930s",Tarzan's Revenge (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/tarzans_revenge" subs="https://archive.org/download/tarzans_revenge/tarzans_revenge.asr.srt" group-title="1930s",Tarzan's Revenge (1938)
 https://archive.org/download/tarzans_revenge/tarzans_revenge.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Lady_X" group-title="1930s",The Divorce of Lady X (1938)
 https://archive.org/download/Lady_X/The_Divorce_of_Lady_X_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/mark_of_the_avenger_1938" group-title="1930s",The Mysterious Rider AKA Mark of the Avenger (1938)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/mark_of_the_avenger_1938" subs="https://archive.org/download/mark_of_the_avenger_1938/mark_of_the_avenger.asr.srt" group-title="1930s",The Mysterious Rider AKA Mark of the Avenger (1938)
 https://archive.org/download/mark_of_the_avenger_1938/mark_of_the_avenger.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/danger_flight" group-title="1930s",Danger Flight (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/danger_flight" subs="https://archive.org/download/danger_flight/danger_flight.asr.srt" group-title="1930s",Danger Flight (1939)
 https://archive.org/download/danger_flight/danger_flight.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_gorilla" group-title="1930s",Gorilla – The (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_gorilla" subs="https://archive.org/download/the_gorilla/the_gorilla.asr.srt" group-title="1930s",Gorilla – The (1939)
 https://archive.org/download/the_gorilla/the_gorilla.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/great_commandment" group-title="1930s",Great Commandment – The (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/great_commandment" subs="https://archive.org/download/great_commandment/great_commandment.asr.srt" group-title="1930s",Great Commandment – The (1939)
 https://archive.org/download/great_commandment/great_commandment.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/gullivers_travels1939" group-title="1930s",Gulliver's Travels (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/gullivers_travels1939" subs="https://archive.org/download/gullivers_travels1939/gullivers_travels1939.asr.srt" group-title="1930s",Gulliver's Travels (1939)
 https://archive.org/download/gullivers_travels1939/gullivers_travels1939.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/GulliversTravels720p_652" group-title="1930s",Gulliver's Travels [720p] (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/GulliversTravels720p_652" subs="https://archive.org/download/GulliversTravels720p_652/GulliversTravels.asr.srt" group-title="1930s",Gulliver's Travels [720p] (1939)
 https://archive.org/download/GulliversTravels720p_652/GulliversTravels.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Jamaica_Inn" group-title="1930s",Jamaica Inn (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Jamaica_Inn" subs="https://archive.org/download/Jamaica_Inn/JAMAICA_INN.asr.srt" group-title="1930s",Jamaica Inn (1939)
 https://archive.org/download/Jamaica_Inn/JAMAICA_INN.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/little_princess" group-title="1930s",Little Princess – The (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/little_princess" subs="https://archive.org/download/little_princess/little_princess.asr.srt" group-title="1930s",Little Princess – The (1939)
 https://archive.org/download/little_princess/little_princess.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/LoveAffair" group-title="1930s",Love Affair (1939)
 https://archive.org/download/LoveAffair/LoveAffair.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/made_for_each_other_film" group-title="1930s",Made for Each Other (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/made_for_each_other_film" subs="https://archive.org/download/made_for_each_other_film/made_for_each_other.asr.srt" group-title="1930s",Made for Each Other (1939)
 https://archive.org/download/made_for_each_other_film/made_for_each_other.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/nancy_drew_reporter" group-title="1930s",Nancy Drew... Reporter (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/nancy_drew_reporter" subs="https://archive.org/download/nancy_drew_reporter/nancy_drew_reporter.asr.srt" group-title="1930s",Nancy Drew... Reporter (1939)
 https://archive.org/download/nancy_drew_reporter/nancy_drew_reporter.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheFlyingDeuces" group-title="1930s",The Flying Deuces (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheFlyingDeuces" subs="https://archive.org/download/TheFlyingDeuces/The_Flying_Deuces.asr.srt" group-title="1930s",The Flying Deuces (1939)
 https://archive.org/download/TheFlyingDeuces/The_Flying_Deuces.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Mystery_of_Mr._Wong" group-title="1930s",The Mystery of Mr. Wong (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Mystery_of_Mr._Wong" subs="https://archive.org/download/The_Mystery_of_Mr._Wong/The_Mystery_of_Mr._Wong.asr.srt" group-title="1930s",The Mystery of Mr. Wong (1939)
 https://archive.org/download/The_Mystery_of_Mr._Wong/The_Mystery_of_Mr._Wong.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ThePhantomCreeps" group-title="1930s",The Phantom Creeps (1939)
 https://archive.org/download/ThePhantomCreeps/ThePhantomCreeps.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/They_Made_Me_A_Criminal_1939" group-title="1930s",They Made Me a Criminal (1939)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/They_Made_Me_A_Criminal_1939" subs="https://archive.org/download/They_Made_Me_A_Criminal_1939/they_made_me_a_criminal_1939.asr.srt" group-title="1930s",They Made Me a Criminal (1939)
 https://archive.org/download/They_Made_Me_A_Criminal_1939/they_made_me_a_criminal_1939.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/boys_of_the_city" group-title="1940s",Boys of the City (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/boys_of_the_city" subs="https://archive.org/download/boys_of_the_city/boys_of_the_city.asr.srt" group-title="1940s",Boys of the City (1940)
 https://archive.org/download/boys_of_the_city/boys_of_the_city.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/british_intelligence" group-title="1940s",British Intelligence (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/british_intelligence" subs="https://archive.org/download/british_intelligence/british_intelligence.asr.srt" group-title="1940s",British Intelligence (1940)
 https://archive.org/download/british_intelligence/british_intelligence.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Doomed_to_Die_1940" group-title="1940s",Doomed to Die (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Doomed_to_Die_1940" subs="https://archive.org/download/Doomed_to_Die_1940/Doomed_to_Die.asr.srt" group-title="1940s",Doomed to Die (1940)
 https://archive.org/download/Doomed_to_Die_1940/Doomed_to_Die.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/his_girl_friday" group-title="1940s",His Girl Friday (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/his_girl_friday" subs="https://archive.org/download/his_girl_friday/his_girl_friday.asr.srt" group-title="1940s",His Girl Friday (1940)
 https://archive.org/download/his_girl_friday/his_girl_friday.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/lil_abner" group-title="1940s",Lil' Abner (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/lil_abner" subs="https://archive.org/download/lil_abner/lil_abner.asr.srt" group-title="1940s",Lil' Abner (1940)
 https://archive.org/download/lil_abner/lil_abner.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/misbehaving_husbands" group-title="1940s",Misbehaving Husbands (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/misbehaving_husbands" subs="https://archive.org/download/misbehaving_husbands/misbehaving_husbands.asr.srt" group-title="1940s",Misbehaving Husbands (1940)
 https://archive.org/download/misbehaving_husbands/misbehaving_husbands.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_of_Chinatown_1940" group-title="1940s",Phantom of Chinatown (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_of_Chinatown_1940" subs="https://archive.org/download/Phantom_of_Chinatown_1940/Phantom_of_Chinatown.asr.srt" group-title="1940s",Phantom of Chinatown (1940)
 https://archive.org/download/Phantom_of_Chinatown_1940/Phantom_of_Chinatown.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Santa_Fe_Trail_movie" group-title="1940s",Santa Fe Trail (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Santa_Fe_Trail_movie" subs="https://archive.org/download/Santa_Fe_Trail_movie/Santa_Fe_Trail.asr.srt" group-title="1940s",Santa Fe Trail (1940)
 https://archive.org/download/Santa_Fe_Trail_movie/Santa_Fe_Trail.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/take_me_back_to_oklahoma" group-title="1940s",Take Me Back To Oklahoma (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/take_me_back_to_oklahoma" subs="https://archive.org/download/take_me_back_to_oklahoma/take_me_back_to_oklahoma.asr.srt" group-title="1940s",Take Me Back To Oklahoma (1940)
 https://archive.org/download/take_me_back_to_oklahoma/take_me_back_to_oklahoma.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/the-grapes-of-wrath-1940" group-title="1940s",The Grapes Of Wrath ( 1940) (1940)
 https://archive.org/download/the-grapes-of-wrath-1940/The%20Grapes%20Of%20Wrath%20%281940%29.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/young_bill_hickok" group-title="1940s",Young Bill Hickok (1940)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/young_bill_hickok" subs="https://archive.org/download/young_bill_hickok/young_bill_hickok.asr.srt" group-title="1940s",Young Bill Hickok (1940)
 https://archive.org/download/young_bill_hickok/young_bill_hickok.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Billy_the_Kid_Wanted_1941" group-title="1940s",Billy the Kid Wanted (1941)
 https://archive.org/download/Billy_the_Kid_Wanted_1941/Billy_the_Kid_Wanted_1941.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/jungle_man" group-title="1940s",Jungle Man (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/jungle_man" subs="https://archive.org/download/jungle_man/jungle_man.asr.srt" group-title="1940s",Jungle Man (1941)
 https://archive.org/download/jungle_man/jungle_man.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/King_of_the_Zombies" group-title="1940s",King of the Zombies (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/King_of_the_Zombies" subs="https://archive.org/download/King_of_the_Zombies/King_of_the_Zombies.asr.srt" group-title="1940s",King of the Zombies (1941)
 https://archive.org/download/King_of_the_Zombies/King_of_the_Zombies.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Poster_-_Meet_John_Doe_01.jpg/330px-Poster_-_Meet_John_Doe_01.jpg" group-title="1940s",Meet John Doe (1941)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Poster_-_Meet_John_Doe_01.jpg/330px-Poster_-_Meet_John_Doe_01.jpg" subs="https://archive.org/download/meet_john_doe/meet_john_doe.asr.srt" group-title="1940s",Meet John Doe (1941)
 https://archive.org/download/meet_john_doe/meet_john_doe_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/penny_serenade" group-title="1940s",Penny Serenade (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/penny_serenade" subs="https://archive.org/download/penny_serenade/penny_serenade.asr.srt" group-title="1940s",Penny Serenade (1941)
 https://archive.org/download/penny_serenade/penny_serenade.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/road_to_happiness" group-title="1940s",Road To Happiness (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/road_to_happiness" subs="https://archive.org/download/road_to_happiness/road_to_happiness.asr.srt" group-title="1940s",Road To Happiness (1941)
 https://archive.org/download/road_to_happiness/road_to_happiness.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/spooks_run_wild" group-title="1940s",Spooks Run Wild (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/spooks_run_wild" subs="https://archive.org/download/spooks_run_wild/spooks_run_wild.asr.srt" group-title="1940s",Spooks Run Wild (1941)
 https://archive.org/download/spooks_run_wild/spooks_run_wild.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/blood_of_jesus" group-title="1940s",The Blood Of Jesus (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/blood_of_jesus" subs="https://archive.org/download/blood_of_jesus/blood_of_jesus.asr.srt" group-title="1940s",The Blood Of Jesus (1941)
 https://archive.org/download/blood_of_jesus/blood_of_jesus.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheGhostTrain" group-title="1940s",The Ghost Train (1941)
 https://archive.org/download/TheGhostTrain/TheGhostTrain.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Topper_Returns_41" group-title="1940s",Topper Returns (1941)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Topper_Returns_41" subs="https://archive.org/download/Topper_Returns_41/Topper_Returns_41.asr.srt" group-title="1940s",Topper Returns (1941)
 https://archive.org/download/Topper_Returns_41/Topper_Returns_41.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/american_empire" group-title="1940s",American Empire (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/american_empire" subs="https://archive.org/download/american_empire/american_empire.asr.srt" group-title="1940s",American Empire (1942)
 https://archive.org/download/american_empire/american_empire.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/arizona_stage_coach" group-title="1940s",Arizona Stage Coach (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/arizona_stage_coach" subs="https://archive.org/download/arizona_stage_coach/arizona_stage_coach.asr.srt" group-title="1940s",Arizona Stage Coach (1942)
 https://archive.org/download/arizona_stage_coach/arizona_stage_coach.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bowery_at_Midnight" group-title="1940s",Bowery at Midnight (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bowery_at_Midnight" subs="https://archive.org/download/Bowery_at_Midnight/Bowery_at_Midnight_1942.asr.srt" group-title="1940s",Bowery at Midnight (1942)
 https://archive.org/download/Bowery_at_Midnight/Bowery_at_Midnight_1942.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hemp_for_victory_1942" group-title="1940s",Hemp for Victory (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hemp_for_victory_1942" subs="https://archive.org/download/Hemp_for_victory_1942/Hemp_for_victory_1942.asr.srt" group-title="1940s",Hemp for Victory (1942)
 https://archive.org/download/Hemp_for_victory_1942/Hemp_for_victory_1942.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/hitler_dead_or_alive" group-title="1940s",Hitler Dead or Alive (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/hitler_dead_or_alive" subs="https://archive.org/download/hitler_dead_or_alive/hitler_dead_or_alive.asr.srt" group-title="1940s",Hitler Dead or Alive (1942)
 https://archive.org/download/hitler_dead_or_alive/hitler_dead_or_alive.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/In_Which_We_Serve" group-title="1940s",In Which We Serve (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/In_Which_We_Serve" subs="https://archive.org/download/In_Which_We_Serve/In_Which_We_Serve.asr.srt" group-title="1940s",In Which We Serve (1942)
 https://archive.org/download/In_Which_We_Serve/In_Which_We_Serve.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/JungleBook" group-title="1940s",Jungle Book (1942)
 https://archive.org/download/JungleBook/Jungle_Book.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/private_buckaroo_ipod" group-title="1940s",Private Buckaroo (1942)
 https://archive.org/download/private_buckaroo_ipod/private_buckaroo.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/private_snuffy_smith" group-title="1940s",Private Snuffy Smith (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/private_snuffy_smith" subs="https://archive.org/download/private_snuffy_smith/private_snuffy_smith.asr.srt" group-title="1940s",Private Snuffy Smith (1942)
 https://archive.org/download/private_snuffy_smith/private_snuffy_smith.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Rifle_Marksmanship_with_M1_Rifle_Part_1" group-title="1940s",Rifle Marksmanship with the M1 Rifle (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Rifle_Marksmanship_with_M1_Rifle_Part_1" subs="https://archive.org/download/Rifle_Marksmanship_with_M1_Rifle_Part_1/Rifle_Marksmanship_with_M1_Rifle_part_1.asr.srt" group-title="1940s",Rifle Marksmanship with the M1 Rifle (1942)
 https://archive.org/download/Rifle_Marksmanship_with_M1_Rifle_Part_1/Rifle_Marksmanship_with_M1_Rifle_part_1.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_bashful_bachelor" group-title="1940s",The Bashful Bachelor (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_bashful_bachelor" subs="https://archive.org/download/the_bashful_bachelor/the_bashful_bachelor.asr.srt" group-title="1940s",The Bashful Bachelor (1942)
 https://archive.org/download/the_bashful_bachelor/bashful_bachelor.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheCorpseVanishes" group-title="1940s",The Corpse Vanishes (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheCorpseVanishes" subs="https://archive.org/download/TheCorpseVanishes/TheCorpseVanishes.asr.srt" group-title="1940s",The Corpse Vanishes (1942)
 https://archive.org/download/TheCorpseVanishes/TheCorpseVanishes.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/they_raid_by_night" group-title="1940s",They Raid By Night (1942)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/they_raid_by_night" subs="https://archive.org/download/they_raid_by_night/they_raid_by_night.asr.srt" group-title="1940s",They Raid By Night (1942)
 https://archive.org/download/they_raid_by_night/they_raid_by_night.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/border_patrol" group-title="1940s",Border Patrol (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/border_patrol" subs="https://archive.org/download/border_patrol/border_patrol.asr.srt" group-title="1940s",Border Patrol (1943)
 https://archive.org/download/border_patrol/border_patrol.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Gung_Ho" group-title="1940s",Gung Ho! (1943)
 https://archive.org/download/Gung_Ho/Gung_Ho.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Minesweeper_1943" group-title="1940s",Minesweeper (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Minesweeper_1943" subs="https://archive.org/download/Minesweeper_1943/minesweeper.asr.srt" group-title="1940s",Minesweeper (1943)
 https://archive.org/download/Minesweeper_1943/minesweeper.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/miss_london_ltd_1943" group-title="1940s",Miss London Ltd. (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/miss_london_ltd_1943" subs="https://archive.org/download/miss_london_ltd_1943/miss_london_ltd.asr.srt" group-title="1940s",Miss London Ltd. (1943)
 https://archive.org/download/miss_london_ltd_1943/miss_london_ltd.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/secret_weapon" group-title="1940s",Sherlock Holmes and the Secret Weapon (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/secret_weapon" subs="https://archive.org/download/secret_weapon/sherlock_holmes_and_the_secret_weapon.asr.srt" group-title="1940s",Sherlock Holmes and the Secret Weapon (1943)
 https://archive.org/download/secret_weapon/sherlock_holmes_and_the_secret_weapon.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/2_weeks_to_live" group-title="1940s",Two Weeks to Live (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/2_weeks_to_live" subs="https://archive.org/download/2_weeks_to_live/2_week_to_live.asr.srt" group-title="1940s",Two Weeks to Live (1943)
 https://archive.org/download/2_weeks_to_live/two_weeks_to_live.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/WarOfTheWildcats-JohnWayne1943" group-title="1940s",War of the Wildcats - John Wayne (1943)
 https://archive.org/download/WarOfTheWildcats-JohnWayne1943/JohnWayne-WarOfTheWildcats1943.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/We_Dive_at_Dawn_1943" group-title="1940s",We Dive at Dawn (1943)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/We_Dive_at_Dawn_1943" subs="https://archive.org/download/We_Dive_at_Dawn_1943/We_Dive_at_Dawn.asr.srt" group-title="1940s",We Dive at Dawn (1943)
 https://archive.org/download/We_Dive_at_Dawn_1943/We_Dive_at_Dawn.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bluebeard" group-title="1940s",Bluebeard (1944)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Bluebeard" subs="https://archive.org/download/Bluebeard/Bluebeard.asr.srt" group-title="1940s",Bluebeard (1944)
 https://archive.org/download/Bluebeard/Bluebeard.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/brand_of_the_devil" group-title="1940s",Brand of the Devil (1944)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/brand_of_the_devil" subs="https://archive.org/download/brand_of_the_devil/brand_of_the_devil.asr.srt" group-title="1940s",Brand of the Devil (1944)
 https://archive.org/download/brand_of_the_devil/brand_of_the_devil.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Double.Indemnity.1944.720p.BrRip.x265.HEVCBay.com.mkv" group-title="1940s",Double. Indemnity. 1944.720p. Br Rip.x 265. HEVCBay.com.mkv (1944)
 https://archive.org/download/Double.Indemnity.1944.720p.BrRip.x265.HEVCBay.com.mkv/Double.Indemnity.1944.720p.BrRip.x265.HEVCBay.com.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/gangsters_of_the_frontier_1944" group-title="1940s",Gangsters of the Frontier (1944)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/gangsters_of_the_frontier_1944" subs="https://archive.org/download/gangsters_of_the_frontier_1944/gangsters_of_the_frontier.asr.srt" group-title="1940s",Gangsters of the Frontier (1944)
 https://archive.org/download/gangsters_of_the_frontier_1944/gangsters_of_the_frontier.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Training_vid" group-title="1940s",German_SniperTraining-video1944 (1944)
 https://archive.org/download/Training_vid/German_SnipersTraining_video1944.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/laura_202003" group-title="1940s",Laura (1944) Dir: Otto Preminger – Starring Gene Tierney – Dana Andrews – Clifton Webb – Vincent Price – Judith Anderson. (1944)
 https://archive.org/download/laura_202003/Laura.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheMemphisBelleAStoryofaFlyingFortress" group-title="1940s",The Memphis Belle: A Story of a Flying Fortress (1944)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheMemphisBelleAStoryofaFlyingFortress" subs="https://archive.org/download/TheMemphisBelleAStoryofaFlyingFortress/Memphis.BelleTheA.Story.Of.A.Flying.Fortress.1944.asr.srt" group-title="1940s",The Memphis Belle: A Story of a Flying Fortress (1944)
 https://archive.org/download/TheMemphisBelleAStoryofaFlyingFortress/Memphis.BelleTheA.Story.Of.A.Flying.Fortress.1944.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BloodontheSun" group-title="1940s",Blood on the Sun (1945)
 https://archive.org/download/BloodontheSun/BloodontheSun.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/download/captain-kidd-poster/Captain_Kidd_Poster.jpg" group-title="1940s",Captain Kidd (1945)
 https://archive.org/download/captain-kidd-1945_202609/CaptainKidd_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/club_paradise" group-title="1940s",Club Paradise (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/club_paradise" subs="https://archive.org/download/club_paradise/club_paradise.asr.srt" group-title="1940s",Club Paradise (1945)
 https://archive.org/download/club_paradise/club_paradise.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Detour" group-title="1940s",Detour (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Detour" subs="https://archive.org/download/Detour/Detour.asr.srt" group-title="1940s",Detour (1945)
 https://archive.org/download/Detour/Detour.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/dick_tracy_detctive" group-title="1940s",Dick Tracy Detective (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/dick_tracy_detctive" subs="https://archive.org/download/dick_tracy_detctive/dick_tracy_detective.asr.srt" group-title="1940s",Dick Tracy Detective (1945)
 https://archive.org/download/dick_tracy_detctive/dick_tracy_detective.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Fog_island_1945" group-title="1940s",Fog Island (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Fog_island_1945" subs="https://archive.org/download/Fog_island_1945/Fog_Island_1945.asr.srt" group-title="1940s",Fog Island (1945)
 https://archive.org/download/Fog_island_1945/Fog_Island_1945.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/HERE_IS_GERMANY" group-title="1940s",Here is Germany (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/HERE_IS_GERMANY" subs="https://archive.org/download/HERE_IS_GERMANY/HERE_IS_GERMANY.asr.srt" group-title="1940s",Here is Germany (1945)
 https://archive.org/download/HERE_IS_GERMANY/HERE_IS_GERMANY.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/nazi_concentration_camps" group-title="1940s",Nazi Concentration Camps (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/nazi_concentration_camps" subs="https://archive.org/download/nazi_concentration_camps/nazi_concentration_camps.asr.srt" group-title="1940s",Nazi Concentration Camps (1945)
 https://archive.org/download/nazi_concentration_camps/nazi_concentration_camps.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/ScarletStreet" group-title="1940s",Scarlet Street (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/ScarletStreet" subs="https://archive.org/download/ScarletStreet/Scarlet_Street.asr.srt" group-title="1940s",Scarlet Street (1945)
 https://archive.org/download/ScarletStreet/Scarlet_Street.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheHouseILiveIn" group-title="1940s",The House I Live In (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheHouseILiveIn" subs="https://archive.org/download/TheHouseILiveIn/TheHouseILiveIn.asr.srt" group-title="1940s",The House I Live In (1945)
 https://archive.org/download/TheHouseILiveIn/TheHouseILiveIn.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Lady_Confesses" group-title="1940s",The Lady Confesses (1945)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Lady_Confesses" subs="https://archive.org/download/Lady_Confesses/Lady_Confesses.asr.srt" group-title="1940s",The Lady Confesses (1945)
 https://archive.org/download/Lady_Confesses/Lady_Confesses.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/AbileneTown" group-title="1940s",Abilene Town (1946)
 https://archive.org/download/AbileneTown/AbileneTown.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/angel_on_my_shoulder" group-title="1940s",Angel on My Shoulder (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/angel_on_my_shoulder" subs="https://archive.org/download/angel_on_my_shoulder/angel_on_my_shoulder.asr.srt" group-title="1940s",Angel on My Shoulder (1946)
 https://archive.org/download/angel_on_my_shoulder/angel_on_my_shoulder.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/BehindGreenLights_high_Q_mp4" group-title="1940s",Behind Green Lights (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/BehindGreenLights_high_Q_mp4" subs="https://archive.org/download/BehindGreenLights_high_Q_mp4/Behind_Green_Lights.asr.srt" group-title="1940s",Behind Green Lights (1946)
 https://archive.org/download/BehindGreenLights_high_Q_mp4/Behind_Green_Lights.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/dressed_to_kill" group-title="1940s",Dressed To Kill (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/dressed_to_kill" subs="https://archive.org/download/dressed_to_kill/dressed_to_kill.asr.srt" group-title="1940s",Dressed To Kill (1946)
 https://archive.org/download/dressed_to_kill/dressed_to_kill.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/flight_to_nowhere" group-title="1940s",Flight to Nowhere (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/flight_to_nowhere" subs="https://archive.org/download/flight_to_nowhere/flight_to_nowhere.asr.srt" group-title="1940s",Flight to Nowhere (1946)
 https://archive.org/download/flight_to_nowhere/flight_to_nowhere.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/GreatExpectations1946" group-title="1940s",Great Expectations (1946)
 https://archive.org/download/GreatExpectations1946/GreatExpectations1946.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/heartbeat" group-title="1940s",Heartbeat (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/heartbeat" subs="https://archive.org/download/heartbeat/heartbeat.asr.srt" group-title="1940s",Heartbeat (1946)
 https://archive.org/download/heartbeat/heartbeat.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/QueenoftheAmazons" group-title="1940s",Queen of the Amazons (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/QueenoftheAmazons" subs="https://archive.org/download/QueenoftheAmazons/QueenoftheAmazons.asr.srt" group-title="1940s",Queen of the Amazons (1946)
 https://archive.org/download/QueenoftheAmazons/QueenoftheAmazons.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Martha_Ivers_movie" group-title="1940s",Strange Love of Martha Ivers (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Martha_Ivers_movie" subs="https://archive.org/download/Martha_Ivers_movie/Strange_Love_Martha_Ivers.asr.srt" group-title="1940s",Strange Love of Martha Ivers (1946)
 https://archive.org/download/Martha_Ivers_movie/Strange_Love_Martha_Ivers.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TerrorByNight1946" group-title="1940s",Terror By Night (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TerrorByNight1946" subs="https://archive.org/download/TerrorByNight1946/TerrorByNight.asr.srt" group-title="1940s",Terror By Night (1946)
 https://archive.org/download/TerrorByNight1946/TerrorByNight.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheChase_" group-title="1940s",The Chase (1946)
 https://archive.org/download/TheChase_/TheChase.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/thekillers1946usafeaturingburtlancasteravagardneredmondobrienfilmnoirfullmovie_202001" group-title="1940s",The Killers (1946) Burt Lancaster – Ava Gardner – Edmond O' Brien - Film Noir Full Movie (1946)
 https://archive.org/download/thekillers1946usafeaturingburtlancasteravagardneredmondobrienfilmnoirfullmovie_202001/The%20Killers%20%281946%2C%20USA%29%20Featuring%20Burt%20Lancaster%2C%20Ava%20Gardner%2C%20Edmond%20O%27Brien%20-%20Film%20Noir%20Full%20Movie.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheStranger_0" group-title="1940s",The Stranger (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheStranger_0" subs="https://archive.org/download/TheStranger_0/The_Stranger.asr.srt" group-title="1940s",The Stranger (1946)
 https://archive.org/download/TheStranger_0/The_Stranger.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheyMadeMeAKiller" group-title="1940s",They Made Me a Killer (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheyMadeMeAKiller" subs="https://archive.org/download/TheyMadeMeAKiller/TheyMadeMeAKiller.asr.srt" group-title="1940s",They Made Me a Killer (1946)
 https://archive.org/download/TheyMadeMeAKiller/TheyMadeMeAKiller.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/till_the_clouds_roll_by" group-title="1940s",Till The Clouds Roll By (1946)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/till_the_clouds_roll_by" subs="https://archive.org/download/till_the_clouds_roll_by/till_the_clouds_roll_by.asr.srt" group-title="1940s",Till The Clouds Roll By (1946)
 https://archive.org/download/till_the_clouds_roll_by/till_the_clouds_roll_by.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Whistle_Stop" group-title="1940s",Whistle Stop (1946)
 https://archive.org/download/Whistle_Stop/Whistle_Stop.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/angel_and_the_badman" group-title="1940s",Angel and the Badman (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/angel_and_the_badman" subs="https://archive.org/download/angel_and_the_badman/angel_and_the_badman.asr.srt" group-title="1940s",Angel and the Badman (1947)
 https://archive.org/download/angel_and_the_badman/angel_and_the_badman.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/brideless_groom" group-title="1940s",Brideless Groom (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/brideless_groom" subs="https://archive.org/download/brideless_groom/brideless_groom.asr.srt" group-title="1940s",Brideless Groom (1947)
 https://archive.org/download/brideless_groom/brideless_groom.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/dick_tracys_dilemma" group-title="1940s",Dick Tracy's Dilemma (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/dick_tracys_dilemma" subs="https://archive.org/download/dick_tracys_dilemma/dick_tracys_dilemma.asr.srt" group-title="1940s",Dick Tracy's Dilemma (1947)
 https://archive.org/download/dick_tracys_dilemma/dick_tracys_dilemma.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/dishonored_lady" group-title="1940s",Dishonored Lady (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/dishonored_lady" subs="https://archive.org/download/dishonored_lady/dishonored_lady.asr.srt" group-title="1940s",Dishonored Lady (1947)
 https://archive.org/download/dishonored_lady/dishonored_lady.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/its_a_joke_son" group-title="1940s",It's A Joke – Son (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/its_a_joke_son" subs="https://archive.org/download/its_a_joke_son/its_a_joke_son.asr.srt" group-title="1940s",It's A Joke – Son (1947)
 https://archive.org/download/its_a_joke_son/its_a_joke_son.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Law_of_the_Lash_film" group-title="1940s",Law of the Lash (1947)
 https://archive.org/download/Law_of_the_Lash_film/Law_of_the_Lash_1947.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/my_favorite_brunette" group-title="1940s",My Favorite Brunette (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/my_favorite_brunette" subs="https://archive.org/download/my_favorite_brunette/my_favorite_brunette.asr.srt" group-title="1940s",My Favorite Brunette (1947)
 https://archive.org/download/my_favorite_brunette/my_favorite_brunette.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/sing_a_song_of_six_pants" group-title="1940s",Sing A Song of Six Pants (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/sing_a_song_of_six_pants" subs="https://archive.org/download/sing_a_song_of_six_pants/sing_a_song_of_six_pants.asr.srt" group-title="1940s",Sing A Song of Six Pants (1947)
 https://archive.org/download/sing_a_song_of_six_pants/sing_a_song_of_six_pants.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheRedHouse" group-title="1940s",The Red House (1947)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheRedHouse" subs="https://archive.org/download/TheRedHouse/The_Red_House.asr.srt" group-title="1940s",The Red House (1947)
 https://archive.org/download/TheRedHouse/The_Red_House.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/amazing_mr_x" group-title="1940s",Amazing Mr. X – The (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/amazing_mr_x" subs="https://archive.org/download/amazing_mr_x/amazing_mr_x.asr.srt" group-title="1940s",Amazing Mr. X – The (1948)
 https://archive.org/download/amazing_mr_x/amazing_mr_x.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BlondeIce1948" group-title="1940s",Blonde Ice (1948)
 https://archive.org/download/BlondeIce1948/BlondeIce1948.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/calendar_girl" group-title="1940s",Calendar Girl (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/calendar_girl" subs="https://archive.org/download/calendar_girl/calendar_girl.asr.srt" group-title="1940s",Calendar Girl (1948)
 https://archive.org/download/calendar_girl/calendar_girl.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/He_Walked_By_Night.avi" group-title="1940s",He Walked By Night (1948)
 https://archive.org/download/He_Walked_By_Night.avi/He_Walked_By_Night.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Inner_Sanctum_movie" group-title="1940s",Inner Sanctum (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Inner_Sanctum_movie" subs="https://archive.org/download/Inner_Sanctum_movie/Inner_Sanctum.asr.srt" group-title="1940s",Inner Sanctum (1948)
 https://archive.org/download/Inner_Sanctum_movie/Inner_Sanctum.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/killer_diller" group-title="1940s",Killer Diller (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/killer_diller" subs="https://archive.org/download/killer_diller/Killer_Diller.asr.srt" group-title="1940s",Killer Diller (1948)
 https://archive.org/download/killer_diller/Killer_Diller.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_quiet_one" group-title="1940s",The Quiet One (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_quiet_one" subs="https://archive.org/download/the_quiet_one/the_quiet_one.asr.srt" group-title="1940s",The Quiet One (1948)
 https://archive.org/download/the_quiet_one/the_quiet_one.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/under_california_stars" group-title="1940s",Under California Stars (1948)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/under_california_stars" subs="https://archive.org/download/under_california_stars/under_california_stars.asr.srt" group-title="1940s",Under California Stars (1948)
 https://archive.org/download/under_california_stars/under_california_stars.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/AfricaScreams" group-title="1940s",Africa Screams (1949)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/AfricaScreams" subs="https://archive.org/download/AfricaScreams/Africa_Screams.asr.srt" group-title="1940s",Africa Screams (1949)
 https://archive.org/download/AfricaScreams/Africa_Screams.mp4
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/D.O.A._%281950_poster%29.jpg/330px-D.O.A._%281950_poster%29.jpg" group-title="1940s",D.O.A. (1949)
 https://archive.org/download/7.3-d.-o.-a.-1949/7.3%20D.O.A.%C2%A0%281949%29%C2%A0.ia.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/impact" group-title="1940s",Impact (1949)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/impact" subs="https://archive.org/download/impact/impact.asr.srt" group-title="1940s",Impact (1949)
 https://archive.org/download/impact/impact.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Jigsaw_" group-title="1940s",Jigsaw (1949)
 https://archive.org/download/Jigsaw_/Jigsaw.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/malice_in_the_palace" group-title="1940s",Malice in the Palace (1949)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/malice_in_the_palace" subs="https://archive.org/download/malice_in_the_palace/malice_in_the_palace.asr.srt" group-title="1940s",Malice in the Palace (1949)
 https://archive.org/download/malice_in_the_palace/malice_in_the_palace.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/my_dear_secretary" group-title="1940s",My Dear Secretary (1949)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/my_dear_secretary" subs="https://archive.org/download/my_dear_secretary/my_dear_secretary.asr.srt" group-title="1940s",My Dear Secretary (1949)
 https://archive.org/download/my_dear_secretary/M4V10006.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Port_of_New_York" group-title="1940s",Port of New York (1949)
 https://archive.org/download/Port_of_New_York/Port_of_New_York.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_inspector_general" group-title="1940s",The Inspector General (1949)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_inspector_general" subs="https://archive.org/download/the_inspector_general/the_inspector_general.asr.srt" group-title="1940s",The Inspector General (1949)
 https://archive.org/download/the_inspector_general/the_inspector_general.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/AtWarWithTheArmy" group-title="1950s",At War with the Army (1950)
 https://archive.org/download/AtWarWithTheArmy/AtWarWithTheArmy.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Cyrano_DeBergerac" group-title="1950s",Cyrano De Bergerac (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Cyrano_DeBergerac" subs="https://archive.org/download/Cyrano_DeBergerac/Cyrano_De_Bergerac.asr.srt" group-title="1950s",Cyrano De Bergerac (1950)
 https://archive.org/download/Cyrano_DeBergerac/Cyrano_De_Bergerac.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Jackie_Robinson_Story_The" group-title="1950s",Jackie Robinson Story – The (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Jackie_Robinson_Story_The" subs="https://archive.org/download/Jackie_Robinson_Story_The/jrs.asr.srt" group-title="1950s",Jackie Robinson Story – The (1950)
 https://archive.org/download/Jackie_Robinson_Story_The/jrs.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/love_island" group-title="1950s",Love Island (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/love_island" subs="https://archive.org/download/love_island/love_island.asr.srt" group-title="1950s",Love Island (1950)
 https://archive.org/download/love_island/love_island.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Quicksand_clear" group-title="1950s",Quicksand (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Quicksand_clear" subs="https://archive.org/download/Quicksand_clear/Quicksand.asr.srt" group-title="1950s",Quicksand (1950)
 https://archive.org/download/Quicksand_clear/Quicksand.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/SunsetBoulevard1950" group-title="1950s",Sunset Boulevard (1950)
 https://archive.org/download/SunsetBoulevard1950/Sunset%20Boulevard%20%281950%29.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheFileonThelmaJordanBarbaraStanwyck1950ripHJXvid2" group-title="1950s",The File On Thelma Jordan (1950)
 https://archive.org/download/TheFileonThelmaJordanBarbaraStanwyck1950ripHJXvid2/TheFileonThelmaJordanBarbaraStanwyck1950ripHJXvid2.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheTorch_627" group-title="1950s",The Torch (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheTorch_627" subs="https://archive.org/download/TheTorch_627/torch.asr.srt" group-title="1950s",The Torch (1950)
 https://archive.org/download/TheTorch_627/torch.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Woman_on_the_Run" group-title="1950s",Woman on the Run (1950)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Woman_on_the_Run" subs="https://archive.org/download/Woman_on_the_Run/Woman_on_the_Run.asr.srt" group-title="1950s",Woman on the Run (1950)
 https://archive.org/download/Woman_on_the_Run/Woman_on_the_Run.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/behave_yourself_ipod" group-title="1950s",Behave Yourself (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/behave_yourself_ipod" subs="https://archive.org/download/behave_yourself_ipod/behave_yourself.asr.srt" group-title="1950s",Behave Yourself (1951)
 https://archive.org/download/behave_yourself_ipod/behave_yourself.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/born_to_the_saddle" group-title="1950s",Born to the Saddle (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/born_to_the_saddle" subs="https://archive.org/download/born_to_the_saddle/born_to_the_saddle.asr.srt" group-title="1950s",Born to the Saddle (1951)
 https://archive.org/download/born_to_the_saddle/born_to_the_saddle.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Drums_in_the_Deep_South" group-title="1950s",Drums in the Deep South (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Drums_in_the_Deep_South" subs="https://archive.org/download/Drums_in_the_Deep_South/DrumsInTheDeepSouth.asr.srt" group-title="1950s",Drums in the Deep South (1951)
 https://archive.org/download/Drums_in_the_Deep_South/DrumsInTheDeepSouth.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Go_for_Broke" group-title="1950s",Go for Broke! (1951)
 https://archive.org/download/Go_for_Broke/Go_for_Broke.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/OnlytheValaint" group-title="1950s",Only the Valiant (1951)
 https://archive.org/download/OnlytheValaint/OnlytheValaint.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/royal_wedding" group-title="1950s",Royal Wedding (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/royal_wedding" subs="https://archive.org/download/royal_wedding/royal_wedding.asr.srt" group-title="1950s",Royal Wedding (1951)
 https://archive.org/download/royal_wedding/royal_wedding.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Man_Who_Cheated_Himself" group-title="1950s",The Man Who Cheated Himself (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Man_Who_Cheated_Himself" subs="https://archive.org/download/Man_Who_Cheated_Himself/Man_Who_Cheated_Himself.asr.srt" group-title="1950s",The Man Who Cheated Himself (1951)
 https://archive.org/download/Man_Who_Cheated_Himself/NOIR_DISC_1.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Second_Woman_" group-title="1950s",The Second Woman (1951)
 https://archive.org/download/The_Second_Woman_/The_Second_Woman_.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/UnknownWorld" group-title="1950s",Unknown World (1951)
 https://archive.org/download/UnknownWorld/UnknownWorld.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/utopia" group-title="1950s",Utopia (1951)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/utopia" subs="https://archive.org/download/utopia/Utopia.asr.srt" group-title="1950s",Utopia (1951)
 https://archive.org/download/utopia/Utopia_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/VengeanceValley" group-title="1950s",Vengeance Valley (1951)
 https://archive.org/download/VengeanceValley/VengeanceValley.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/iron_mask_ipod" group-title="1950s",Iron Mask (1952)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/iron_mask_ipod" subs="https://archive.org/download/iron_mask_ipod/iron_mask.asr.srt" group-title="1950s",Iron Mask (1952)
 https://archive.org/download/iron_mask_ipod/iron_mask.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco_jackandthebeanstalk" group-title="1950s",Jack and the Beanstalk (1952)
 https://archive.org/download/cco_jackandthebeanstalk/ccoPublicDomainJack_and_the_Beanstalk.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/kansascityconfidencial" group-title="1950s",Kansas City Confidential (1952)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/kansascityconfidencial" subs="https://archive.org/download/kansascityconfidencial/kansascityconfidencial.asr.srt" group-title="1950s",Kansas City Confidential (1952)
 https://archive.org/download/kansascityconfidencial/kansascityconfidencial.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/OperationIVY1952" group-title="1950s",Operation IVY (1952)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/OperationIVY1952" subs="https://archive.org/download/OperationIVY1952/OperationIVY1952.asr.srt" group-title="1950s",Operation IVY (1952)
 https://archive.org/download/OperationIVY1952/OperationIVY1952.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_green_glove" group-title="1950s",The Green Glove (1952)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/the_green_glove" subs="https://archive.org/download/the_green_glove/the_green_glove.asr.srt" group-title="1950s",The Green Glove (1952)
 https://archive.org/download/the_green_glove/the_green_glove.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Kilimanjaro" group-title="1950s",The Snows of Kilimanjaro (1952)
 https://archive.org/download/Kilimanjaro/The_Snows_of_Kilimanjaro.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BeatTheDevil1953" group-title="1950s",Beat the Devil (1953)
 https://archive.org/download/BeatTheDevil1953/BeatTheDevil1954.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/beneath_the_12-mile_reef" group-title="1950s",Beneath the 12-Mile Reef (1953)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/beneath_the_12-mile_reef" subs="https://archive.org/download/beneath_the_12-mile_reef/beneath_the_12-mile_reef.asr.srt" group-title="1950s",Beneath the 12-Mile Reef (1953)
 https://archive.org/download/beneath_the_12-mile_reef/beneath_the_12-mile_reef.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/MesaOfLostWomen" group-title="1950s",Mesa of Lost Women (1953)
 https://archive.org/download/MesaOfLostWomen/MesaOfLostWomen.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_From_Space" group-title="1950s",Phantom From Space (1953)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_From_Space" subs="https://archive.org/download/Phantom_From_Space/Phantom_From_Space.asr.srt" group-title="1950s",Phantom From Space (1953)
 https://archive.org/download/Phantom_From_Space/Phantom_From_Space.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/planet_outlaws_ipod" group-title="1950s",Planet Outlaws (1953)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/planet_outlaws_ipod" subs="https://archive.org/download/planet_outlaws_ipod/planet_outlaws.asr.srt" group-title="1950s",Planet Outlaws (1953)
 https://archive.org/download/planet_outlaws_ipod/planet_outlaws.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hitch_Hiker" group-title="1950s",The Hitch-Hiker (1953)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hitch_Hiker" subs="https://archive.org/download/Hitch_Hiker/Hitch-Hiker.asr.srt" group-title="1950s",The Hitch-Hiker (1953)
 https://archive.org/download/Hitch_Hiker/Hitch-Hiker.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheLimpingMan" group-title="1950s",The Limping Man (1953)
 https://archive.org/download/TheLimpingMan/TheLimpingMan.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/JailBait" group-title="1950s",Jail Bait (1954)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/JailBait" subs="https://archive.org/download/JailBait/JailBait.asr.srt" group-title="1950s",Jail Bait (1954)
 https://archive.org/download/JailBait/JailBait.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Killers_from_space" group-title="1950s",Killers From Space (1954)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Killers_from_space" subs="https://archive.org/download/Killers_from_space/Killers_from_space.asr.srt" group-title="1950s",Killers From Space (1954)
 https://archive.org/download/Killers_from_space/Killers_from_space.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/suddenly" group-title="1950s",Suddenly (1954)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/suddenly" subs="https://archive.org/download/suddenly/suddenly.asr.srt" group-title="1950s",Suddenly (1954)
 https://archive.org/download/suddenly/suddenly.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/big_bluff" group-title="1950s",Big Bluff (1955)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/big_bluff" subs="https://archive.org/download/big_bluff/big_bluff.asr.srt" group-title="1950s",Big Bluff (1955)
 https://archive.org/download/big_bluff/big_bluff.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/daughter_of_horror" group-title="1950s",Daughter of Horror (1955)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/daughter_of_horror" subs="https://archive.org/download/daughter_of_horror/daughter_of_horror.asr.srt" group-title="1950s",Daughter of Horror (1955)
 https://archive.org/download/daughter_of_horror/daughter_of_horror.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/rhythm_blues_review" group-title="1950s",Rhythm and Blues Revue (1955)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/rhythm_blues_review" subs="https://archive.org/download/rhythm_blues_review/rhythm_blues_review.asr.srt" group-title="1950s",Rhythm and Blues Revue (1955)
 https://archive.org/download/rhythm_blues_review/rhythm_blues_review.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Teaserama" group-title="1950s",Teaserama (1955)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Teaserama" subs="https://archive.org/download/Teaserama/Teaserama.asr.srt" group-title="1950s",Teaserama (1955)
 https://archive.org/download/Teaserama/Teaserama.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheFastandtheFuriousJohnIreland1954goofyrip" group-title="1950s",The Fast And The Furious (1955)
 https://archive.org/download/TheFastandtheFuriousJohnIreland1954goofyrip/TheFastandtheFuriousJohnIreland1954goofyrip.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Daniel_Boone_-_Trail_Blazer" group-title="1950s",Daniel Boone – Trail Blazer (1956)
 https://archive.org/download/Daniel_Boone_-_Trail_Blazer/Daniel_Boone_-_Trail_Blazer.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/hot_rod_girl_1956" group-title="1950s",Hot Rod Girl (1956)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/hot_rod_girl_1956" subs="https://archive.org/download/hot_rod_girl_1956/hot_rod_girl.asr.srt" group-title="1950s",Hot Rod Girl (1956)
 https://archive.org/download/hot_rod_girl_1956/hot_rod_girl.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Please_Murder_Me_movie" group-title="1950s",Please Murder Me (1956)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Please_Murder_Me_movie" subs="https://archive.org/download/Please_Murder_Me_movie/Please_Murder_Me.asr.srt" group-title="1950s",Please Murder Me (1956)
 https://archive.org/download/Please_Murder_Me_movie/Please_Murder_Me.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/rock_rock_rock" group-title="1950s",Rock – Rock – Rock (1956)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/rock_rock_rock" subs="https://archive.org/download/rock_rock_rock/Rock_Rock_Rock.asr.srt" group-title="1950s",Rock – Rock – Rock (1956)
 https://archive.org/download/rock_rock_rock/Rock_Rock_Rock.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/plan.-9.-from.-outer.-space.-1957" group-title="1950s",Plan 9 from Outer Space (1957)
 https://archive.org/download/plan.-9.-from.-outer.-space.-1957/Plan%209%20From%20Outer%20Space%20%281957%29/mp4/Plan.9.From.Outer.Space.1957.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/raiders_of_old_california_ipod" group-title="1950s",Raiders of Old California (1957)
 https://archive.org/download/raiders_of_old_california_ipod/raiders_of_old_california.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheIncrediblePetrifiedWorld" group-title="1950s",The Incredible Petrified World (1957)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheIncrediblePetrifiedWorld" subs="https://archive.org/download/TheIncrediblePetrifiedWorld/TheIncrediblePetrifiedWorld.asr.srt" group-title="1950s",The Incredible Petrified World (1957)
 https://archive.org/download/TheIncrediblePetrifiedWorld/TheIncrediblePetrifiedWorld.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Pied_Piper_of_Hamelin" group-title="1950s",The Pied Piper of Hamelin (1957)
 https://archive.org/download/The_Pied_Piper_of_Hamelin/pied.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/she_gods_of_shark_reef" group-title="1950s",She Gods of Shark Reef (1958)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/she_gods_of_shark_reef" subs="https://archive.org/download/she_gods_of_shark_reef/she_gods_of_shark_reef.asr.srt" group-title="1950s",She Gods of Shark Reef (1958)
 https://archive.org/download/she_gods_of_shark_reef/she_gods_of_shark_reef.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Poster_for_The_Screaming_Skull.jpg/330px-Poster_for_The_Screaming_Skull.jpg" group-title="1950s",The Screaming Skull (1958)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Poster_for_The_Screaming_Skull.jpg/330px-Poster_for_The_Screaming_Skull.jpg" subs="https://archive.org/download/TheScreamingSkull/TheScreamingSkull.asr.srt" group-title="1950s",The Screaming Skull (1958)
 https://archive.org/download/TheScreamingSkull/TheScreamingSkull.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ABucketOfBlood1959" group-title="1950s",A Bucket of Blood (1959)
 https://archive.org/download/ABucketOfBlood1959/A_Bucket_Of_Blood.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Attack_From_Space" group-title="1950s",Attack From Space (1959)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Attack_From_Space" subs="https://archive.org/download/Attack_From_Space/Attack_From_Space.asr.srt" group-title="1950s",Attack From Space (1959)
 https://archive.org/download/Attack_From_Space/Attack_From_Space.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco_attackofthegiantleeches" group-title="1950s",Attack of the Giant Leeches (1959)
 https://archive.org/download/cco_attackofthegiantleeches/ccoPublicDomainAttack_of_the_Giant_Leeches.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/HerculesUnchained" group-title="1950s",Hercules Unchained (1959)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/HerculesUnchained" subs="https://archive.org/download/HerculesUnchained/Hercules_Unchained.asr.srt" group-title="1950s",Hercules Unchained (1959)
 https://archive.org/download/HerculesUnchained/Hercules_Unchained.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/House_on_Haunted_Hill.jpg/330px-House_on_Haunted_Hill.jpg" group-title="1950s",House on Haunted Hill (1959)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/House_on_Haunted_Hill.jpg/330px-House_on_Haunted_Hill.jpg" subs="https://archive.org/download/house_on_haunted_hill_ipod/house_on_haunted_hill.asr.srt" group-title="1950s",House on Haunted Hill (1959)
 https://archive.org/download/house_on_haunted_hill_ipod/house_on_haunted_hill_512kb.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Teenagersouterspace.jpg/330px-Teenagersouterspace.jpg" group-title="1950s",Teenagers from Outer Space (1959)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Teenagersouterspace.jpg/330px-Teenagersouterspace.jpg" subs="https://archive.org/download/teenagers_from_outerspace/Teenagers_from_Outer_Space.asr.srt" group-title="1950s",Teenagers from Outer Space (1959)
 https://archive.org/download/teenagers_from_outerspace/Teenagers_from_Outer_Space_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/House_On_Haunted_Hill.avi" group-title="1950s",The House On Haunted Hill (1959)
 https://archive.org/download/House_On_Haunted_Hill.avi/The_House_on_Haunted_Hill.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Saint_Louis_Bank_Robbery" group-title="1950s",The Saint Louis Bank Robbery (1959)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Saint_Louis_Bank_Robbery" subs="https://archive.org/download/Saint_Louis_Bank_Robbery/Saint_Louis_Bank_Robbery.asr.srt" group-title="1950s",The Saint Louis Bank Robbery (1959)
 https://archive.org/download/Saint_Louis_Bank_Robbery/Saint_Louis_Bank_Robbery.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/the_snow_queen_1959_animation" group-title="1950s",The Snow Queen (Animation) (1959)
 https://archive.org/download/the_snow_queen_1959_animation/snow_queen_us_version.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/YoungLand" group-title="1950s",The Young Land (1959)
 https://archive.org/download/YoungLand/YoungLand.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Assignment_Outer_Space" group-title="1960s",Assignment Outer Space (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Assignment_Outer_Space" subs="https://archive.org/download/Assignment_Outer_Space/Assignment_Outer_Space.asr.srt" group-title="1960s",Assignment Outer Space (1960)
 https://archive.org/download/Assignment_Outer_Space/Assignment_Outer_Space.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/AtomAgeVampire" group-title="1960s",Atom Age Vampire (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/AtomAgeVampire" subs="https://archive.org/download/AtomAgeVampire/AtomAgeVampire.asr.srt" group-title="1960s",Atom Age Vampire (1960)
 https://archive.org/download/AtomAgeVampire/AtomAgeVampire.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BattleofBloodIsland" group-title="1960s",Battle of Blood Island (1960)
 https://archive.org/download/BattleofBloodIsland/BattleofBloodIsland.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Horror_Hotel" group-title="1960s",City of the Dead/Horror Hotel (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Horror_Hotel" subs="https://archive.org/download/Horror_Hotel/Horror_Hotel.asr.srt" group-title="1960s",City of the Dead/Horror Hotel (1960)
 https://archive.org/download/Horror_Hotel/Horror_Hotel.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/PublicDomainAnsaFilmandBeaverChampionAttactionsDavidandGoliath1960" group-title="1960s",David and Goliath (1960)
 https://archive.org/download/PublicDomainAnsaFilmandBeaverChampionAttactionsDavidandGoliath1960/David_and_Goliath.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/FirstSpaceshipOnVenusMPEG" group-title="1960s",First Spaceship on Venus (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/FirstSpaceshipOnVenusMPEG" subs="https://archive.org/download/FirstSpaceshipOnVenusMPEG/First_Spaceship_On_Venus.asr.srt" group-title="1960s",First Spaceship on Venus (1960)
 https://archive.org/download/FirstSpaceshipOnVenusMPEG/First_Spaceship_On_Venus.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Hercules_Unchained" group-title="1960s",Hercules Unchained (1960)
 https://archive.org/download/Hercules_Unchained/Hercules_Unchained_XviD_320x240.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/PublicDomainJollyFilmJosephandHisBrethren" group-title="1960s",Joseph and His Brethren (1960)
 https://archive.org/download/PublicDomainJollyFilmJosephandHisBrethren/Joseph_and_His_Brethren.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/last_woman_on_earth" group-title="1960s",Last Woman on Earth (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/last_woman_on_earth" subs="https://archive.org/download/last_woman_on_earth/last_woman_on_earth.asr.srt" group-title="1960s",Last Woman on Earth (1960)
 https://archive.org/download/last_woman_on_earth/last_woman_on_earth.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Wasp_Women" group-title="1960s",The Wasp Woman (1960)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Wasp_Women" subs="https://archive.org/download/The_Wasp_Women/The_Wasp_Women.asr.srt" group-title="1960s",The Wasp Woman (1960)
 https://archive.org/download/The_Wasp_Women/The_Wasp_Women.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BattleOfTheWorldsWidesceen" group-title="1960s",Battle Of The Worlds 1961 (1961)
 https://archive.org/download/BattleOfTheWorldsWidesceen/Battle%20of%20the%20Worlds%20NTSC_1.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/CreatureFromTheHauntedSea" group-title="1960s",Creature from the Haunted Sea (1961)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/CreatureFromTheHauntedSea" subs="https://archive.org/download/CreatureFromTheHauntedSea/CreatureFromTheHauntedSea.asr.srt" group-title="1960s",Creature from the Haunted Sea (1961)
 https://archive.org/download/CreatureFromTheHauntedSea/CreatureFromTheHauntedSea.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Five_Minutes_To_Live.avi" group-title="1960s",Five Minutes To Live (1961)
 https://archive.org/download/Five_Minutes_To_Live.avi/Five_Minutes_to_Live.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco__HerculesandtheCaptiveWomen" group-title="1960s",Hercules and the Captive Women (1961)
 https://archive.org/download/cco__HerculesandtheCaptiveWomen/cco_herculesandthecaptivewomen.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_Planet" group-title="1960s",The Phantom Planet (1961)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Phantom_Planet" subs="https://archive.org/download/Phantom_Planet/The_Phantom_Planet.asr.srt" group-title="1960s",The Phantom Planet (1961)
 https://archive.org/download/Phantom_Planet/The_Phantom_Planet.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWhiteWarrior1961" group-title="1960s",The White Warrior (1961)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWhiteWarrior1961" subs="https://archive.org/download/TheWhiteWarrior1961/TheWhiteWarrior1961.asr.srt" group-title="1960s",The White Warrior (1961)
 https://archive.org/download/TheWhiteWarrior1961/TheWhiteWarrior1961.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/yojimbo_202012" group-title="1960s",Yojimbo (1961)
 https://archive.org/download/yojimbo_202012/Yojimbo.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Carnival_of_Souls_%281962_pressbook_cover%29.jpg/330px-Carnival_of_Souls_%281962_pressbook_cover%29.jpg" group-title="1960s",Carnival of Souls (1962)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Carnival_of_Souls_%281962_pressbook_cover%29.jpg/330px-Carnival_of_Souls_%281962_pressbook_cover%29.jpg" subs="https://archive.org/download/CarnivalofSouls/CarnivalOfSouls.asr.srt" group-title="1960s",Carnival of Souls (1962)
 https://archive.org/download/CarnivalofSouls/CarnivalOfSouls_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/shame_" group-title="1960s",Shame (1962)
 https://archive.org/download/shame_/Shame.mp4
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Brainthatwouldntdie_film_poster.jpg/330px-Brainthatwouldntdie_film_poster.jpg" group-title="1960s",The Brain that Wouldn't Die (1962)
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Brainthatwouldntdie_film_poster.jpg/330px-Brainthatwouldntdie_film_poster.jpg" subs="https://archive.org/download/the_brain_that_wouldnt_die/the_brain_that_wouldnt_die.asr.srt" group-title="1960s",The Brain that Wouldn't Die (1962)
 https://archive.org/download/the_brain_that_wouldnt_die/the_brain_that_wouldnt_die_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/HouseOnBareMountain" group-title="1960s",The House On Bare Mountain (1962)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/HouseOnBareMountain" subs="https://archive.org/download/HouseOnBareMountain/House%20on%20Bare%20Mountain.asr.srt" group-title="1960s",The House On Bare Mountain (1962)
 https://archive.org/download/HouseOnBareMountain/House%20on%20Bare%20Mountain.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/AteneaFilmsPublicDomainTheInvincibleGladiator" group-title="1960s",The Invincible Gladiator (1962)
 https://archive.org/download/AteneaFilmsPublicDomainTheInvincibleGladiator/Invincible_Gladiator.mp4
@@ -690,65 +690,65 @@ https://archive.org/download/AteneaFilmsPublicDomainTheInvincibleGladiator/Invin
 https://archive.org/download/TheMagicSword/TheMagicSword.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ThisisNotaTest" group-title="1960s",This Is Not a Test (1962)
 https://archive.org/download/ThisisNotaTest/ThisisNotaTest.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Werewolf_In_A_Girls_Dormitory" group-title="1960s",Werewolf in a Girls' Dormitory (1962)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Werewolf_In_A_Girls_Dormitory" subs="https://archive.org/download/Werewolf_In_A_Girls_Dormitory/Werewolf_In_A_Girls_Dormitory.asr.srt" group-title="1960s",Werewolf in a Girls' Dormitory (1962)
 https://archive.org/download/Werewolf_In_A_Girls_Dormitory/Werewolf_In_A_Girls_Dormitory.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/dementia-13-1963_202312" group-title="1960s",Dementia 13 (1963)
 https://archive.org/download/dementia-13-1963_202312/Dementia%2013%20%281963%29.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/mclintok_widescreen" group-title="1960s",McLintock! (1963)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/mclintok_widescreen" subs="https://archive.org/download/mclintok_widescreen/McLintock.asr.srt" group-title="1960s",McLintock! (1963)
 https://archive.org/download/mclintok_widescreen/McLintock.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco_swordoflancelot" group-title="1960s",Sword of Lancelot (1963)
 https://archive.org/download/cco_swordoflancelot/ccoPublicDomainSword_of_Lancelot.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Sadist" group-title="1960s",The Sadist (1963)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Sadist" subs="https://archive.org/download/The_Sadist/THE_SADIST.asr.srt" group-title="1960s",The Sadist (1963)
 https://archive.org/download/The_Sadist/THE_SADIST.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/SonofHerculesTheLandofDarkness" group-title="1960s",The Sons of Hercules: Land of Darkness (1963)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/SonofHerculesTheLandofDarkness" subs="https://archive.org/download/SonofHerculesTheLandofDarkness/SonofHerculesTheLandofDarkness.asr.srt" group-title="1960s",The Sons of Hercules: Land of Darkness (1963)
 https://archive.org/download/SonofHerculesTheLandofDarkness/SonofHerculesTheLandofDarkness.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheTerror" group-title="1960s",The Terror (1963)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheTerror" subs="https://archive.org/download/TheTerror/TheTerror.asr.srt" group-title="1960s",The Terror (1963)
 https://archive.org/download/TheTerror/TheTerror.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheYesterdayMachine1963" group-title="1960s",The Yesterday Machine (1963)
 https://archive.org/download/TheYesterdayMachine1963/TheYesterdayMachine1963.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/dr-strangelove-or-how-i-learned-to-stop-worrying-and-love-the-bomb" group-title="1960s",Dr Strangelove – or: How I Learned to Stop Worrying and Love the Bomb (1964)
 https://archive.org/download/dr-strangelove-or-how-i-learned-to-stop-worrying-and-love-the-bomb/Dr%20Strangelove%20or%20How%20I%20Learned%20to%20Stop%20Worrying%20and%20Love%20the%20Bomb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/EvilBrainFromOuterSpace" group-title="1960s",Evil Brain From Outer Space (1964)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/EvilBrainFromOuterSpace" subs="https://archive.org/download/EvilBrainFromOuterSpace/EvilBrainFromOuterSpace.asr.srt" group-title="1960s",Evil Brain From Outer Space (1964)
 https://archive.org/download/EvilBrainFromOuterSpace/EvilBrainFromOuterSpace_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hercules_Against_the_Moon_Men" group-title="1960s",Hercules Against the Moon Men (1964)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hercules_Against_the_Moon_Men" subs="https://archive.org/download/Hercules_Against_the_Moon_Men/Hercules_Against_the_Moon_Men.asr.srt" group-title="1960s",Hercules Against the Moon Men (1964)
 https://archive.org/download/Hercules_Against_the_Moon_Men/Hercules_Against_the_Moon_Men.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hercules_and_the_Tyrants_of_Babylon" group-title="1960s",Hercules and the Tyrants of Babylon (1964)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Hercules_and_the_Tyrants_of_Babylon" subs="https://archive.org/download/Hercules_and_the_Tyrants_of_Babylon/Hercules_and_the_Tyrants_of_Babylon.asr.srt" group-title="1960s",Hercules and the Tyrants of Babylon (1964)
 https://archive.org/download/Hercules_and_the_Tyrants_of_Babylon/Hercules_and_the_Tyrants_of_Babylon.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/IronAngel" group-title="1960s",Iron Angel (1964)
 https://archive.org/download/IronAngel/IronAngel.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/CHILD" group-title="1960s",The Child Molester (1964)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/CHILD" subs="https://archive.org/download/CHILD/CHILD.asr.srt" group-title="1960s",The Child Molester (1964)
 https://archive.org/download/CHILD/CHILD.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/BloodyPitOfHorror" group-title="1960s",Bloody Pit of Horror (1965)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/BloodyPitOfHorror" subs="https://archive.org/download/BloodyPitOfHorror/BloodyPitOfHorror.asr.srt" group-title="1960s",Bloody Pit of Horror (1965)
 https://archive.org/download/BloodyPitOfHorror/BloodyPitOfHorror.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/gammera" group-title="1960s",Gammera the Invincible (1965)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/gammera" subs="https://archive.org/download/gammera/gamera.asr.srt" group-title="1960s",Gammera the Invincible (1965)
 https://archive.org/download/gammera/gamera.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/nightmare_castle" group-title="1960s",Nightmare Castle (1965)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/nightmare_castle" subs="https://archive.org/download/nightmare_castle/nightmare_castle.asr.srt" group-title="1960s",Nightmare Castle (1965)
 https://archive.org/download/nightmare_castle/M4V10002.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Eye_Creatures" group-title="1960s",The Eye Creatures (1965)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Eye_Creatures" subs="https://archive.org/download/The_Eye_Creatures/The_Eye_Creatures_1962.avi.asr.srt" group-title="1960s",The Eye Creatures (1965)
 https://archive.org/download/The_Eye_Creatures/The_Eye_Creatures_1962.avi.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/blow-up-1966" group-title="1960s",Blow Up 1966 (1966)
 https://archive.org/download/blow-up-1966/Blow-up_1966.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Death_Rides_A_Horse_pan_and_scan" group-title="1960s",Death Rides A Horse (1967)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Death_Rides_A_Horse_pan_and_scan" subs="https://archive.org/download/Death_Rides_A_Horse_pan_and_scan/deathridesahorse-4of4.asr.srt" group-title="1960s",Death Rides A Horse (1967)
 https://archive.org/download/Death_Rides_A_Horse_pan_and_scan/deathridesahorse-2of4.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/In_The_Year_2889" group-title="1960s",In The Year 2889 (1967)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/In_The_Year_2889" subs="https://archive.org/download/In_The_Year_2889/In_The_Year_2889_1967.avi.asr.srt" group-title="1960s",In The Year 2889 (1967)
 https://archive.org/download/In_The_Year_2889/In_The_Year_2889_1967.avi.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/HolyGhostPeople" group-title="1960s",The Holy Ghost People (1967)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/HolyGhostPeople" subs="https://archive.org/download/HolyGhostPeople/HolyGhost1.asr.srt" group-title="1960s",The Holy Ghost People (1967)
 https://archive.org/download/HolyGhostPeople/HolyGhost1.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/VoyagetothePlanetofPrehistoricWomen" group-title="1960s",Voyage to the Planet of Prehistoric Women (1967)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/VoyagetothePlanetofPrehistoricWomen" subs="https://archive.org/download/VoyagetothePlanetofPrehistoricWomen/VoyagetothePlanetofPrehistoricWomen.asr.srt" group-title="1960s",Voyage to the Planet of Prehistoric Women (1967)
 https://archive.org/download/VoyagetothePlanetofPrehistoricWomen/VoyagetothePlanetofPrehistoricWomen.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Mommartz_Weg_zum_Nachbarn_1968" group-title="1960s",1968 Weg zum Nachbarn (Way to the Neighbour) (1968)
 https://archive.org/download/Mommartz_Weg_zum_Nachbarn_1968/1968WegZumNachbarn.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/carne-1968" group-title="1960s",Carne (1968)
 https://archive.org/download/carne-1968/Carne%20Argentina%20%281968%29.ia.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Destroy_All_Planets" group-title="1960s",Destroy All Planets (1968)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Destroy_All_Planets" subs="https://archive.org/download/Destroy_All_Planets/Destroy_All_Planets.asr.srt" group-title="1960s",Destroy All Planets (1968)
 https://archive.org/download/Destroy_All_Planets/Destroy_All_Planets.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/download/night-of-the-living-dead-movie-poster/NOTLD2x1200.jpg" group-title="1960s",Night of the Living Dead (1968)
+#EXTINF:-1 tvg-logo="https://archive.org/download/night-of-the-living-dead-movie-poster/NOTLD2x1200.jpg" subs="https://archive.org/download/Night.Of.The.Living.Dead_1080p/NightOfTheLivingDead_DVD9.asr.srt" group-title="1960s",Night of the Living Dead (1968)
 https://archive.org/download/Night.Of.The.Living.Dead_1080p/NightOfTheLivingDead.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/rosemarys-baby_202105" group-title="1960s",Rosemary's Baby (1968)
 https://archive.org/download/rosemarys-baby_202105/Rosemary%27s%20Baby.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/the.-big.-switch.-1969.1080p.-blu-ray.-h-264.-aac-rarbg" group-title="1960s",The Big Switch(1968) 1080p (1968)
 https://archive.org/download/the.-big.-switch.-1969.1080p.-blu-ray.-h-264.-aac-rarbg/The.Big.Switch.1969.1080p.BluRay.H264.AAC-RARBG.ia.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Attack_of_the_Monsters" group-title="1960s",Attack of the Monsters (1969)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Attack_of_the_Monsters" subs="https://archive.org/download/Attack_of_the_Monsters/Attack_of_the_Monsters.asr.srt" group-title="1960s",Attack of the Monsters (1969)
 https://archive.org/download/Attack_of_the_Monsters/Attack_of_the_Monsters.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/love.-camp.-7.1969.1080p.-blu-ray.-h-264.-aac-rarbg" group-title="1960s",Love Camp 7 (1969)
 https://archive.org/download/love.-camp.-7.1969.1080p.-blu-ray.-h-264.-aac-rarbg/Love.Camp.7.1969.1080p.BluRay.H264.AAC-RARBG.ia.mp4
@@ -770,7 +770,7 @@ https://archive.org/download/SantaandtheThreeBears/SantaandtheThreeBears.mp4
 https://archive.org/download/the-naughty-cheerleader.-1970.-tvrip.x-264-cg/The%20Naughty%20Cheerleader.1970.TVRIP.x264-CG.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheOver-the-HillGangRidesAgain" group-title="1970s",The Over-the-Hill Gang Rides Again (1970)
 https://archive.org/download/TheOver-the-HillGangRidesAgain/TheOver-the-HillGangRidesAgain.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Red_Detachment_of_Women" group-title="1970s",The Red Detachment of Women (1970)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/The_Red_Detachment_of_Women" subs="https://archive.org/download/The_Red_Detachment_of_Women/rdow.part1.asr.srt" group-title="1970s",The Red Detachment of Women (1970)
 https://archive.org/download/The_Red_Detachment_of_Women/rdow.part1.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BorntoWin" group-title="1970s",Born to Win (1971)
 https://archive.org/download/BorntoWin/BorntoWin.mp4
@@ -778,27 +778,27 @@ https://archive.org/download/BorntoWin/BorntoWin.mp4
 https://archive.org/download/DoomsdayMachine1972/DoomsdayMachine1972.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/ItCanBeDoneAmigo" group-title="1970s",It Can Be Done Amigo (1972)
 https://archive.org/download/ItCanBeDoneAmigo/MoviePowderPresentsItCanBeDoneAmigo.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Mastertouch" group-title="1970s",Master Touch (1972)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Mastertouch" subs="https://archive.org/download/Mastertouch/MasterTouch.asr.srt" group-title="1970s",Master Touch (1972)
 https://archive.org/download/Mastertouch/MasterTouch.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/virgin.-witch.-1972.1080p.-blu-ray.-h-264.-aac-rarbg" group-title="1970s",Virgin Witch(1972) 1080p BD RIP (1972)
 https://archive.org/download/virgin.-witch.-1972.1080p.-blu-ray.-h-264.-aac-rarbg/Virgin.Witch.1972.1080p.BluRay.H264.AAC-RARBG.ia.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/fantastic-planet__1973" group-title="1970s",Fantastic Planet (1973)
 https://archive.org/download/fantastic-planet__1973/Fantastic.Planet.1973.DUBBED.REMASTERED.1080p.BluRay.H264.AAC.ia.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Horror_Express" group-title="1970s",Horror Express (1973)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Horror_Express" subs="https://archive.org/download/Horror_Express/Horror_Express.asr.srt" group-title="1970s",Horror Express (1973)
 https://archive.org/download/Horror_Express/Horror_Express.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/GetChristieLove" group-title="1970s",Get Christie Love! (1974)
 https://archive.org/download/GetChristieLove/GetChristieLove.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Grave_of_the_Vampire_movie" group-title="1970s",Grave of the Vampire (1974)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Grave_of_the_Vampire_movie" subs="https://archive.org/download/Grave_of_the_Vampire_movie/Grave-of-the-Vampire.asr.srt" group-title="1970s",Grave of the Vampire (1974)
 https://archive.org/download/Grave_of_the_Vampire_movie/Grave-of-the-Vampire.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/SilentNightBloodyNight" group-title="1970s",Silent Night – Bloody Night (1974)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/SilentNightBloodyNight" subs="https://archive.org/download/SilentNightBloodyNight/Silent_Night_Bloody_Night.asr.srt" group-title="1970s",Silent Night – Bloody Night (1974)
 https://archive.org/download/SilentNightBloodyNight/SilentNightBloodyNight.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheDisappearanceofFlight41274DVDcosmo3" group-title="1970s",The Disappearance of Flight 412 (1974)
 https://archive.org/download/TheDisappearanceofFlight41274DVDcosmo3/TheDisappearanceofFlight41274DVDcosmo3.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco_thegunandthepulpit" group-title="1970s",The Gun and the Pulpit (1974)
 https://archive.org/download/cco_thegunandthepulpit/ccoPublicDomainThe_Gun_and_the_Pulpit.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Streetfighter_778" group-title="1970s",The Streetfighter (1974)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Streetfighter_778" subs="https://archive.org/download/Streetfighter_778/StreetFighter.asr.srt" group-title="1970s",The Streetfighter (1974)
 https://archive.org/download/Streetfighter_778/StreetFighter.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/FLUEGELSCHLAGEN" group-title="1970s",1975 Flügelschlagen (wing flapping) (1975)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/FLUEGELSCHLAGEN" subs="https://archive.org/download/FLUEGELSCHLAGEN/1975FlugelschlagenTeil1DerTrilogieMehrAlsZwei.movAvp2048x1556422Hq2552Min.asr.srt" group-title="1970s",1975 Flügelschlagen (wing flapping) (1975)
 https://archive.org/download/FLUEGELSCHLAGEN/1975FlugelschlagenTeil1DerTrilogieMehrAlsZwei.movAvp2048x1556422Hq2552Min.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Apache_Blood" group-title="1970s",Apache Blood (1975)
 https://archive.org/download/Apache_Blood/Apache_Blood.mp4
@@ -806,17 +806,17 @@ https://archive.org/download/Apache_Blood/Apache_Blood.mp4
 https://archive.org/download/BlackFist/Black_Fist.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Breaking_With_Old_Ideas" group-title="1970s",Breaking with Old Ideas (1975)
 https://archive.org/download/Breaking_With_Old_Ideas/Breaking_With_Old_Ideas.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/DeepRed1975" group-title="1970s",Deep Red (1975)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/DeepRed1975" subs="https://archive.org/download/DeepRed1975/DeepRed.asr.srt" group-title="1970s",Deep Red (1975)
 https://archive.org/download/DeepRed1975/DeepRed.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/GonewiththeWest" group-title="1970s",Gone with the West (1975)
 https://archive.org/download/GonewiththeWest/GonewiththeWest.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/GrazieNonnaLoverBoy1975FullMovieItalian" group-title="1970s",Grazie Nonna Lover Boy ( 1975) Full Movie Italian (1975)
 https://archive.org/download/GrazieNonnaLoverBoy1975FullMovieItalian/Grazie%20nonna%20-Lover%20Boy-%20%281975%29%20Full%20Movie%20-%20Italian.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/ItSeemedLikeaGoodIdeaattheTimeMPEG2" group-title="1970s",It Seemed Like a Good Idea at the Time (1975)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/ItSeemedLikeaGoodIdeaattheTimeMPEG2" subs="https://archive.org/download/ItSeemedLikeaGoodIdeaattheTimeMPEG2/ItSeemedLikeaGoodIdeaattheTime1976MillCreekRip.asr.srt" group-title="1970s",It Seemed Like a Good Idea at the Time (1975)
 https://archive.org/download/ItSeemedLikeaGoodIdeaattheTimeMPEG2/ItSeemedLikeaGoodIdeaattheTime1976MillCreekRip.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/embryo_RockHudson" group-title="1970s",Embryo (1976)
 https://archive.org/download/embryo_RockHudson/EMBRYO.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/horror_express_ipod" group-title="1970s",Horror Express (1976)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/horror_express_ipod" subs="https://archive.org/download/horror_express_ipod/horror_express.asr.srt" group-title="1970s",Horror Express (1976)
 https://archive.org/download/horror_express_ipod/horror_express.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/in-the-realm-of-the-senses" group-title="1970s",In The Realm Of The Senses (1976)
 https://archive.org/download/in-the-realm-of-the-senses/In%20the%20Realm%20of%20the%20Senses.mp4
@@ -824,7 +824,7 @@ https://archive.org/download/in-the-realm-of-the-senses/In%20the%20Realm%20of%20
 https://archive.org/download/ClaCinOnl_Joshua/Joshua.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/NakedMassacre1976" group-title="1970s",Naked Massacre (1976)
 https://archive.org/download/NakedMassacre1976/MoviePowderPresentsNakedMassacre.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Cosmos_War_of_the_Planets" group-title="1970s",Cosmos: War of the Planets (1977)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Cosmos_War_of_the_Planets" subs="https://archive.org/download/Cosmos_War_of_the_Planets/Cosmos_War_of_the_Planets.asr.srt" group-title="1970s",Cosmos: War of the Planets (1977)
 https://archive.org/download/Cosmos_War_of_the_Planets/Cosmos_War_of_the_Planets.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/EndoftheWorld" group-title="1970s",End of the World (1977)
 https://archive.org/download/EndoftheWorld/EndoftheWorld.mp4
@@ -838,7 +838,7 @@ https://archive.org/download/star-wars-1977/Star-wars_1977.mp4
 https://archive.org/download/ConcreteCowboys/ConcreteCowboys.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/DrillerKillerUncut1979" group-title="1970s",Driller Killer-Uncut (1979)
 https://archive.org/download/DrillerKillerUncut1979/DrillerKillerUncut1979.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/StarOdysseyitalianStarWars1979" group-title="1970s",Star Odyssey (Italian Star Wars) 1979 (1979)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/StarOdysseyitalianStarWars1979" subs="https://archive.org/download/StarOdysseyitalianStarWars1979/STAR_ODYSSEY_1979-desktop.asr.srt" group-title="1970s",Star Odyssey (Italian Star Wars) 1979 (1979)
 https://archive.org/download/StarOdysseyitalianStarWars1979/STAR_ODYSSEY_1979-desktop.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/cco_virus" group-title="1980s",['Virus (Fukkatsu no hi )' – 'Virus'] (1980)
 https://archive.org/download/cco_virus/ccoPublicDomainVirus.mp4
@@ -848,7 +848,7 @@ https://archive.org/download/AChristmasWithoutSnow/MoviePowderPresentsAChristmas
 https://archive.org/download/lavare-1980/L%27avare%20%281980%29.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/les-novices-libertines" group-title="1980s",Les Novices libertines (1980)
 https://archive.org/download/les-novices-libertines/Les%20Novices%20Libertines.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/VirusFukkatsuNoHi1980" group-title="1980s",Virus (Fukkatsu no hi 復活の日) (1980)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/VirusFukkatsuNoHi1980" subs="https://archive.org/download/VirusFukkatsuNoHi1980/Virus_Fukkatsu_no_hi.asr.srt" group-title="1980s",Virus (Fukkatsu no hi 復活の日) (1980)
 https://archive.org/download/VirusFukkatsuNoHi1980/Virus_Fukkatsu_no_hi.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/HighRisk" group-title="1980s",High Risk (1981)
 https://archive.org/download/HighRisk/High_Risk.mp4
@@ -870,17 +870,17 @@ https://archive.org/download/dead-poets-society-1989m-4v/Dead-poets-society_1989
 https://archive.org/download/pulse-kairo-kiyoshi-kurosawa-2001-eng-sub-1301306804834/Pulse_-_Kairo_Kiyoshi_Kurosawa_2001_EngSub-1301306804834.ia.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/girl.-camp.-2003.-chained.-vengeance.-2003.-dvdrip.-xvi-d-spri-nter" group-title="2000s",Girl Camp: Chained Vengeance (2003)DVDRip (2003)
 https://archive.org/download/girl.-camp.-2003.-chained.-vengeance.-2003.-dvdrip.-xvi-d-spri-nter/Girl.Camp.2003.Chained.Vengeance.2003.DVDRip.XviD-SPRiNTER.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/panorama_ephemera2004" group-title="2000s",Panorama Ephemera (2004)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/panorama_ephemera2004" subs="https://archive.org/download/panorama_ephemera2004/panorama_ephemera2004.asr.srt" group-title="2000s",Panorama Ephemera (2004)
 https://archive.org/download/panorama_ephemera2004/panorama_ephemera.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/StarWreckInThePirkining" group-title="2000s",Star Wreck: In the Pirkining (2005)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/StarWreckInThePirkining" subs="https://archive.org/download/StarWreckInThePirkining/StarWreck.asr.srt" group-title="2000s",Star Wreck: In the Pirkining (2005)
 https://archive.org/download/StarWreckInThePirkining/StarWreck_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Reign_of_the_Fallen" group-title="2000s",Reign of the Fallen (2006)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Reign_of_the_Fallen" subs="https://archive.org/download/Reign_of_the_Fallen/Reign_of_the_Fallen_sor3.asr.srt" group-title="2000s",Reign of the Fallen (2006)
 https://archive.org/download/Reign_of_the_Fallen/Reign_of_the_Fallen_sor3.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/zeitgeist_movie" group-title="2000s",Zeitgeist - The Movie (2007)
 https://archive.org/download/zeitgeist_movie/Zeitgeist.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Grundeinkommen" group-title="2000s",Grundeinkommen (2008)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Grundeinkommen" subs="https://archive.org/download/Grundeinkommen/grundeinkommen_DVD_DL_7GB.asr.srt" group-title="2000s",Grundeinkommen (2008)
 https://archive.org/download/Grundeinkommen/grundeinkommen_AVI.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Sita_Sings_the_Blues" group-title="2000s",Sita Sings the Blues (2008)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Sita_Sings_the_Blues" subs="https://archive.org/download/Sita_Sings_the_Blues/Sita_Sings_the_Blues_DVD_NTSC.asr.srt" group-title="2000s",Sita Sings the Blues (2008)
 https://archive.org/download/Sita_Sings_the_Blues/Sita_Sings_the_Blues_1080p.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/rockstar-2011" group-title="2010s",Rockstar ( 2011) (2011)
 https://archive.org/download/rockstar-2011/Rockstar%20%282011%29.mp4
@@ -888,15 +888,15 @@ https://archive.org/download/rockstar-2011/Rockstar%20%282011%29.mp4
 https://archive.org/download/Decay2012-TheLhcZombieFilmfullFilm/Decay_2012_720p.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/aashiqui-2-2013-dv-drip-x-264-mp-4...-hon-3y" group-title="2010s",Aashiqui 2 2013 Dv DRip X 264 MP 4... Hon 3y (2013)
 https://archive.org/download/aashiqui-2-2013-dv-drip-x-264-mp-4...-hon-3y/Aashiqui%202%202013%20DvDRip%20x264%20MP4...Hon3y.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/ColorCrazinessTheThreeStooges" group-title="Misc",['The Three Stooges - "Color Craziness"' – '"Color Craziness" - The Three Stooges']
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/ColorCrazinessTheThreeStooges" subs="https://archive.org/download/ColorCrazinessTheThreeStooges/threestoogescolorcraziness.asr.srt" group-title="Misc",['The Three Stooges - "Color Craziness"' – '"Color Craziness" - The Three Stooges']
 https://archive.org/download/ColorCrazinessTheThreeStooges/threestoogescolorcraziness.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/ABucketofBlood" group-title="Misc",A Bucket of Blood
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/ABucketofBlood" subs="https://archive.org/download/ABucketofBlood/Bucket_1959.asr.srt" group-title="Misc",A Bucket of Blood
 https://archive.org/download/ABucketofBlood/Bucket_1959.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/AlicesWonderland" group-title="Misc",Alice's Wonderland
 https://archive.org/download/AlicesWonderland/AlicesWonderland_512kb.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/angelandthebadman1947" group-title="Misc",Angel and the Badman
 https://archive.org/download/angelandthebadman1947/AngelAndTheBadMan.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/AngelAndTheBadManVideoQualityUpgrade" group-title="Misc",ANGEL AND THE BADMAN video quality upgrade
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/AngelAndTheBadManVideoQualityUpgrade" subs="https://archive.org/download/AngelAndTheBadManVideoQualityUpgrade/AngelAndTheBadManVideoQualityUpgrade.asr.srt" group-title="Misc",ANGEL AND THE BADMAN video quality upgrade
 https://archive.org/download/AngelAndTheBadManVideoQualityUpgrade/AngelAndTheBadManVideoQualityUpgrade.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/BerlinSymphonyofaGreatCity" group-title="Misc",Berlin: Symphony of a Great City
 https://archive.org/download/BerlinSymphonyofaGreatCity/BERLIN_512kb.mp4
@@ -906,17 +906,17 @@ https://archive.org/download/CharlieChaplin/Chaplin_512kb.mp4
 https://archive.org/download/DeathRidesAHorse/DeathRidesAHorse1967.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Dont_Look_in_theBasement" group-title="Misc",Don't Look in the Basement
 https://archive.org/download/Dont_Look_in_theBasement/Dont_Look_in_the_Basement.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell2theGrindhouseExperience" group-title="Misc",DOUBLE FEATURE HELL 2 (the grindhouse experience).
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell2theGrindhouseExperience" subs="https://archive.org/download/DoubleFeatureHell2theGrindhouseExperience/DoubleFeatureHell2theGrindhouseExperience.asr.srt" group-title="Misc",DOUBLE FEATURE HELL 2 (the grindhouse experience).
 https://archive.org/download/DoubleFeatureHell2theGrindhouseExperience/DoubleFeatureHell2theGrindhouseExperience.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell6grindhouse2" group-title="Misc",DOUBLE FEATURE HELL 6 (Grindhouse 2)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell6grindhouse2" subs="https://archive.org/download/DoubleFeatureHell6grindhouse2/DoubleFeatureHell6grindhouse2.asr.srt" group-title="Misc",DOUBLE FEATURE HELL 6 (Grindhouse 2)
 https://archive.org/download/DoubleFeatureHell6grindhouse2/DoubleFeatureHell6grindhouse2.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell8grindhouse3" group-title="Misc",DOUBLE FEATURE HELL 8 (Grindhouse 3)
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/DoubleFeatureHell8grindhouse3" subs="https://archive.org/download/DoubleFeatureHell8grindhouse3/DoubleFeatureHell8grindhouse3.asr.srt" group-title="Misc",DOUBLE FEATURE HELL 8 (Grindhouse 3)
 https://archive.org/download/DoubleFeatureHell8grindhouse3/DoubleFeatureHell8grindhouse3.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Fed_Up_Genetic_Engineering" group-title="Misc",Fed Up! Genetic Engineering – Industrial Agriculture – and Sustainable Alternatives
 https://archive.org/download/Fed_Up_Genetic_Engineering/VTS_04_1.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/FlashGordonTheMovie" group-title="Misc",Flash Gordon: The Movie
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/FlashGordonTheMovie" subs="https://archive.org/download/FlashGordonTheMovie/FlashGordonTheMovie.asr.srt" group-title="Misc",Flash Gordon: The Movie
 https://archive.org/download/FlashGordonTheMovie/FlashGordonTheMovie.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/GoldilocksAndTheThreeBaresMkv" group-title="Misc",Goldilocks And The Three Bares
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/GoldilocksAndTheThreeBaresMkv" subs="https://archive.org/download/GoldilocksAndTheThreeBaresMkv/Goldilocks%20and%20the%20Three%20Bares%20mkv.asr.srt" group-title="Misc",Goldilocks And The Three Bares
 https://archive.org/download/GoldilocksAndTheThreeBaresMkv/Goldilocks%20and%20the%20Three%20Bares%20mkv.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/GonewiththeWest_201511" group-title="Misc",Gone with the West
 https://archive.org/download/GonewiththeWest_201511/GonewiththeWest.mp4
@@ -924,21 +924,21 @@ https://archive.org/download/GonewiththeWest_201511/GonewiththeWest.mp4
 https://archive.org/download/HiDiddleDiddle/HiDiddleDiddle1943.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/InvasionOfTheBeeGirls" group-title="Misc",Invasion of the Bee girls
 https://archive.org/download/InvasionOfTheBeeGirls/InvasionOfTheBeeGirls.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/InvasionOfTheBeeGirlsWidescreenQualityUpgrade" group-title="Misc",INVASION OF THE BEE GIRLS widescreen & quality upgrade.
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/InvasionOfTheBeeGirlsWidescreenQualityUpgrade" subs="https://archive.org/download/InvasionOfTheBeeGirlsWidescreenQualityUpgrade/InvasionOfTheBeeGirlsWidescreen.asr.srt" group-title="Misc",INVASION OF THE BEE GIRLS widescreen & quality upgrade.
 https://archive.org/download/InvasionOfTheBeeGirlsWidescreenQualityUpgrade/InvasionOfTheBeeGirlsWidescreen.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Kill.or.Cure" group-title="Misc",Kill.or.Cure
 https://archive.org/download/Kill.or.Cure/Bachelor.Flat.62.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/lastmanonearth-1964" group-title="Misc",Last Man on Earth-hd
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/lastmanonearth-1964" subs="https://archive.org/download/lastmanonearth-1964/lastmanonearth-1964.asr.srt" group-title="Misc",Last Man on Earth-hd
 https://archive.org/download/lastmanonearth-1964/lastmanonearth-1964.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Levoyagedanslalune" group-title="Misc",Le voyage dans la lune
 https://archive.org/download/Levoyagedanslalune/Le_voyage_dans_la_lune_A_trip_to_the_moon__Georges_Mlis_1902_512kb.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/new_adventures_of_tarzan" group-title="Misc",New Adventures of Tarzan
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/new_adventures_of_tarzan" subs="https://archive.org/download/new_adventures_of_tarzan/new_adventures_of_tarzan.asr.srt" group-title="Misc",New Adventures of Tarzan
 https://archive.org/download/new_adventures_of_tarzan/new_adventures_of_tarzan.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/publicmovies212" group-title="Misc",Public Domain Movies
 https://archive.org/download/publicmovies212/Till_The_Clouds_Roll_By.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/RecurringDinosaurInfestationFilms" group-title="Misc",Recurring Dinosaur Infestation Films
 https://archive.org/download/RecurringDinosaurInfestationFilms/23.Godzilla1998.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/RevengeOfTheVirgins" group-title="Misc",Revenge of the Virgins
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/RevengeOfTheVirgins" subs="https://archive.org/download/RevengeOfTheVirgins/RotV.asr.srt" group-title="Misc",Revenge of the Virgins
 https://archive.org/download/RevengeOfTheVirgins/RotV.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Samsara-PanNalin" group-title="Misc",Samsara - Pan Nalin
 https://archive.org/download/Samsara-PanNalin/Samsara_512kb.mp4
@@ -946,29 +946,29 @@ https://archive.org/download/Samsara-PanNalin/Samsara_512kb.mp4
 https://archive.org/download/theblueangel1930/TheBlueAngel.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/Little_ShopOf_Horrors.avi" group-title="Misc",The Little Shop Of Horrors
 https://archive.org/download/Little_ShopOf_Horrors.avi/The_Little_Shop_of_Horrors.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheNakedWitch" group-title="Misc",The Naked Witch
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheNakedWitch" subs="https://archive.org/download/TheNakedWitch/TheNakedWitch1964FullMovieFilmHorror.asr.srt" group-title="Misc",The Naked Witch
 https://archive.org/download/TheNakedWitch/TheNakedWitch1964FullMovieFilmHorror.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheProudandtheDamned_201511" group-title="Misc",The Proud and the Damned
 https://archive.org/download/TheProudandtheDamned_201511/TheProudandtheDamned.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TheRomanOrgy" group-title="Misc",The Roman Orgy
 https://archive.org/download/TheRomanOrgy/TheRomanOrgy.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheSecretLifeOfAdolfHitler" group-title="Misc",The Secret Life of Adolf Hitler
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheSecretLifeOfAdolfHitler" subs="https://archive.org/download/TheSecretLifeOfAdolfHitler/SecretLifeOfAdolphHitler.asr.srt" group-title="Misc",The Secret Life of Adolf Hitler
 https://archive.org/download/TheSecretLifeOfAdolfHitler/SecretLifeOfAdolphHitler.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWildWomenOfWongoVideoQualityUpgrade" group-title="Misc",THE WILD WOMEN OF WONGO video quality upgrade.
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TheWildWomenOfWongoVideoQualityUpgrade" subs="https://archive.org/download/TheWildWomenOfWongoVideoQualityUpgrade/TheWildWomenOfWongoVideoQualityUpgrade.asr.srt" group-title="Misc",THE WILD WOMEN OF WONGO video quality upgrade.
 https://archive.org/download/TheWildWomenOfWongoVideoQualityUpgrade/TheWildWomenOfWongoVideoQualityUpgrade.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/3stooges" group-title="Misc",Three Stooges Episodes
 https://archive.org/download/3stooges/3stooges_NewApants2.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/TomAndJerryWotANight" group-title="Misc",Tom and Jerry: Wot A Night
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/TomAndJerryWotANight" subs="https://archive.org/download/TomAndJerryWotANight/WotANight.asr.srt" group-title="Misc",Tom and Jerry: Wot A Night
 https://archive.org/download/TomAndJerryWotANight/WotANight.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/tombstone_canyon" group-title="Misc",Tombstone Canyon
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/tombstone_canyon" subs="https://archive.org/download/tombstone_canyon/tombstone_canyon.asr.srt" group-title="Misc",Tombstone Canyon
 https://archive.org/download/tombstone_canyon/tombstone_canyon.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/Tonightandeverynight" group-title="Misc",Tonightandeverynight
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/Tonightandeverynight" subs="https://archive.org/download/Tonightandeverynight/TonightAndEveryNight_TR_1945.asr.srt" group-title="Misc",Tonightandeverynight
 https://archive.org/download/Tonightandeverynight/TonightAndEveryNight_TR_1945.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/TriumphOfTheWillgermanTriumphDesWillens" group-title="Misc",Triumph of the Will (German: Triumph des Willens)
 https://archive.org/download/TriumphOfTheWillgermanTriumphDesWillens/TriumphDesWillensHighQualityReupload.mp4
 #EXTINF:-1 tvg-logo="https://archive.org/services/img/VoyageToThePlanetOfPrehistoricWomen_20130813" group-title="Misc",Voyage To The Planet Of Prehistoric Women
 https://archive.org/download/VoyageToThePlanetOfPrehistoricWomen_20130813/Voyage%20to%20the%20Planet%20of%20Prehistoric%20Women.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/WarOfTheRobots" group-title="Misc",War of the Robots
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/WarOfTheRobots" subs="https://archive.org/download/WarOfTheRobots/WarOfTheRobots1978.asr.srt" group-title="Misc",War of the Robots
 https://archive.org/download/WarOfTheRobots/WarOfTheRobots1978.mp4
-#EXTINF:-1 tvg-logo="https://archive.org/services/img/WildGalsOfTheNakedWest" group-title="Misc",Wild Gals Of The Naked West
+#EXTINF:-1 tvg-logo="https://archive.org/services/img/WildGalsOfTheNakedWest" subs="https://archive.org/download/WildGalsOfTheNakedWest/Wild%20Gals%20of%20the%20Naked%20West.asr.srt" group-title="Misc",Wild Gals Of The Naked West
 https://archive.org/download/WildGalsOfTheNakedWest/Wild%20Gals%20of%20the%20Naked%20West.mp4
