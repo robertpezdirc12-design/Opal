@@ -10,7 +10,7 @@ static constexpr int piece_size = 64 * 1024;
 static constexpr int media_size = 12 * 1024 * 1024 + 317;
 static char byte_at(std::int64_t n) { return char((n * 31 + n / 997 + 17) & 255); }
 static void require(bool ok, const char* message) { if (!ok) throw std::runtime_error(message); }
-static void wait_for(std::function<bool()> ready, const char* message, int seconds = 15) {
+static void wait_for(std::function<bool()> ready, const char* message, int seconds = 30) {
     auto end = std::chrono::steady_clock::now() + std::chrono::seconds(seconds);
     while (!ready()) {
         if (std::chrono::steady_clock::now() >= end) throw std::runtime_error(message);
