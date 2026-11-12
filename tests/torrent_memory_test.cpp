@@ -95,8 +95,8 @@ int main(int argc, char** argv) try {
     require(client->memory_limit_mib.load() == 512, "RAM maximum not enforced");
     // Small test budget forces eviction with a tiny, fast local fixture.
     client->memory_limit_mib.store(4);
-    int sid = torrent_add_file(seed, metadata.c_str(), downloads.c_str());
-    int id = torrent_add_file(client, metadata.c_str(), downloads.c_str());
+    int sid = torrent_add_file(seed, metadata.string().c_str(), downloads.string().c_str());
+    int id = torrent_add_file(client, metadata.string().c_str(), downloads.string().c_str());
     require(sid >= 0 && id >= 0 && torrent_is_memory_only(client, id), "memory torrent add failed");
     auto sn = get_node(seed, sid);
     auto node = get_node(client, id);
@@ -164,7 +164,7 @@ int main(int argc, char** argv) try {
     // the directory whose emptiness proves the later magnet uses RAM storage.
     const auto disk_downloads = root / "disk-downloads";
     fs::create_directories(disk_downloads);
-    int disk_id = torrent_add_file(client, metadata.c_str(), disk_downloads.c_str());
+    int disk_id = torrent_add_file(client, metadata.string().c_str(), disk_downloads.string().c_str());
     require(disk_id >= 0 && !torrent_is_memory_only(client, disk_id), "toggle off didn't restore disk storage");
     char relative_path[1024];
     torrent_get_file_path(client, disk_id, 0, relative_path, sizeof(relative_path));
@@ -190,7 +190,7 @@ int main(int argc, char** argv) try {
     torrent_remove(client, disk_id);
     char restored_magnet[512];
     require(torrent_get_identity_magnet(seed, sid, restored_magnet, sizeof(restored_magnet)) == 0, "restore identity missing");
-    int restored_id = torrent_restore_magnet(client, restored_magnet, downloads.c_str());
+    int restored_id = torrent_restore_magnet(client, restored_magnet, downloads.string().c_str());
     require(restored_id >= 0 && torrent_is_paused(client, restored_id), "restore must start paused");
     require(!(get_node(client, restored_id)->handle.flags() & lt::torrent_flags::auto_managed), "session may auto-resume restored torrent");
     torrent_remove(client, restored_id);
@@ -202,7 +202,7 @@ int main(int argc, char** argv) try {
     torrent_set_memory_storage(client, 1, 128);
     char magnet[512];
     require(torrent_get_identity_magnet(seed, sid, magnet, sizeof(magnet)) == 0, "magnet identity missing");
-    int mid = torrent_add_magnet(client, magnet, downloads.c_str());
+    int mid = torrent_add_magnet(client, magnet, downloads.string().c_str());
     require(mid >= 0 && torrent_is_memory_only(client, mid), "magnet didn't select RAM");
     auto mn = get_node(client, mid);
     mn->handle.connect_peer(peer);

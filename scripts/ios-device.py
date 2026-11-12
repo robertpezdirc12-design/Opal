@@ -251,10 +251,16 @@ def package_ipa(app, destination, strip=None):
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as ipa:
         for path, name in ipa_entries(app):
+            data = release_bytes(path, strip)
+            # Mach-O payloads must ship executable regardless of the host's
+            # st_mode: Windows checkouts report no x-bits at all.
+            mode = path.stat().st_mode & 0o777
+            if data[:4] in MACHO_MAGICS:
+                mode |= 0o111
             info = zipfile.ZipInfo(name, date_time=time.localtime(path.stat().st_mtime)[:6])
-            info.external_attr = (path.stat().st_mode & 0o777 | 0o100000) << 16
+            info.external_attr = (mode | 0o100000) << 16
             info.compress_type = zipfile.ZIP_DEFLATED
-            ipa.writestr(info, release_bytes(path, strip))
+            ipa.writestr(info, data)
     return destination
 
 

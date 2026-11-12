@@ -14,6 +14,9 @@ def presentation_edges(sources):
         # Scan the whole file: Zig permits production declarations after tests.
         production = '\n'.join(line for line in source.splitlines()
                                if not line.lstrip().startswith('//'))
+        # Edge keys use forward slashes on every OS so the checked-in
+        # exceptions file matches Windows checkouts too.
+        path = path.replace('\\', '/')
         for target in re.findall(r'@import\("([^"]+)"\)', production):
             if target in ('dvui', 'icons') or '/ui/' in target:
                 edges.add(f'{path} -> {target}')

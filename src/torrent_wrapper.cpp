@@ -49,7 +49,13 @@ static std::string torrent_file_path(const lt::torrent_handle& handle,
                                      const lt::torrent_info& info, lt::file_index_t index) {
 #if LIBTORRENT_VERSION_NUM >= 20100
     const auto renames = handle.get_renamed_files();
-    return lt::filenames(info.layout(), renames).file_path(index);
+    std::string path = lt::filenames(info.layout(), renames).file_path(index);
+    // libtorrent 2.1's filenames() yields OS-native separators, while the
+    // pre-2.1 files() API callers rely on (path joins, the UI tree, relative
+    // path expectations) always returned forward slashes. Normalize so file
+    // paths are identical across libtorrent versions and host OSes.
+    std::replace(path.begin(), path.end(), '\\', '/');
+    return path;
 #else
     (void)handle;
     return info.files().file_path(index);

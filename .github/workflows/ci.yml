@@ -560,3 +560,40 @@ jobs:
             --workdir /workspace \
             opal:headless \
             tests/test_shutdown_live.py --binary /usr/local/bin/opal
+
+  # Windows parity for the deterministic half of the feature suite: the
+  # source-tree checks, the real headless spawns and the torrent memory
+  # regression. Runtime DLLs install beside every built exe (see build.zig),
+  # so spawned fixtures resolve libmpv/libsqlite3 without PATH tricks.
+  feature-suite-windows:
+    runs-on: windows-2022
+    timeout-minutes: 75
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.17.0
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          update: false
+          install: >-
+            mingw-w64-x86_64-sqlite3
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-libtorrent-rasterbar
+            mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-SDL2
+      - name: Torrent memory regression
+        run: |
+          export MINGW_PREFIX="$(cygpath -m /mingw64)"
+          export PKG_CONFIG_PATH="$MINGW_PREFIX/lib/pkgconfig"
+          python tests/test_torrent_memory.py
+      - name: Run tests/test_features.py
+        run: |
+          export MINGW_PREFIX="$(cygpath -m /mingw64)"
+          export PKG_CONFIG_PATH="$MINGW_PREFIX/lib/pkgconfig"
+          python tests/test_features.py

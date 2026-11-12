@@ -1,0 +1,39 @@
+name: Sync upstream
+
+# This fork tracks debpalash/Opal. Weekly (and on demand) merge upstream/main
+# into main so new features and fixes land here without manual git work.
+# A conflicting merge fails loudly instead of force-choosing a side.
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Merge upstream/main
+        run: |
+          git remote add upstream https://github.com/debpalash/Opal.git
+          git fetch upstream main --tags
+          git config user.name "opal-sync-bot"
+          git config user.email "noreply@github.com"
+          if git merge upstream/main --no-edit; then
+            git push origin main
+          else
+            echo "::error::Upstream merge conflicts — resolve manually, then push."
+            exit 1
+          fi

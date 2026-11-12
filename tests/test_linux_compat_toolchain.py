@@ -14,6 +14,8 @@ spec.loader.exec_module(locator)
 
 
 class CompatToolchainTests(unittest.TestCase):
+    @unittest.skipIf(os.name == "nt",
+                     "fixture compiler is a POSIX shell script; locator semantics are POSIX-only")
     def test_locator_follows_symlinks_and_rejects_wrong_or_incomplete_sdk(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

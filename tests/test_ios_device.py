@@ -129,7 +129,10 @@ class ReleaseIpaTests(unittest.TestCase):
             (app / '_CodeSignature/CodeResources').write_text('sig')
             (app / 'embedded.mobileprovision').write_text('UDID TEAM')
             (app / 'archived-expanded-entitlements.xcent').write_text('ent')
-            (app / 'Opal').write_text('binary'); (app / 'Opal').chmod(0o755)
+            # Real Mach-O header: package_ipa grants the executable bit to
+            # Mach-O payloads, not to arbitrary files (Windows st_mode has no
+            # x-bits, so exec-ness must come from the file format).
+            (app / 'Opal').write_bytes(b'\xcf\xfa\xed\xfe' + b'binary'); (app / 'Opal').chmod(0o755)
             (app / 'Info.plist').write_text('plist')
             ipa = ios.package_ipa(app, Path(tmp) / 'out/Opal.ipa', strip=lambda target: None)
             with zipfile.ZipFile(ipa) as z:
