@@ -62,7 +62,7 @@ pub const SOURCES = [_]Source{
         .kind = .base,
         .url = "https://iptv-org.github.io/api",
         .region = "Global",
-        .approx = 13000,
+        .approx = 12470,
         .default_on = true,
     },
     .{
@@ -72,7 +72,7 @@ pub const SOURCES = [_]Source{
         .url = "https://iptv-org.github.io/iptv/index.m3u",
         .region = "Global",
         .note = "The complete iptv-org playlist (more than the API window).",
-        .approx = 13398,
+        .approx = 11447,
     },
     .{
         .id = "free-tv",
@@ -81,7 +81,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8",
         .region = "Global",
         .note = "Curated free-to-air, actively maintained.",
-        .approx = 1930,
+        .approx = 2174,
         // A second globally-useful, maintained, adult-free index — on by default
         // so the catalog spans more of the world out of the box. Regional and
         // stale sources stay opt-in.
@@ -94,18 +94,18 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/LITUATUI/M3UPT/main/M3U/M3UPT.m3u",
         .region = "Portugal",
         .note = "Portuguese public/official TV, updated daily.",
-        .approx = 1136,
+        .approx = 930,
         // Small, clean, actively maintained — on by default to widen coverage.
         .default_on = true,
     },
     .{
-        .id = "iptv-italia",
-        .name = "IPTV Italia",
+        .id = "openiptvitaly",
+        .name = "Open IPTV Italia",
         .kind = .m3u,
-        .url = "https://raw.githubusercontent.com/Tundrak/IPTV-Italia/main/iptvita.m3u",
+        .url = "https://raw.githubusercontent.com/xN1ckuz/OpenIPTVItaly/main/OpenIPTVItaly.m3u",
         .region = "Italy",
-        .note = "Italian free-to-air. Frozen since 2024 — links may rot.",
-        .approx = 71,
+        .note = "Italian free-to-air (Rai, Mediaset, LA7 + locals), actively maintained.",
+        .approx = 125,
     },
     .{
         .id = "youtube-live",
@@ -124,7 +124,7 @@ pub const SOURCES = [_]Source{
         .url = "https://www.tdtchannels.com/lists/tv.m3u8",
         .region = "Spain/Portugal",
         .note = "Official Spanish/Portuguese/Andorran DTT (RTVE, etc.), maintained.",
-        .approx = 547,
+        .approx = 573,
     },
     // FAST providers via BuddyChewChew/app-m3u-generator (GitHub Actions –
     // regenerated regularly). Each is a legal free ad-supported streaming
@@ -138,7 +138,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/main/playlists/plutotv_all.m3u",
         .region = "Global",
         .note = "Pluto TV free ad-supported channels, all regions.",
-        .approx = 2819,
+        .approx = 2627,
         .default_on = true,
     },
     .{
@@ -148,7 +148,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/main/playlists/samsungtvplus_all.m3u",
         .region = "Global",
         .note = "Samsung TV Plus free channels. A few regions geo-block.",
-        .approx = 2573,
+        .approx = 2662,
         .default_on = true,
     },
     .{
@@ -158,7 +158,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/main/playlists/plex_all.m3u",
         .region = "Global",
         .note = "Plex free ad-supported live channels.",
-        .approx = 2880,
+        .approx = 2890,
         .default_on = true,
     },
     .{
@@ -168,7 +168,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/main/playlists/roku_all.m3u",
         .region = "Global",
         .note = "The Roku Channel free live TV.",
-        .approx = 353,
+        .approx = 255,
         .default_on = true,
     },
     .{
@@ -178,7 +178,7 @@ pub const SOURCES = [_]Source{
         .url = "https://raw.githubusercontent.com/BuddyChewChew/app-m3u-generator/main/playlists/tubi_all.m3u",
         .region = "Global",
         .note = "Tubi free ad-supported live channels.",
-        .approx = 179,
+        .approx = 182,
         .default_on = true,
     },
     // ── Direct-stream movies (no torrents) ──

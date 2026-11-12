@@ -713,14 +713,14 @@
       "file": "plugins/m3upt.json"
     },
     {
-      "id": "iptv-italia",
-      "name": "IPTV - Italia",
+      "id": "openiptvitaly",
+      "name": "IPTV - Open Italia",
       "type": "iptv-m3u",
       "version": "1.0.0",
       "endpoints": {
-        "url": "https://raw.githubusercontent.com/Tundrak/IPTV-Italia/main/iptvita.m3u"
+        "url": "https://raw.githubusercontent.com/xN1ckuz/OpenIPTVItaly/main/OpenIPTVItaly.m3u"
       },
-      "file": "plugins/iptv-italia.json"
+      "file": "plugins/openiptvitaly.json"
     },
     {
       "id": "youtube-live",
