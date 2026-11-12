@@ -2790,6 +2790,9 @@ pub const PlaybackRequest = struct {
     /// this on the request makes candidate health a property of the playback
     /// seam instead of forcing each card/view to invent its own hook.
     health_kind: []const u8 = "",
+    /// External subtitle sidecar URL handed to mpv with the same loadfile
+    /// entry (archive.org `.asr.srt` for catalog VOD entries).
+    sub_file: []const u8 = "",
 };
 
 fn FixedPlaybackField(comptime capacity: usize) type {
@@ -2825,6 +2828,7 @@ const DeferredPlayback = struct {
     title: FixedPlaybackField(512) = .{},
     subtitle: FixedPlaybackField(512) = .{},
     user_agent: FixedPlaybackField(512) = .{},
+    sub_file: FixedPlaybackField(2048) = .{},
     header_fields: FixedPlaybackField(2048) = .{},
     health_kind: FixedPlaybackField(64) = .{},
     metadata: ?state.PendingPlay = null,
@@ -2844,6 +2848,7 @@ const DeferredPlayback = struct {
             !out.title.set(request.title) or
             !out.subtitle.set(request.subtitle) or
             !out.user_agent.set(request.user_agent) or
+            !out.sub_file.set(request.sub_file) or
             !out.health_kind.set(request.health_kind)) return null;
 
         var fields_buf: [2048]u8 = undefined;
@@ -2878,6 +2883,7 @@ const DeferredPlayback = struct {
             .title = self.title.slice(),
             .subtitle = self.subtitle.slice(),
             .user_agent = self.user_agent.slice(),
+            .sub_file = self.sub_file.slice(),
             .prepared_header_fields = self.header_fields.slice(),
             .health_kind = self.health_kind.slice(),
         };
@@ -3014,6 +3020,7 @@ pub fn playDirect(request: PlaybackRequest) void {
         .user_agent = request.user_agent,
         .headers = request.headers,
         .prepared_header_fields = request.prepared_header_fields,
+        .sub_file = request.sub_file,
     });
 
     if (request.mode == .replace) {
@@ -3057,6 +3064,8 @@ fn stashFromNowPlaying(art_url: []const u8, title: []const u8, subtitle: []const
 /// Like loadContentDirectMeta, but sends an arbitrary per-request header set
 /// (Referer + Origin + Cookie …) instead of just a Referer. Callers build the
 /// slice; sanitizing/joining happens in `http_headers_pure`.
+/// `sub_file` carries an optional external subtitle sidecar URL (archive.org
+/// `.asr.srt` on catalog VOD entries); pass "" for plain live channels.
 pub fn loadContentDirectMetaHeaders(
     url: []const u8,
     art_url: []const u8,
@@ -3064,8 +3073,9 @@ pub fn loadContentDirectMetaHeaders(
     subtitle: []const u8,
     user_agent: []const u8,
     headers: []const player.HttpHeader,
+    sub_file: []const u8,
 ) void {
-    playDirect(.{ .url = url, .art_url = art_url, .title = title, .subtitle = subtitle, .user_agent = user_agent, .headers = headers });
+    playDirect(.{ .url = url, .art_url = art_url, .title = title, .subtitle = subtitle, .user_agent = user_agent, .headers = headers, .sub_file = sub_file });
 }
 
 /// Load content with automatic provider routing

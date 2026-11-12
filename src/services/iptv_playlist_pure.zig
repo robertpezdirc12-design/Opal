@@ -50,6 +50,8 @@ pub fn parseM3u(text: []const u8, out: []p.IptvChannel, nsfw_allowed: bool, quer
     var pending_cat_len: usize = 0;
     var pending_country: [64]u8 = undefined;
     var pending_country_len: usize = 0;
+    var pending_sub: [512]u8 = undefined;
+    var pending_sub_len: usize = 0;
     var have_inf = false;
 
     var lines = std.mem.splitScalar(u8, text, '\n');
@@ -65,6 +67,7 @@ pub fn parseM3u(text: []const u8, out: []p.IptvChannel, nsfw_allowed: bool, quer
             pending_logo_len = attr(line, "tvg-logo", &pending_logo);
             pending_cat_len = attr(line, "group-title", &pending_cat);
             pending_country_len = attr(line, "tvg-country", &pending_country);
+            pending_sub_len = attr(line, "subs", &pending_sub);
             have_inf = true;
             continue;
         }
@@ -88,6 +91,9 @@ pub fn parseM3u(text: []const u8, out: []p.IptvChannel, nsfw_allowed: bool, quer
         const country = playlistCountry(pending_country[0..pending_country_len], pending_cat[0..pending_cat_len]);
         @memcpy(c.country[0..country.len], country);
         c.country_len = country.len;
+
+        c.sub_url_len = @min(pending_sub_len, c.sub_url.len);
+        @memcpy(c.sub_url[0..c.sub_url_len], pending_sub[0..c.sub_url_len]);
 
         const filters = p.Filters{
             .query = query,
@@ -122,6 +128,20 @@ test "parseM3u maps EXTINF attrs + name + url onto IptvChannel" {
     try std.testing.expectEqualStrings("https://x/bbc.png", out[0].logo[0..out[0].logo_len]);
     try std.testing.expectEqualStrings("News", out[0].category[0..out[0].category_len]);
     try std.testing.expectEqualStrings("ESPN", out[1].name[0..out[1].name_len]);
+}
+
+test "parseM3u carries the subs sidecar attribute and stays empty without one" {
+    const m3u =
+        "#EXTM3U\n" ++
+        "#EXTINF:-1 tvg-logo=\"https://x/poster.jpg\" subs=\"https://archive.org/download/id/film.asr.srt\" group-title=\"1920s\",Film (1927)\n" ++
+        "https://archive.org/download/id/film.mp4\n" ++
+        "#EXTINF:-1 group-title=\"News\",No subs\n" ++
+        "https://cdn/live.m3u8\n";
+    var out: [4]p.IptvChannel = undefined;
+    const n = parseM3u(m3u, &out, false, "", "");
+    try std.testing.expectEqual(@as(usize, 2), n);
+    try std.testing.expectEqualStrings("https://archive.org/download/id/film.asr.srt", out[0].sub_url[0..out[0].sub_url_len]);
+    try std.testing.expectEqual(@as(usize, 0), out[1].sub_url_len);
 }
 
 test "parseM3u applies query + category filters + NSFW gate" {

@@ -28,3 +28,18 @@ pub fn mpvSubAdd(ctx: ?*mpv.mpv_handle, path: []const u8) bool {
     var argv = [_][*c]const u8{ "sub-add", &path_z, null };
     return mpv.mpv_command(ctx, @ptrCast(&argv)) >= 0;
 }
+
+/// `sub-add <path> select` — like mpvSubAdd, but the added track is selected
+/// immediately. Used for catalog-carried subtitle sidecars (archive.org
+/// `.asr.srt` on the public-domain VOD source): mpv's default external-sub
+/// selection only fires on a language match with the audio track, and ASR
+/// sidecars carry no language, so without `select` the track often loads
+/// unselected and the viewer sees no subtitles at all.
+pub fn mpvSubAddSelect(ctx: ?*mpv.mpv_handle, path: []const u8) bool {
+    var path_z: [2048]u8 = undefined;
+    if (path.len >= path_z.len) return false;
+    @memcpy(path_z[0..path.len], path);
+    path_z[path.len] = 0;
+    var argv = [_][*c]const u8{ "sub-add", &path_z, "select", null };
+    return mpv.mpv_command(ctx, @ptrCast(&argv)) >= 0;
+}

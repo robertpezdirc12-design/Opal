@@ -79,6 +79,12 @@ pub const IptvChannel = struct {
     user_agent_len: usize = 0,
     referrer: [256]u8 = std.mem.zeroes([256]u8),
     referrer_len: usize = 0,
+    // External subtitle URL carried by the entry (VOD sources list e.g.
+    // archive.org's auto-generated `.asr.srt` sidecars). Handled at play time:
+    // queued as an mpv `sub-add select` once FILE_LOADED so the track attaches
+    // to the current file. Empty for ordinary live channels.
+    sub_url: [512]u8 = std.mem.zeroes([512]u8),
+    sub_url_len: usize = 0,
 };
 
 // ══════════════════════════════════════════════════════════

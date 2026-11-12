@@ -85,6 +85,8 @@ const MpvPlaybackSink = struct {
         const header_fields_z = @import("opal-fmt").bufPrintZ(&header_fields_buf, "{s}", .{options.header_fields}) catch return;
         var audio_file_buf: [MAX_LOAD_URL + 1]u8 = undefined;
         const audio_file_z = @import("opal-fmt").bufPrintZ(&audio_file_buf, "{s}", .{options.audio_file}) catch return;
+        var sub_file_buf: [MAX_LOAD_URL + 1]u8 = undefined;
+        const sub_file_z = @import("opal-fmt").bufPrintZ(&sub_file_buf, "{s}", .{options.sub_file}) catch return;
         var media_title_buf: [257]u8 = undefined;
         const media_title_z = @import("opal-fmt").bufPrintZ(&media_title_buf, "{s}", .{options.media_title}) catch return;
 
@@ -92,14 +94,14 @@ const MpvPlaybackSink = struct {
         // through mpv_command_node. This avoids comma/string escaping and,
         // crucially, stores HTTP identity on the playlist entry instead of
         // changing the options of media that is already playing.
-        var option_values: [8]c.mpv.mpv_node = undefined;
+        var option_values: [10]c.mpv.mpv_node = undefined;
         option_values[0..4].* = .{
             stringNode(user_agent_z.ptr),
             stringNode(header_fields_z.ptr),
             stringNode(options.cache_pause_initial.ptr),
             stringNode(options.network_timeout.ptr),
         };
-        var option_keys: [8][*c]u8 = undefined;
+        var option_keys: [10][*c]u8 = undefined;
         option_keys[0..4].* = .{
             @constCast("user-agent"),
             @constCast("http-header-fields"),
@@ -110,6 +112,15 @@ const MpvPlaybackSink = struct {
         if (options.audio_file.len > 0) {
             option_values[option_count] = stringNode(audio_file_z.ptr);
             option_keys[option_count] = @constCast("audio-file");
+            option_count += 1;
+        }
+        // External subtitle sidecar on the SAME playlist entry (mirrors
+        // audio-file). The track is added at load time; player.zig's
+        // FILE_LOADED hook selects it, because a bare sub-file follows mpv's
+        // language-match selection and ASR sidecars carry no language.
+        if (options.sub_file.len > 0) {
+            option_values[option_count] = stringNode(sub_file_z.ptr);
+            option_keys[option_count] = @constCast("sub-file");
             option_count += 1;
         }
         if (options.media_title.len > 0) {
@@ -438,6 +449,12 @@ pub const MediaPlayer = struct {
     last_good_pos_secs: f64 = 0.0,
     current_url: [MAX_LOAD_URL]u8 = std.mem.zeroes([MAX_LOAD_URL]u8),
     current_url_len: usize = 0,
+    /// Catalog-carried external subtitle for the CURRENT load (e.g. an
+    /// archive.org `.asr.srt` sidecar from the public-domain VOD source).
+    /// Staged by load() and consumed exactly once at FILE_LOADED — sub-add must
+    /// run after the file is loaded for the track to attach to it.
+    catalog_sub: [MAX_LOAD_URL]u8 = std.mem.zeroes([MAX_LOAD_URL]u8),
+    catalog_sub_len: usize = 0,
     fallback_url: [MAX_LOAD_URL]u8 = std.mem.zeroes([MAX_LOAD_URL]u8),
     fallback_url_len: usize = 0,
     fallback_url_2: [MAX_LOAD_URL]u8 = std.mem.zeroes([MAX_LOAD_URL]u8),
@@ -1431,6 +1448,11 @@ pub const MediaPlayer = struct {
         // commitPlayback because async resolution/fallback commits belong to
         // the already-staged original request and must not erase its identity.
         @import("../services/auto_subs.zig").cancelForMediaChange();
+        // Stage this load's catalog subtitle sidecar (if any). Overwritten on
+        // every replace so a stopped/switched stream can never fire its sub on
+        // the NEXT file's FILE_LOADED. Consumed by the FILE_LOADED hook below.
+        self.catalog_sub_len = @min(request.sub_file.len, self.catalog_sub.len);
+        @memcpy(self.catalog_sub[0..self.catalog_sub_len], request.sub_file[0..self.catalog_sub_len]);
         self.load_serial = playback_load_sequence.fetchAdd(1, .acq_rel) + 1;
         self.browser_transport = null;
         if (self.youtube_proxy_handle.valid()) {
@@ -3056,6 +3078,18 @@ pub fn updateTorrentBackgroundTasks() void {
                 // Trigger-to-play milestone (audio-only reports + disarms here;
                 // video reports again at its first published frame).
                 openFileLoaded(has_video);
+                // Catalog-carried subtitle sidecar (e.g. archive.org's
+                // auto-generated `.asr.srt` on the public-domain VOD source).
+                // sub-add must run after FILE_LOADED so the track attaches to
+                // THIS file; "select" makes it the visible track because ASR
+                // sidecars carry no language for mpv's match rules. Counting it
+                // as an existing sub also keeps the auto-download engine from
+                // racing it with a duplicate fetch.
+                if (p.catalog_sub_len > 0) {
+                    _ = c.mpvSubAddSelect(p.mpv_ctx, p.catalog_sub[0..p.catalog_sub_len]);
+                    p.catalog_sub_len = 0;
+                    has_sub = true;
+                }
                 // Audio and headless playback have no rendered first frame to
                 // clear the loading flag. Leave native video readiness owned
                 // by its first uploaded frame.

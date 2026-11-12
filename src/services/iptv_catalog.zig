@@ -83,8 +83,8 @@ fn writeChannels(source_id: []const u8, channels: []const pure.IptvChannel, forc
     }
     const sql =
         "INSERT OR IGNORE INTO iptv_catalog" ++
-        "(source_id,url_hash,name,name_lc,url,logo,category,country,quality,user_agent,referrer,nsfw,quality_tier)" ++
-        " VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13)";
+        "(source_id,url_hash,name,name_lc,url,logo,category,country,quality,user_agent,referrer,sub_url,nsfw,quality_tier)" ++
+        " VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14)";
     const stmt = db.prepare(sql) orelse {
         return 0;
     };
@@ -116,8 +116,9 @@ fn writeChannels(source_id: []const u8, channels: []const pure.IptvChannel, forc
         db.bindText(stmt, 9, ch.quality[0..ch.quality_len]);
         db.bindText(stmt, 10, ch.user_agent[0..ch.user_agent_len]);
         db.bindText(stmt, 11, ch.referrer[0..ch.referrer_len]);
-        db.bindInt(stmt, 12, if (is_adult) 1 else 0);
-        db.bindInt(stmt, 13, @intCast(cpure.qualityTier(ch.quality[0..ch.quality_len])));
+        db.bindText(stmt, 12, ch.sub_url[0..ch.sub_url_len]);
+        db.bindInt(stmt, 13, if (is_adult) 1 else 0);
+        db.bindInt(stmt, 14, @intCast(cpure.qualityTier(ch.quality[0..ch.quality_len])));
         if (db.step(stmt) != db.c.SQLITE_DONE) return 0;
         if (db.get()) |handle| if (db.c.sqlite3_changes(handle) > 0) {
             inserted += 1;
@@ -331,6 +332,7 @@ fn readRow(stmt: ?*db.Stmt) pure.IptvChannel {
     copyCol(stmt, 5, &c.quality, &c.quality_len);
     copyCol(stmt, 6, &c.user_agent, &c.user_agent_len);
     copyCol(stmt, 7, &c.referrer, &c.referrer_len);
+    copyCol(stmt, 8, &c.sub_url, &c.sub_url_len);
     return c;
 }
 
