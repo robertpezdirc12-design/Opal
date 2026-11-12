@@ -793,6 +793,16 @@
       "file": "plugins/tubi-tv.json"
     },
     {
+      "id": "public-domain-movies",
+      "name": "IPTV - Public Domain Movies (direct stream)",
+      "type": "iptv-m3u",
+      "version": "1.0.0",
+      "endpoints": {
+        "url": "https://raw.githubusercontent.com/robertpezdirc12-design/Opal/main/data/playlists/public-domain-movies.m3u"
+      },
+      "file": "plugins/public-domain-movies.json"
+    },
+    {
       "id": "suwayomi",
       "name": "Suwayomi (Mihon extensions)",
       "type": "suwayomi",
