@@ -40,11 +40,13 @@ class knaben:
         body = json.dumps({
             'search_type': 'score',
             'query': query,
-            'order_by': 'seeders',
-            'order_direction': 'desc',
             'hide_unsafe': True,
             'size': 50,
         }).encode('utf-8')
+        # NO order_by: the API dropped/renamed the field, and an unrecognized
+        # order_by makes it silently ignore the whole query and return its
+        # default popular listing — a "night of the living dead" search came
+        # back full of software cracks (verified against the live API).
 
         try:
             # Through helpers: retry + per-attempt deadline + anti-block fallback.
