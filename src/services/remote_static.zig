@@ -154,7 +154,13 @@ fn serveFile(stream: std.Io.net.Stream, path: []const u8, asset: Asset, index: u
         .revalidate => "Cache-Control: max-age=0, must-revalidate\r\n",
     };
     const privacy_header: []const u8 = if (std.mem.eql(u8, asset.content_type, "text/html"))
-        "Referrer-Policy: no-referrer\r\nContent-Security-Policy: default-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' blob:; connect-src 'self'; frame-src 'self' https://www.youtube-nocookie.com\r\n"
+        // media-src/connect-src must admit https: — the web player hands
+        // <video>/hls.js DIRECT remote stream URLs (Live TV cards' "Watch
+        // here", direct-URL discoveries), and under a 'self'-only policy
+        // Chromium rejects the load ("Media load rejected by URL safety
+        // check") on every browser, Safari included. Scripts stay 'self';
+        // only the media fetch surface opens, matching img-src https:.
+        "Referrer-Policy: no-referrer\r\nContent-Security-Policy: default-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' blob: https:; connect-src 'self' https:; frame-src 'self' https://www.youtube-nocookie.com\r\n"
     else
         "";
     const validator: []const u8 = if (etag.len > 0) "ETag: " else "";
