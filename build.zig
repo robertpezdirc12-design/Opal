@@ -843,6 +843,13 @@ fn buildSupported(b: *std.Build) void {
     }) });
     test_step.dependOn(&b.addRunArtifact(test_catalog_projection).step);
 
+    const test_lan_bridge_pure = addBoundTest(b, .{ .root_module = b.createModule(.{
+        .root_source_file = b.path("src/services/lan_bridge_pure.zig"),
+        .target = target,
+        .optimize = optimize,
+    }) });
+    test_step.dependOn(&b.addRunArtifact(test_lan_bridge_pure).step);
+
     const test_youtube_projection = addBoundTest(b, .{ .root_module = b.createModule(.{
         .root_source_file = b.path("src/test_remote_youtube_projection.zig"),
         .target = target,

@@ -17,6 +17,7 @@ const alloc = @import("../core/alloc.zig").allocator;
 const http = @import("../core/http.zig");
 const io_global = @import("../core/io_global.zig");
 const workers = @import("../core/workers.zig");
+const lan_bridge = @import("lan_bridge.zig");
 
 pub const CastDevice = struct {
     name: [64]u8 = std.mem.zeroes([64]u8),
@@ -418,23 +419,50 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
     else
         null;
 
-    // Allocate copies for the thread
+    // Allocate copies for the thread. The device IP drives the LAN-bridge URL
+    // host pick for local files (the TV must be able to reach it).
     const url_copy = alloc.dupe(u8, url) catch return;
     const name_copy = alloc.dupe(u8, device_name) catch return;
     const control_copy: ?[]u8 = if (dlna_control) |cu| (alloc.dupe(u8, cu) catch return) else null;
+    const ip_copy = alloc.dupe(u8, devices[device_idx].ip[0..devices[device_idx].ip_len]) catch return;
 
     if (workers.spawnLegacy(struct {
-        fn worker(u: []const u8, dev: []const u8, control: ?[]u8) void {
+        fn worker(u: []const u8, dev: []const u8, control: ?[]u8, dev_ip: []const u8) void {
             defer {
                 is_casting.store(false, .release);
                 alloc.free(u);
                 alloc.free(dev);
                 if (control) |cc| alloc.free(cc);
+                alloc.free(dev_ip);
             }
 
             if (control) |cc| {
-                // Native DLNA: push the URL, then Play.
-                if (dlnaCast(cc, u)) {
+                // Native DLNA: push the URL, then Play. One cast at a time —
+                // a stale LAN-bridge share is replaced. A local path (C:\…,
+                // /home/…, file://) is unreadable to the TV — bridge it over
+                // the LAN first and push the bridge URL instead. The share
+                // stays up while the TV fetches bytes; stopCast() tears it
+                // down.
+                lan_bridge.stopShare();
+                var push_url = u;
+                var bridge_buf: [256]u8 = undefined;
+                if (!lan_bridge.isRemoteUrl(u)) {
+                    const candidates = localIPv4Candidates();
+                    defer alloc.free(candidates);
+                    var host_buf: [46]u8 = undefined;
+                    const host = lan_bridge.pickHostIp(dev_ip, candidates, &host_buf);
+                    if (host == null or !lan_bridge.startShare(u, host.?)) {
+                        state.showToast("Cast failed (local file)");
+                        return;
+                    }
+                    push_url = lan_bridge.getShareUrl(&bridge_buf) orelse {
+                        lan_bridge.stopShare();
+                        state.showToast("Cast failed (local file)");
+                        return;
+                    };
+                }
+
+                if (dlnaCast(cc, push_url)) {
                     state.showToast("Casting to TV…");
                 } else {
                     state.showToast("Cast failed (TV refused)");
@@ -455,7 +483,7 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
             state.showToast("Casting…");
             _ = child.wait() catch {};
         }
-    }.worker, .{ url_copy, name_copy, control_copy })) |t| workers.release(t) else |_| {}
+    }.worker, .{ url_copy, name_copy, control_copy, ip_copy })) |t| workers.release(t) else |_| {}
 }
 
 /// Lock-free convenience for callers that do not already hold the players
@@ -508,6 +536,9 @@ pub fn stopCast() void {
                 child.spawn() catch return;
                 _ = child.wait() catch {};
             }
+            // The LAN bridge served the local file for this cast; the TV is
+            // stopped, so close it (no-op when the cast was a remote URL).
+            lan_bridge.stopShare();
             is_casting.store(false, .release);
             active_device_idx = null;
             state.showToast("Cast stopped");
