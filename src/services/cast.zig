@@ -40,6 +40,9 @@ pub var device_count: usize = 0;
 pub var is_scanning: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
 pub var is_casting: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
 pub var active_device_idx: ?usize = null;
+/// Set before scanDevices() by the cast button: when the scan lands devices,
+/// the active playback auto-casts to the first one (phone-style one-click).
+pub var auto_cast_next_scan: bool = false;
 
 fn storeDevice(name: []const u8, ip: []const u8, control_url: ?[]const u8) void {
     if (device_count >= devices.len) return;
@@ -100,6 +103,11 @@ pub fn scanDevices() void {
 
             // ── native DLNA (SSDP + AVTransport) ──
             dlnaScan();
+
+            if (auto_cast_next_scan) {
+                auto_cast_next_scan = false;
+                if (device_count > 0) castActiveTo(0);
+            }
 
             if (device_count > 0) {
                 var msg: [64]u8 = undefined;
@@ -448,6 +456,14 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
             _ = child.wait() catch {};
         }
     }.worker, .{ url_copy, name_copy, control_copy })) |t| workers.release(t) else |_| {}
+}
+
+/// Lock-free convenience for callers that do not already hold the players
+/// mutex (the scan worker, the cast button): takes the lock itself.
+pub fn castActiveTo(device_idx: usize) void {
+    state.players_mutex.lock();
+    defer state.players_mutex.unlock();
+    castActive(device_idx);
 }
 
 /// Cast whatever the active player is showing. CALLER MUST HOLD

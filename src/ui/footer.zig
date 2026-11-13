@@ -1837,6 +1837,43 @@ pub fn renderLiquidGlassOverlay() void {
             components.tip(@src(), wd, if (has_prev) "Previous episode" else "This is the first episode");
         }
 
+        // ── Cast to TV (DLNA / Chromecast) ──
+        //
+        // Phone-style one-click: the first click scans the home network and
+        // AUTO-CASTS the active playback to the first TV found (no device
+        // picker when there is a single renderer — the common case). Later
+        // clicks re-cast the now-playing URL to that TV; a scan in progress
+        // shows the spinner until devices land.
+        {
+            const cast = @import("../services/cast.zig");
+            const scanning = cast.is_scanning.load(.acquire);
+            const casting = cast.is_casting.load(.acquire);
+            const known = cast.device_count > 0;
+            const tint = if (casting or known) theme.colors.accent else player_text;
+            if (playerButtonIcon(@src(), "cast-tv", icons.tvg.lucide.cast, .{}, .{}, .{
+                .color_fill = @import("color_compat.zig").wrap(playerControlFill(false)),
+                .color_fill_hover = @import("color_compat.zig").wrap(playerControlHover()),
+                .color_fill_press = @import("color_compat.zig").wrap(playerControlFill(true)),
+                .color_text = @import("color_compat.zig").wrap(if (scanning) player_text_muted else tint),
+                .border = dvui.Rect.all(0),
+                .corners = dvui.CornerRect.all(theme.radius.sm),
+                .gravity_y = 0.5,
+                .padding = .{ .x = 6, .y = 6, .w = 6, .h = 6 },
+                .min_size_content = .{ .w = 20, .h = 20 },
+                .max_size_content = .{ .w = 20, .h = 20 },
+            })) {
+                if (casting) {
+                    cast.stopCast();
+                } else if (known) {
+                    cast.castActiveTo(0);
+                } else {
+                    cast.auto_cast_next_scan = true;
+                    cast.scanDevices();
+                }
+            }
+            if (scanning) dvui.spinner(@src(), .{ .min_size_content = .{ .w = 10, .h = 10 }, .color_text = .{ .color = theme.colors.accent } });
+        }
+
         // ── Transport: skip-back | rewind | play/pause | forward | skip-forward ──
         if (has_playlist) {
             if (playerButtonIcon(@src(), "skip-prev", icons.tvg.lucide.@"skip-back", .{}, .{}, .{
