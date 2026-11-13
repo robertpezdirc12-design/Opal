@@ -12,7 +12,11 @@ match the tag exactly.
 
 ## Unreleased
 
-- **Picture presets work on iPhone/iPad too.** The grade now uses a filter every platform ships (iOS lacks `eq`), with the same look.
+## v0.9.6 — 2026-11-13
+
+- **Cast to the TV with one click — including local files.** The player toolbar now has a cast button: the first click scans the home network and starts casting to the first TV it finds (no device picker when you own one TV), a later click re-casts, and a click while casting stops it. Local videos (paths on this PC) previously produced a TV-unreadable `C:\…` link; Opal now serves the file over your home network itself and hands the TV a real URL, so local movies open on the TV exactly like streamed ones.
+- **TV discovery works with VPN adapters connected.** On multi-homed machines the SSDP search used to leave through the VPN's default route, so the TV stayed invisible; Opal now probes every local IPv4 interface (and picks the URL host in the TV's subnet), so cast finds the TV with or without Cloudflare WARP/Tailscale running.
+- **Windows server kit.** `opal-server.bat` and `opal-server-lan.bat` next to the portable folder start the headless phone web UI on loopback or on the home network (auth still gates every route).
 
 ## v0.9.5 — 2026-11-10
 
