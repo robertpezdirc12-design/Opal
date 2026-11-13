@@ -173,6 +173,19 @@ pub fn fetchDirect(url: []const u8, buf: []u8, opts: HttpOptions) ?[]const u8 {
     return transport.fetch(directStreamingClient(), url, buf, opts);
 }
 
+/// One-shot connection for protocol conversations with devices that close
+/// idle sockets aggressively (UPnP renderers do): a pooled keep-alive write
+/// lands on a socket the peer already closed, the request never runs, and the
+/// caller reads that as "no response" while the NEXT request gets refused
+/// because the one before it silently never happened. A throwaway client per
+/// call is the only way to guarantee the action actually reaches the device.
+pub fn fetchFresh(url: []const u8, buf: []u8, opts: HttpOptions) ?[]const u8 {
+    if (comptime @import("builtin").os.tag == .ios) return @import("http_apple.zig").fetch(url, buf, opts);
+    var client = newClient();
+    defer client.deinit();
+    return transport.fetch(&client, url, buf, opts);
+}
+
 /// Release the shared client at process shutdown (frees pooled connections so
 /// the Debug leak report stays at 0). Call once from appDeinit, after workers
 /// have stopped. Idempotent.

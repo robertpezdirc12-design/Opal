@@ -665,11 +665,13 @@ fn dlnaScan() void {
         }
     }
 
-    // One bounded HTTP GET per device description document.
+    // One bounded HTTP GET per device description document. fetchFresh: the
+    // pooled client can hold a socket to this very renderer from an earlier
+    // scan/cast that the device has long closed.
     for (locations[0..location_count]) |loc| {
         if (device_count >= devices.len) break;
         var xbuf: [16 * 1024]u8 = undefined;
-        const xml = http.fetch(loc, &xbuf, .{ .timeout_secs = 4 }) orelse continue;
+        const xml = http.fetchFresh(loc, &xbuf, .{ .timeout_secs = 4 }) orelse continue;
         const name = xmlValue(xml, "friendlyName") orelse "DLNA device";
         var cbuf: [512]u8 = undefined;
         const control = avtransportControlUrl(loc, xml, &cbuf) orelse continue;
@@ -704,11 +706,12 @@ fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) boo
 
     var rbuf: [8 * 1024]u8 = undefined;
     var status: ?std.http.Status = null;
-    // A fresh connection per SOAP action: the descriptor GET already left a
-    // pooled keep-alive connection to the same renderer, and reusing it for the
-    // POST (a body-bearing request) failed against real TVs while a fresh
-    // connection succeeds.
-    _ = http.fetchDirect(control_url, &rbuf, .{
+    // A fresh connection per SOAP action is not a nicety: renderers close idle
+    // sockets within seconds, and a pooled keep-alive write lands on the dead
+    // socket — the action silently never runs, and the next one is refused
+    // (the TCL answers HTTP 500 "transport still active" because the Stop
+    // before it was the one that died). fetchFresh opens a one-shot socket.
+    _ = http.fetchFresh(control_url, &rbuf, .{
         .method = .POST,
         .payload = envelope,
         .content_type = "text/xml; charset=\"utf-8\"",
@@ -716,7 +719,13 @@ fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) boo
         .timeout_secs = 6,
         .status_out = &status,
     }) orelse {
-        std.debug.print("[cast] {s} -> no response from {s}\n", .{ action, control_url });
+        // A non-2xx still lands here (the transport nulls on anything but
+        // success), but status_out already carries the real code — say which.
+        if (status) |st| {
+            std.debug.print("[cast] {s} -> HTTP {d} from {s}\n", .{ action, @intFromEnum(st), control_url });
+        } else {
+            std.debug.print("[cast] {s} -> no response from {s}\n", .{ action, control_url });
+        }
         return false;
     };
     return status == .ok;
@@ -785,7 +794,31 @@ fn dlnaCast(control_url: []const u8, url: []const u8, media_hint: []const u8) bo
             "<CurrentURIMetaData>{s}</CurrentURIMetaData></u:SetAVTransportURI>",
         .{ uri, meta },
     ) catch return false;
-    if (!soapAction(control_url, "SetAVTransportURI", set_body)) return false;
+    // Renderers reject SetAVTransportURI while a transport is still active —
+    // the TCL answers HTTP 500 mid-playback, so a channel switch silently
+    // never happened and the TV stayed on the previous program. Stop first
+    // (harmless on an idle renderer) and give the transport a second to tear
+    // down — the same pause the live protocol dance needed — then push the
+    // URI, then Play.
+    var stop_buf: [512]u8 = undefined;
+    const stop_body = std.fmt.bufPrint(
+        &stop_buf,
+        "<u:Stop xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+            "<InstanceID>0</InstanceID></u:Stop>",
+        .{},
+    ) catch return false;
+    _ = soapAction(control_url, "Stop", stop_body);
+    io_global.sleep(1000 * std.time.ns_per_ms);
+
+    // The settling renderer can still miss the URI push (500 or a dropped
+    // connection right after the teardown); retry with generous pauses.
+    if (!soapAction(control_url, "SetAVTransportURI", set_body)) {
+        io_global.sleep(1200 * std.time.ns_per_ms);
+        if (!soapAction(control_url, "SetAVTransportURI", set_body)) {
+            io_global.sleep(2400 * std.time.ns_per_ms);
+            if (!soapAction(control_url, "SetAVTransportURI", set_body)) return false;
+        }
+    }
 
     var play_buf: [512]u8 = undefined;
     const play_body = std.fmt.bufPrint(
@@ -795,9 +828,11 @@ fn dlnaCast(control_url: []const u8, url: []const u8, media_hint: []const u8) bo
         .{},
     ) catch return false;
     // The renderer can stay busy starting the media right after the URI is set
-    // and miss answering the immediate Play; one retry after a pause lands it.
+    // and miss answering the immediate Play; retries after pauses land it.
     if (soapAction(control_url, "Play", play_body)) return true;
     io_global.sleep(1200 * std.time.ns_per_ms);
+    if (soapAction(control_url, "Play", play_body)) return true;
+    io_global.sleep(2400 * std.time.ns_per_ms);
     return soapAction(control_url, "Play", play_body);
 }
 
