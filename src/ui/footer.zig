@@ -1865,7 +1865,9 @@ pub fn renderLiquidGlassOverlay() void {
                 if (casting) {
                     cast.stopCast();
                 } else if (known) {
-                    cast.castActiveTo(0);
+                    // Not index 0: a local mock or Chromecast proxy can be listed
+                    // first and the click then looks like it did nothing.
+                    cast.castActiveTo(cast.preferredDevice());
                 } else {
                     cast.auto_cast_next_scan = true;
                     cast.scanDevices();
