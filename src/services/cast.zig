@@ -183,32 +183,93 @@ fn avtransportControlUrl(location: []const u8, xml: []const u8, out: []u8) ?[]co
     return out[0 .. base_len + raw.len];
 }
 
+
+/// Extract every IPv4 address from `text` (label-language independent: parses
+/// the dotted quads, not the localized labels). Skips loopback, link-local
+/// APIPA and multicast/reserved ranges — those never host a LAN renderer.
+fn appendIPv4s(text: []const u8, out: *std.ArrayListUnmanaged([]const u8)) !void {
+    var i: usize = 0;
+    while (i < text.len) {
+        if (std.ascii.isDigit(text[i])) {
+            var octets: [4]u32 = undefined;
+            var j: usize = 0;
+            var valid = true;
+            var end = i;
+            while (j < 4) : (j += 1) {
+                if (end >= text.len or !std.ascii.isDigit(text[end])) { valid = false; break; }
+                const start = end;
+                while (end < text.len and std.ascii.isDigit(text[end])) end += 1;
+                const v = std.fmt.parseInt(u32, text[start..end], 10) catch { valid = false; break; };
+                if (v > 255) { valid = false; break; }
+                octets[j] = v;
+                if (j < 3) {
+                    if (end >= text.len or text[end] != '.') { valid = false; break; }
+                    end += 1;
+                }
+            }
+            if (valid) {
+                const a = octets[0]; const b = octets[1];
+                const skip = a == 127 or (a == 169 and b == 254) or a == 0 or a >= 224;
+                if (!skip) {
+                    const ip = try std.fmt.allocPrint(alloc, "{d}.{d}.{d}.{d}", .{ octets[0], octets[1], octets[2], octets[3] });
+                    var dup = false;
+                    for (out.items) |prev| if (std.mem.eql(u8, prev, ip)) { dup = true; };
+                    if (!dup) try out.append(alloc, ip);
+                }
+                i = end;
+                continue;
+            }
+        }
+        i += 1;
+    }
+}
+
+/// Every non-loopback local IPv4 address, probed for SSDP on multi-homed
+/// machines (VPN/virtual adapters steal the default multicast route — the
+/// real LAN is then unreachable from 0.0.0.0-bound sockets).
+fn localIPv4Candidates() []const []const u8 {
+    var list: std.ArrayListUnmanaged([]const u8) = .empty;
+    const argv: []const []const u8 = switch (@import("builtin").os.tag) {
+        .windows => &.{"ipconfig"},
+        .macos => &.{"ifconfig"},
+        else => &.{ "ip", "-4", "addr" },
+    };
+    var child = io_global.Child.init(argv, alloc);
+    child.stdout_behavior = .Pipe;
+    child.stderr_behavior = .Ignore;
+    child.spawn() catch return list.items;
+    var buf: [64 * 1024]u8 = undefined;
+    const n = if (child.stdout) |*so| io_global.readAll(so, &buf) catch 0 else 0;
+    _ = child.wait() catch {};
+    if (n == 0) return list.items;
+    appendIPv4s(buf[0..n], &list) catch {};
+    return list.items;
+}
+
 /// SSDP M-SEARCH for MediaRenderers, then one HTTP GET per device to read the
 /// friendlyName + AVTransport control URL. Appends to `devices`.
-fn dlnaScan() void {
-    const io = io_global.io();
-    const local = std.Io.net.IpAddress.parseIp4("0.0.0.0", 0) catch return;
+fn dlnaProbe(io: std.Io, local_ip: ?[]const u8, locations: *[8][]const u8, loc_buf: *[8][256]u8, location_count: *usize, window_ms: i64) void {
+    const local = if (local_ip) |ip|
+        std.Io.net.IpAddress.parseIp4(ip, 0) catch return
+    else
+        std.Io.net.IpAddress.parseIp4("0.0.0.0", 0) catch return;
     var sock = local.bind(io, .{ .mode = .dgram }) catch return;
     defer sock.close(io);
 
     const msearch =
-        "M-SEARCH * HTTP/1.1\r\n" ++
-        "HOST: 239.255.255.250:1900\r\n" ++
-        "MAN: \"ssdp:discover\"\r\n" ++
-        "MX: 3\r\n" ++
-        "ST: urn:schemas-upnp-org:device:MediaRenderer:1\r\n" ++
-        "\r\n";
+    "M-SEARCH * HTTP/1.1\r\n" ++
+    "HOST: 239.255.255.250:1900\r\n" ++
+    "MAN: \"ssdp:discover\"\r\n" ++
+    "MX: 2\r\n" ++
+    "ST: urn:schemas-upnp-org:device:MediaRenderer:1\r\n" ++
+    "\r\n";
     var maddr = std.Io.net.IpAddress.parseIp4("239.255.255.250", 1900) catch return;
     // Two sends: single-shot discovery routinely misses slow responders.
     sock.send(io, &maddr, msearch) catch return;
     sock.send(io, &maddr, msearch) catch {};
 
-    var locations: [8][]const u8 = undefined;
-    var location_count: usize = 0;
-    var loc_buf: [8][256]u8 = undefined;
-
-    const deadline = io_global.monotonicMilliTimestamp() + 4500;
-    while (io_global.monotonicMilliTimestamp() < deadline and location_count < locations.len) {
+    const deadline = io_global.monotonicMilliTimestamp() + window_ms;
+    while (io_global.monotonicMilliTimestamp() < deadline and location_count.* < locations.len) {
         var rbuf: [1500]u8 = undefined;
         const msg = sock.receiveTimeout(
             io,
@@ -216,7 +277,6 @@ fn dlnaScan() void {
             .{ .duration = .{ .raw = .fromMilliseconds(300), .clock = .awake } },
         ) catch continue;
         const resp = msg.data;
-        // Response lines are case-varied; find LOCATION case-insensitively.
         var it = std.mem.splitScalar(u8, resp, '\n');
         while (it.next()) |line| {
             const ll = std.mem.trim(u8, line, " \r");
@@ -224,18 +284,35 @@ fn dlnaScan() void {
             if (std.ascii.startsWithIgnoreCase(ll, "LOCATION:")) {
                 const loc = std.mem.trim(u8, ll["LOCATION:".len..], " \r");
                 if (loc.len == 0 or !std.mem.startsWith(u8, loc, "http")) continue;
-                // Dedupe by URL — a device answers once per ST/MX cycle.
                 var dup = false;
-                for (locations[0..location_count]) |seen| {
+                for (locations[0..location_count.*]) |seen| {
                     if (std.mem.eql(u8, seen, loc)) dup = true;
                 }
                 if (dup) continue;
-                @memcpy(loc_buf[location_count][0..loc.len], loc);
-                locations[location_count] = loc_buf[location_count][0..loc.len];
-                location_count += 1;
+                @memcpy(loc_buf[location_count.*][0..loc.len], loc);
+                locations[location_count.*] = loc_buf[location_count.*][0..loc.len];
+                location_count.* += 1;
             }
         }
     }
+}
+
+/// SSDP M-SEARCH across every local IPv4 interface (default route first),
+/// then one HTTP GET per device to read the friendlyName + AVTransport
+/// control URL. Appends to `devices`.
+fn dlnaScan() void {
+    const io = io_global.io();
+    var locations: [8][]const u8 = undefined;
+    var location_count: usize = 0;
+    var loc_buf: [8][256]u8 = undefined;
+
+    dlnaProbe(io, null, &locations, &loc_buf, &location_count, 2000);
+    const candidates = localIPv4Candidates();
+    for (candidates) |ip| {
+        if (location_count >= locations.len) break;
+        dlnaProbe(io, ip, &locations, &loc_buf, &location_count, 1500);
+    }
+    alloc.free(candidates);
 
     // One bounded HTTP GET per device description document.
     for (locations[0..location_count]) |loc| {
