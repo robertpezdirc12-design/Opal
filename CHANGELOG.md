@@ -12,6 +12,8 @@ match the tag exactly.
 
 ## Unreleased
 
+## v0.9.7 — 2026-11-23
+
 - **The cast button no longer toggles itself off.** A single tap could deliver two activation events, so casting started and was immediately stopped again; duplicate activations inside the same tap (800 ms) are now ignored.
 
 ## v0.9.6 — 2026-11-13
