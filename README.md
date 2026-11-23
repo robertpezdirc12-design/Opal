@@ -41,7 +41,7 @@ so features and fixes arrive here without manual porting; the local work adds
 | --- | --- |
 | **Upstream** | [debpalash/Opal](https://github.com/debpalash/Opal) — original project by Palash |
 | **This build** | Windows `.msi` / portable `.zip`, verified casting to living-room TVs |
-| **Version** | `0.9.6` (see [`build.zig.zon`](build.zig.zon) and [CHANGELOG](CHANGELOG.md)) |
+| **Version** | `0.9.7` (see [`build.zig.zon`](build.zig.zon) and [CHANGELOG](CHANGELOG.md)) |
 | **License** | GPL-3.0 |
 
 ## Why Opal
