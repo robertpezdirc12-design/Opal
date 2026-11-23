@@ -119,13 +119,14 @@ Grab the latest artifact from
 
 | Artifact | Use |
 | --- | --- |
-| `Opal-<version>-windows-x64.msi` | Standard installer |
-| `Opal-<version>-windows-x64.zip` | Portable folder — unzip and run `opal.exe` |
+| `Opal-<version>-Windows-x64-ReleaseSafe.zip` | Portable folder — unzip anywhere and run `opal.exe` |
 
-Portable installs ship `opal-server.bat` (loopback) and `opal-server-lan.bat`
-(home network) for the headless phone web UI; authentication still gates every
-route. Windows builds are self-contained: no runtime, MPV or Python install
-required.
+The portable folder ships `opal-server.bat` (loopback) and
+`opal-server-lan.bat` (home network) for the headless phone web UI;
+authentication still gates every route. Windows builds are self-contained: no
+runtime, MPV or Python install required. Installer packages (`.msi`) are built
+by the upstream release workflow; this repository publishes the verified
+portable build.
 
 <details>
 <summary><b>Windows notes</b></summary>
