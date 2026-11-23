@@ -12,6 +12,8 @@ match the tag exactly.
 
 ## Unreleased
 
+- **The cast button no longer toggles itself off.** A single tap could deliver two activation events, so casting started and was immediately stopped again; duplicate activations inside the same tap (800 ms) are now ignored.
+
 ## v0.9.6 — 2026-11-13
 
 - **Cast to the TV with one click — including local files.** The player toolbar now has a cast button: the first click scans the home network and starts casting to the first TV it finds (no device picker when you own one TV), a later click re-casts, and a click while casting stops it. Local videos (paths on this PC) previously produced a TV-unreadable `C:\…` link; Opal now serves the file over your home network itself and hands the TV a real URL, so local movies open on the TV exactly like streamed ones.
