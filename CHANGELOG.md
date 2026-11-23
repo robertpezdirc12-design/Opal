@@ -12,6 +12,11 @@ match the tag exactly.
 
 ## Unreleased
 
+## v0.9.8 — 2026-11-23
+
+- **The TV remote, inside Opal.** While a DLNA renderer is playing, the cast icon now opens a panel that drives the television itself: play/pause, back and forward 30 seconds, volume up/down, mute and stop — plus a live readout of what the TV is doing and where it is in the film. The controls go over the same UPnP services the cast uses (`AVTransport` for transport and seek, `RenderingControl` for volume and mute), so nothing extra has to be installed on the TV.
+- **Pick which TV to cast to.** Discovery now lists every renderer it finds; when there is more than one, the cast button opens a picker with each name and IP instead of guessing. A single TV still casts in one click, and **Scan again** refreshes the list without leaving the panel.
+
 ## v0.9.7 — 2026-11-23
 
 - **The cast button no longer toggles itself off.** A single tap could deliver two activation events, so casting started and was immediately stopped again; duplicate activations inside the same tap (800 ms) are now ignored.

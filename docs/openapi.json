@@ -1093,7 +1093,7 @@
     "/cast/scan": {
       "get": {
         "operationId": "cast_scan",
-        "summary": "Scan the local network for Chromecast devices (needs the catt tool). Takes a few seconds; read cast_devices afterwards.",
+        "summary": "Scan the local network for DLNA/UPnP televisions and, when the catt tool is installed, Chromecast devices. Takes a few seconds; read cast_devices afterwards.",
         "tags": [
           "read"
         ],

@@ -28,9 +28,17 @@ pub const CastDevice = struct {
     /// (control_url_len == 0) are cast by shelling out to catt.
     control_url: [512]u8 = std.mem.zeroes([512]u8),
     control_url_len: usize = 0,
+    /// RenderingControl control URL — volume and mute live on that service, not
+    /// on AVTransport. Empty when the renderer does not advertise it.
+    rcs_url: [512]u8 = std.mem.zeroes([512]u8),
+    rcs_url_len: usize = 0,
 
     pub fn isDlna(self: *const CastDevice) bool {
         return self.control_url_len > 0;
+    }
+
+    pub fn hasVolume(self: *const CastDevice) bool {
+        return self.rcs_url_len > 0;
     }
 };
 
@@ -49,7 +57,7 @@ pub var auto_cast_next_scan: bool = false;
 /// exits early, and polling a dead frame segfaulted the scan.
 var catt_scan_done: std.atomic.Value(bool) = std.atomic.Value(bool).init(true);
 
-fn storeDevice(name: []const u8, ip: []const u8, control_url: ?[]const u8) void {
+fn storeDevice(name: []const u8, ip: []const u8, control_url: ?[]const u8, rcs_url: ?[]const u8) void {
     if (device_count >= devices.len) return;
     var dev = &devices[device_count];
     dev.* = .{};
@@ -63,6 +71,11 @@ fn storeDevice(name: []const u8, ip: []const u8, control_url: ?[]const u8) void 
         const clen = @min(cu.len, dev.control_url.len - 1);
         @memcpy(dev.control_url[0..clen], cu[0..clen]);
         dev.control_url_len = clen;
+    }
+    if (rcs_url) |cu| {
+        const clen = @min(cu.len, dev.rcs_url.len - 1);
+        @memcpy(dev.rcs_url[0..clen], cu[0..clen]);
+        dev.rcs_url_len = clen;
     }
     device_count += 1;
 }
@@ -137,7 +150,7 @@ pub fn scanDevices() void {
                         const ip_part = line[dash_pos + 3 ..];
                         // Strip port if present
                         const ip = if (std.mem.indexOf(u8, ip_part, ":")) |col| ip_part[0..col] else ip_part;
-                        storeDevice(name, ip, null);
+                        storeDevice(name, ip, null, null);
                     }
                 }
             } else |_| {
@@ -201,12 +214,15 @@ fn xmlEscape(src: []const u8, out: []u8) ?[]const u8 {
     return out[0..w];
 }
 
-/// The AVTransport control URL from a device description document, absolutized
-/// against `location` (the URL the document was fetched from).
-fn avtransportControlUrl(location: []const u8, xml: []const u8, out: []u8) ?[]const u8 {
-    // The <service> block for AVTransport: everything between its serviceType
+/// One service's control URL from a device description document, absolutized
+/// against `location` (the URL the document was fetched from). `service` is the
+/// service suffix, e.g. "AVTransport:1" or "RenderingControl:1".
+fn serviceControlUrl(location: []const u8, xml: []const u8, service: []const u8, out: []u8) ?[]const u8 {
+    // The <service> block for `service`: everything between its serviceType
     // marker and the closing </service> holds this service's controlURL.
-    const st = std.mem.indexOf(u8, xml, "urn:schemas-upnp-org:service:AVTransport:1") orelse return null;
+    var marker_buf: [96]u8 = undefined;
+    const marker = std.fmt.bufPrint(&marker_buf, "urn:schemas-upnp-org:service:{s}", .{service}) catch return null;
+    const st = std.mem.indexOf(u8, xml, marker) orelse return null;
     const block_end = std.mem.indexOf(u8, xml[st..], "</service>") orelse (xml.len - st);
     const block = xml[st .. st + block_end];
     const raw = xmlValue(block, "controlURL") orelse return null;
@@ -674,19 +690,29 @@ fn dlnaScan() void {
         const xml = http.fetchFresh(loc, &xbuf, .{ .timeout_secs = 4 }) orelse continue;
         const name = xmlValue(xml, "friendlyName") orelse "DLNA device";
         var cbuf: [512]u8 = undefined;
-        const control = avtransportControlUrl(loc, xml, &cbuf) orelse continue;
+        const control = serviceControlUrl(loc, xml, "AVTransport:1", &cbuf) orelse continue;
+        var rbuf: [512]u8 = undefined;
+        const rcs: ?[]const u8 = serviceControlUrl(loc, xml, "RenderingControl:1", &rbuf);
 
         // ip: the host part of the location (diagnostics only — the control
         // URL is what cast uses).
         const scheme_end = std.mem.indexOf(u8, loc, "://") orelse continue;
         const host_start = scheme_end + 3;
         const path_start = std.mem.indexOfScalarPos(u8, loc, host_start, '/') orelse loc.len;
-        storeDevice(name, loc[host_start..path_start], control);
+        storeDevice(name, loc[host_start..path_start], control, rcs);
     }
 }
 
-/// One SOAP action against an AVTransport control URL.
-fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) bool {
+/// One SOAP action against a UPnP service, returning its response body.
+/// `rbuf` receives the response and the returned slice points into it.
+fn soapServiceResponse(
+    control_url: []const u8,
+    service: []const u8,
+    action: []const u8,
+    body: []const u8,
+    rbuf: []u8,
+    status_out: *?std.http.Status,
+) ?[]const u8 {
     var envelope_buf: [4096]u8 = undefined;
     const envelope = std.fmt.bufPrint(
         &envelope_buf,
@@ -695,30 +721,35 @@ fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) boo
             "s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" ++
             "<s:Body>{s}</s:Body></s:Envelope>",
         .{body},
-    ) catch return false;
+    ) catch return null;
 
-    var action_buf: [128]u8 = undefined;
+    var action_buf: [160]u8 = undefined;
     const soapaction = std.fmt.bufPrint(
         &action_buf,
-        "\"urn:schemas-upnp-org:service:AVTransport:1#{s}\"",
-        .{action},
-    ) catch return false;
+        "\"urn:schemas-upnp-org:service:{s}#{s}\"",
+        .{ service, action },
+    ) catch return null;
 
-    var rbuf: [8 * 1024]u8 = undefined;
-    var status: ?std.http.Status = null;
     // A fresh connection per SOAP action is not a nicety: renderers close idle
     // sockets within seconds, and a pooled keep-alive write lands on the dead
     // socket — the action silently never runs, and the next one is refused
     // (the TCL answers HTTP 500 "transport still active" because the Stop
     // before it was the one that died). fetchFresh opens a one-shot socket.
-    _ = http.fetchFresh(control_url, &rbuf, .{
+    return http.fetchFresh(control_url, rbuf, .{
         .method = .POST,
         .payload = envelope,
         .content_type = "text/xml; charset=\"utf-8\"",
         .extra_headers = &.{.{ .name = "SOAPACTION", .value = soapaction }},
         .timeout_secs = 6,
-        .status_out = &status,
-    }) orelse {
+        .status_out = status_out,
+    });
+}
+
+/// Fire one SOAP action; true only when the renderer answered 2xx.
+fn soapService(control_url: []const u8, service: []const u8, action: []const u8, body: []const u8) bool {
+    var rbuf: [8 * 1024]u8 = undefined;
+    var status: ?std.http.Status = null;
+    _ = soapServiceResponse(control_url, service, action, body, &rbuf, &status) orelse {
         // A non-2xx still lands here (the transport nulls on anything but
         // success), but status_out already carries the real code — say which.
         if (status) |st| {
@@ -729,6 +760,11 @@ fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) boo
         return false;
     };
     return status == .ok;
+}
+
+/// One AVTransport SOAP action.
+fn soapAction(control_url: []const u8, action: []const u8, body: []const u8) bool {
+    return soapService(control_url, "AVTransport:1", action, body);
 }
 
 /// MIME type for the renderer's `protocolInfo`, from the media's extension.
@@ -836,6 +872,325 @@ fn dlnaCast(control_url: []const u8, url: []const u8, media_hint: []const u8) bo
     return soapAction(control_url, "Play", play_body);
 }
 
+// ── Remote control (pause / seek / volume) ──────────────
+//
+// Once the TV is playing, IT owns the playback: the local mpv has no say in
+// it. These calls drive the renderer over the same SOAP endpoints the cast
+// used — AVTransport for transport state, pause and seek, RenderingControl for
+// volume and mute. Each runs on a worker because a renderer may take seconds
+// to answer and the UI thread must never block on the network.
+//
+// The fields below are written by those workers and polled by the cast panel
+// on the UI thread, so they are atomic (CLAUDE.md thread-safety rule).
+
+pub const TransportState = enum(u8) { unknown = 0, playing = 1, paused = 2, stopped = 3 };
+
+pub var cast_transport: std.atomic.Value(u8) = std.atomic.Value(u8).init(0);
+pub var cast_volume: std.atomic.Value(i16) = std.atomic.Value(i16).init(-1);
+pub var cast_muted: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
+pub var cast_position: std.atomic.Value(u32) = std.atomic.Value(u32).init(0);
+pub var cast_duration: std.atomic.Value(u32) = std.atomic.Value(u32).init(0);
+/// True from a successful cast until stopCast(): the TV is the active playback.
+/// `is_casting` only covers the moments the cast worker is pushing the URL, so
+/// the UI needs this separate, longer-lived flag.
+pub var session_active: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
+
+var status_busy: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
+var status_last_ms: std.atomic.Value(i64) = std.atomic.Value(i64).init(0);
+
+pub fn transportState() TransportState {
+    const raw = cast_transport.load(.acquire);
+    return if (raw <= @intFromEnum(TransportState.stopped)) @enumFromInt(raw) else .unknown;
+}
+
+/// Copy the active DLNA renderer's AVTransport control URL into `buf`.
+fn activeAvUrl(buf: []u8) ?[]const u8 {
+    const idx = active_device_idx orelse return null;
+    if (idx >= device_count or idx >= devices.len) return null;
+    const dev = devices[idx];
+    if (!dev.isDlna()) return null;
+    const len = @min(dev.control_url_len, buf.len);
+    @memcpy(buf[0..len], dev.control_url[0..len]);
+    return buf[0..len];
+}
+
+/// Copy the active renderer's RenderingControl URL into `buf`.
+fn activeRcsUrl(buf: []u8) ?[]const u8 {
+    const idx = active_device_idx orelse return null;
+    if (idx >= device_count or idx >= devices.len) return null;
+    const dev = devices[idx];
+    if (!dev.hasVolume()) return null;
+    const len = @min(dev.rcs_url_len, buf.len);
+    @memcpy(buf[0..len], dev.rcs_url[0..len]);
+    return buf[0..len];
+}
+
+/// "HH:MM:SS", "MM:SS" or "SS.mmm" → seconds. Renderers are inconsistent about
+/// the leading fields, so every shape is accepted.
+pub fn parseClock(text: []const u8) ?u32 {
+    var parts: [3]u32 = .{ 0, 0, 0 };
+    var n: usize = 0;
+    var it = std.mem.splitScalar(u8, text, ':');
+    while (it.next()) |raw| {
+        if (n >= parts.len) return null;
+        const part = if (std.mem.indexOfScalar(u8, raw, '.')) |dot| raw[0..dot] else raw;
+        if (part.len == 0 or part.len > 9) return null;
+        var v: u32 = 0;
+        for (part) |ch| {
+            if (!std.ascii.isDigit(ch)) return null;
+            v = v * 10 + (ch - '0');
+        }
+        parts[n] = v;
+        n += 1;
+    }
+    return switch (n) {
+        1 => parts[0],
+        2 => parts[0] * 60 + parts[1],
+        3 => parts[0] * 3600 + parts[1] * 60 + parts[2],
+        else => null,
+    };
+}
+
+/// Seconds → "H:MM:SS" / "M:SS" (the shape a Seek target wants).
+pub fn formatClock(buf: []u8, secs: u32) []const u8 {
+    const h = secs / 3600;
+    const m = (secs % 3600) / 60;
+    const s = secs % 60;
+    return if (h > 0)
+        std.fmt.bufPrint(buf, "{d}:{d:0>2}:{d:0>2}", .{ h, m, s }) catch ""
+    else
+        std.fmt.bufPrint(buf, "{d}:{d:0>2}", .{ m, s }) catch "";
+}
+
+fn transportStateCode(text: []const u8) u8 {
+    if (std.mem.indexOf(u8, text, "PAUSED") != null) return @intFromEnum(TransportState.paused);
+    if (std.mem.indexOf(u8, text, "PLAYING") != null) return @intFromEnum(TransportState.playing);
+    if (std.mem.indexOf(u8, text, "STOPPED") != null or std.mem.indexOf(u8, text, "NO_MEDIA") != null) return @intFromEnum(TransportState.stopped);
+    return @intFromEnum(TransportState.unknown);
+}
+
+/// Poll the renderer for transport state, position and volume. Throttled to
+/// roughly once a second and never concurrent with itself: the cast panel calls
+/// this every frame while it is open, and each SOAP round trip is a real HTTP
+/// request to the TV.
+pub fn refreshStatus() void {
+    if (!session_active.load(.acquire)) return;
+    const now = io_global.milliTimestamp();
+    if (now - status_last_ms.load(.acquire) < 900) return;
+    if (status_busy.swap(true, .acquire)) return;
+    status_last_ms.store(now, .release);
+
+    var abuf: [512]u8 = undefined;
+    const av_src = activeAvUrl(&abuf) orelse {
+        status_busy.store(false, .release);
+        return;
+    };
+    const av = alloc.dupe(u8, av_src) catch {
+        status_busy.store(false, .release);
+        return;
+    };
+    var rbuf_url: [512]u8 = undefined;
+    const rcs_src = activeRcsUrl(&rbuf_url);
+    const rcs: ?[]u8 = if (rcs_src) |u| (alloc.dupe(u8, u) catch null) else null;
+
+    if (workers.spawnLegacy(struct {
+        fn worker(av_url: []u8, rcs_url: ?[]u8) void {
+            defer {
+                status_busy.store(false, .release);
+                alloc.free(av_url);
+                if (rcs_url) |r| alloc.free(r);
+            }
+
+            var info_buf: [4096]u8 = undefined;
+            var info_status: ?std.http.Status = null;
+            const info_body =
+                "<u:GetTransportInfo xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                "<InstanceID>0</InstanceID></u:GetTransportInfo>";
+            if (soapServiceResponse(av_url, "AVTransport:1", "GetTransportInfo", info_body, &info_buf, &info_status)) |resp| {
+                if (xmlValue(resp, "CurrentTransportState")) |st| cast_transport.store(transportStateCode(st), .release);
+            }
+
+            var pos_buf: [8192]u8 = undefined;
+            var pos_status: ?std.http.Status = null;
+            const pos_body =
+                "<u:GetPositionInfo xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                "<InstanceID>0</InstanceID></u:GetPositionInfo>";
+            if (soapServiceResponse(av_url, "AVTransport:1", "GetPositionInfo", pos_body, &pos_buf, &pos_status)) |resp| {
+                if (xmlValue(resp, "RelTime")) |t| {
+                    if (parseClock(t)) |secs| cast_position.store(secs, .release);
+                }
+                if (xmlValue(resp, "TrackDuration")) |t| {
+                    if (parseClock(t)) |secs| cast_duration.store(secs, .release);
+                }
+            }
+
+            if (rcs_url) |r| {
+                var vol_buf: [4096]u8 = undefined;
+                var vol_status: ?std.http.Status = null;
+                const vol_body =
+                    "<u:GetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">" ++
+                    "<InstanceID>0</InstanceID><Channel>Master</Channel></u:GetVolume>";
+                if (soapServiceResponse(r, "RenderingControl:1", "GetVolume", vol_body, &vol_buf, &vol_status)) |resp| {
+                    if (xmlValue(resp, "CurrentVolume")) |v| {
+                        if (std.fmt.parseInt(i16, v, 10)) |n| {
+                            cast_volume.store(std.math.clamp(n, 0, 100), .release);
+                        } else |_| {}
+                    }
+                }
+                var mute_buf: [4096]u8 = undefined;
+                var mute_status: ?std.http.Status = null;
+                const mute_body =
+                    "<u:GetMute xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">" ++
+                    "<InstanceID>0</InstanceID><Channel>Master</Channel></u:GetMute>";
+                if (soapServiceResponse(r, "RenderingControl:1", "GetMute", mute_body, &mute_buf, &mute_status)) |resp| {
+                    if (xmlValue(resp, "CurrentMute")) |m| {
+                        cast_muted.store(std.mem.eql(u8, m, "1") or std.ascii.eqlIgnoreCase(m, "true"), .release);
+                    }
+                }
+            }
+        }
+    }.worker, .{ av, rcs })) |t| workers.release(t) else |_| {
+        status_busy.store(false, .release);
+        alloc.free(av);
+        if (rcs) |r| alloc.free(r);
+    }
+}
+
+/// Pause or resume the TV, whichever the opposite of its current state is.
+pub fn castTogglePause() void {
+    var buf: [512]u8 = undefined;
+    const src = activeAvUrl(&buf) orelse return;
+    const url = alloc.dupe(u8, src) catch return;
+    const pause_now = transportState() != .paused;
+    if (workers.spawnLegacy(struct {
+        fn worker(control_url: []u8, pause: bool) void {
+            defer alloc.free(control_url);
+            var body_buf: [512]u8 = undefined;
+            const body = if (pause)
+                std.fmt.bufPrint(
+                    &body_buf,
+                    "<u:Pause xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                        "<InstanceID>0</InstanceID></u:Pause>",
+                    .{},
+                ) catch return
+            else
+                std.fmt.bufPrint(
+                    &body_buf,
+                    "<u:Play xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                        "<InstanceID>0</InstanceID><Speed>1</Speed></u:Play>",
+                    .{},
+                ) catch return;
+            const action = if (pause) "Pause" else "Play";
+            if (soapService(control_url, "AVTransport:1", action, body)) {
+                cast_transport.store(@intFromEnum(if (pause) TransportState.paused else TransportState.playing), .release);
+                status_last_ms.store(0, .release);
+            } else {
+                state.showToast(if (pause) "TV refused to pause" else "TV refused to play");
+            }
+        }
+    }.worker, .{ url, pause_now })) |t| workers.release(t) else |_| alloc.free(url);
+}
+
+/// Seek the TV by `delta_secs` (negative rewinds). DLNA only seeks to an
+/// absolute REL_TIME, so the worker reads the renderer's position first.
+pub fn castSeekBy(delta_secs: i32) void {
+    var buf: [512]u8 = undefined;
+    const src = activeAvUrl(&buf) orelse return;
+    const url = alloc.dupe(u8, src) catch return;
+    if (workers.spawnLegacy(struct {
+        fn worker(control_url: []u8, delta: i32) void {
+            defer alloc.free(control_url);
+            var pos_buf: [8192]u8 = undefined;
+            var pos_status: ?std.http.Status = null;
+            const pos_body =
+                "<u:GetPositionInfo xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                "<InstanceID>0</InstanceID></u:GetPositionInfo>";
+            const resp = soapServiceResponse(control_url, "AVTransport:1", "GetPositionInfo", pos_body, &pos_buf, &pos_status) orelse {
+                state.showToast("TV did not report its position");
+                return;
+            };
+            const current = if (xmlValue(resp, "RelTime")) |t| (parseClock(t) orelse 0) else 0;
+            var target: i64 = @as(i64, current) + delta;
+            if (target < 0) target = 0;
+            const duration = cast_duration.load(.acquire);
+            if (duration > 2 and target > @as(i64, duration) - 2) target = @as(i64, duration) - 2;
+            var target_buf: [32]u8 = undefined;
+            const stamp = formatClock(&target_buf, @intCast(target));
+            var body_buf: [512]u8 = undefined;
+            const body = std.fmt.bufPrint(
+                &body_buf,
+                "<u:Seek xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
+                    "<InstanceID>0</InstanceID><Unit>REL_TIME</Unit><Target>{s}</Target></u:Seek>",
+                .{stamp},
+            ) catch return;
+            if (soapService(control_url, "AVTransport:1", "Seek", body)) {
+                cast_position.store(@intCast(target), .release);
+            } else {
+                state.showToast("TV refused to seek");
+            }
+        }
+    }.worker, .{ url, delta_secs })) |t| workers.release(t) else |_| alloc.free(url);
+}
+
+/// Step the TV's master volume by `delta` (percent), clamped to 0–100.
+pub fn castVolumeStep(delta: i16) void {
+    var buf: [512]u8 = undefined;
+    const src = activeRcsUrl(&buf) orelse {
+        state.showToast("This TV does not expose volume");
+        return;
+    };
+    const url = alloc.dupe(u8, src) catch return;
+    if (workers.spawnLegacy(struct {
+        fn worker(rcs_url: []u8, step: i16) void {
+            defer alloc.free(rcs_url);
+            var current: i16 = cast_volume.load(.acquire);
+            if (current < 0) current = 30;
+            const next: i16 = std.math.clamp(current + step, 0, 100);
+            var body_buf: [512]u8 = undefined;
+            const body = std.fmt.bufPrint(
+                &body_buf,
+                "<u:SetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">" ++
+                    "<InstanceID>0</InstanceID><Channel>Master</Channel><DesiredVolume>{d}</DesiredVolume></u:SetVolume>",
+                .{next},
+            ) catch return;
+            if (soapService(rcs_url, "RenderingControl:1", "SetVolume", body)) {
+                cast_volume.store(next, .release);
+                if (next > 0) cast_muted.store(false, .release);
+            } else {
+                state.showToast("TV refused the volume change");
+            }
+        }
+    }.worker, .{ url, delta })) |t| workers.release(t) else |_| alloc.free(url);
+}
+
+/// Toggle mute on the TV.
+pub fn castToggleMute() void {
+    var buf: [512]u8 = undefined;
+    const src = activeRcsUrl(&buf) orelse {
+        state.showToast("This TV does not expose mute");
+        return;
+    };
+    const url = alloc.dupe(u8, src) catch return;
+    const mute_now = !cast_muted.load(.acquire);
+    if (workers.spawnLegacy(struct {
+        fn worker(rcs_url: []u8, mute: bool) void {
+            defer alloc.free(rcs_url);
+            var body_buf: [512]u8 = undefined;
+            const body = std.fmt.bufPrint(
+                &body_buf,
+                "<u:SetMute xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">" ++
+                    "<InstanceID>0</InstanceID><Channel>Master</Channel><DesiredMute>{d}</DesiredMute></u:SetMute>",
+                .{@intFromBool(mute)},
+            ) catch return;
+            if (soapService(rcs_url, "RenderingControl:1", "SetMute", body)) {
+                cast_muted.store(mute, .release);
+            } else {
+                state.showToast("TV refused the mute change");
+            }
+        }
+    }.worker, .{ url, mute_now })) |t| workers.release(t) else |_| alloc.free(url);
+}
+
 // ── cast / stop ──────────────────────────────────────────
 
 /// Cast `url` to a discovered device.
@@ -906,6 +1261,14 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
                 }
 
                 if (dlnaCast(cc, push_url, u)) {
+                    // The TV now owns playback: mark the session and seed the
+                    // remote so the cast panel shows sensible values at once.
+                    cast_position.store(0, .release);
+                    cast_duration.store(0, .release);
+                    cast_muted.store(false, .release);
+                    cast_transport.store(@intFromEnum(TransportState.playing), .release);
+                    status_last_ms.store(0, .release);
+                    session_active.store(true, .release);
                     state.showToast("Casting to TV…");
                 } else {
                     state.showToast("Cast failed (TV refused)");
@@ -976,6 +1339,7 @@ pub fn castActive(device_idx: usize) void {
 
 /// Stop casting
 pub fn stopCast() void {
+    session_active.store(false, .release);
     // Snapshot the active DLNA control URL before clearing state.
     var control_copy: ?[]u8 = null;
     if (active_device_idx) |idx| {
@@ -1009,6 +1373,10 @@ pub fn stopCast() void {
             // stopped, so close it (no-op when the cast was a remote URL).
             lan_bridge.stopShare();
             is_casting.store(false, .release);
+            session_active.store(false, .release);
+            cast_transport.store(@intFromEnum(TransportState.unknown), .release);
+            cast_position.store(0, .release);
+            cast_duration.store(0, .release);
             active_device_idx = null;
             state.showToast("Cast stopped");
         }

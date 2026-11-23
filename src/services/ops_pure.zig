@@ -351,7 +351,7 @@ pub const ops = [_]Op{
     .{ .name = "player_info", .summary = "Full state of the active player: position, volume, speed, subtitle delay, chapters, audio and subtitle tracks (ids for player_audio_track and player_subtitle_track), subtitle search results and audio outputs. Answers 'no player' when nothing is loaded.", .tier = .read, .method = .GET, .path = "/player" },
 
     // ── Cast: scanning is a background job, then read the devices ──
-    .{ .name = "cast_scan", .summary = "Scan the local network for Chromecast devices (needs the catt tool). Takes a few seconds; read cast_devices afterwards.", .tier = .read, .method = .GET, .path = "/cast/scan" },
+    .{ .name = "cast_scan", .summary = "Scan the local network for DLNA/UPnP televisions and, when the catt tool is installed, Chromecast devices. Takes a few seconds; read cast_devices afterwards.", .tier = .read, .method = .GET, .path = "/cast/scan" },
     .{ .name = "cast_devices", .summary = "Cast devices found so far (name, ip), whether a scan is running and whether something is casting. Starts a scan when none are known yet.", .tier = .read, .method = .GET, .path = "/cast/devices" },
 
     // ── Live torrents (downloads_list covers direct downloads; these are the torrent sessions) ──

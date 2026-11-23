@@ -41,7 +41,7 @@ so features and fixes arrive here without manual porting; the local work adds
 | --- | --- |
 | **Upstream** | [debpalash/Opal](https://github.com/debpalash/Opal) — original project by Palash |
 | **This build** | Windows `.msi` / portable `.zip`, verified casting to living-room TVs |
-| **Version** | `0.9.7` (see [`build.zig.zon`](build.zig.zon) and [CHANGELOG](CHANGELOG.md)) |
+| **Version** | `0.9.8` (see [`build.zig.zon`](build.zig.zon) and [CHANGELOG](CHANGELOG.md)) |
 | **License** | GPL-3.0 |
 
 ## Why Opal
@@ -77,7 +77,7 @@ it connects to Plex and Jellyfin servers rather than replacing them.</sub>
 | 📺 **Live TV** | IPTV and M3U channels from the sources you enable. |
 | 📚 **Manga & comics** | A built-in reader with Suwayomi and Mihon/Tachiyomi extensions. |
 | 🗂️ **Jellyfin & Plex client** | Browse and play your existing server libraries. |
-| 📡 **DLNA casting** | Send the current stream or a local file to any UPnP/DLNA TV on your network — one click, no device picker when you own one TV. |
+| 📡 **DLNA casting** | Send the current stream or a local file to any UPnP/DLNA TV on your network — one click when you own one TV, a device picker when there are several, and a remote (pause, seek, volume, mute) while it plays. |
 | 🌐 **Web browser** | Tabs, extensions and send-to-player. |
 | 💬 **Subtitles & translation** | Pick tracks, fetch subtitles and translate them on the fly. |
 | ⬇️ **Downloads & RSS** | Download queues, plus RSS feeds for torrents and podcasts. |
@@ -215,8 +215,11 @@ Chromecast or an account.
 
 1. Connect the PC and the TV to the same network.
 2. Open a video and click the **cast icon** in the player footer.
-3. The first click scans the LAN and casts to the television it finds; clicking
-   again re-casts, and clicking while casting stops playback on the TV.
+3. The first click scans the LAN and casts to the television it finds. With
+   more than one renderer you get a picker; with a single TV the cast starts
+   straight away.
+4. While the TV is playing, the cast icon opens the **TV remote**: play/pause,
+   ±30 seconds, volume, mute and **Stop casting**.
 
 Local files are served straight from the PC over the LAN — the TV receives a
 real HTTP URL instead of a Windows path, so files on disk play exactly like

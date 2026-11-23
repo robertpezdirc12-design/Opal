@@ -40,10 +40,10 @@ const dropup = @import("dropup_pure.zig");
 /// Per-picker rect, kept across frames because dvui's FloatingWindowWidget wants a
 /// mutable pointer. Recomputed from the chip anchor every frame, so a panel tracks
 /// its chip if the control bar moves (e.g. entering fullscreen).
-var dropup_rects: [11]dvui.Rect = @as([11]dvui.Rect, @splat(.{}));
+var dropup_rects: [12]dvui.Rect = @as([12]dvui.Rect, @splat(.{}));
 /// Physical bounds from the last rendered frame. Mouse events are physical,
 /// while FloatingWindowWidget placement uses logical coordinates.
-var dropup_screen_rects: [11]dvui.Rect.Physical = @as([11]dvui.Rect.Physical, @splat(.{}));
+var dropup_screen_rects: [12]dvui.Rect.Physical = @as([12]dvui.Rect.Physical, @splat(.{}));
 
 pub fn renderQualityPickerPopover(active_p: *player.MediaPlayer) void {
     if (footer.open_picker != .quality) return;
@@ -596,6 +596,126 @@ pub fn renderAudioDevicePickerPopover(active_p: *player.MediaPlayer) void {
     }
 
     if (!open) footer.open_picker = .none;
+}
+
+/// Cast panel — the device picker before a cast, the TV remote afterwards.
+///
+/// The toolbar chip keeps its one-click behaviour when exactly one renderer is
+/// known; this panel appears when there is a choice to make, or when the TV is
+/// already playing and the user wants to drive it (pause, seek, volume, stop).
+pub fn renderCastPopover() void {
+    if (footer.open_picker != .cast) return;
+    const cast = @import("../services/cast.zig");
+    const txt = @import("../core/text.zig");
+
+    var open = true;
+    var fw = beginDropUp(@src(), .cast, 340, 344, &open);
+    defer fw.deinit();
+
+    const session = cast.session_active.load(.acquire);
+    const active_idx: ?usize = if (cast.active_device_idx) |idx| (if (idx < cast.device_count and idx < cast.devices.len) idx else null) else null;
+
+    var title_buf: [80]u8 = undefined;
+    const title: []const u8 = if (session) blk: {
+        const idx = active_idx orelse break :blk "TV";
+        const dev = &cast.devices[idx];
+        break :blk std.fmt.bufPrint(&title_buf, "{s}", .{txt.safeUtf8(dev.name[0..dev.name_len])}) catch "TV";
+    } else "Cast to a device";
+    dropUpTitle(@src(), icons.tvg.lucide.cast, title);
+
+    var pad = dvui.box(@src(), .{ .dir = .vertical }, .{
+        .expand = .both,
+        .padding = dvui.Rect.all(theme.spacing.sm),
+    });
+    defer pad.deinit();
+
+    if (session) {
+        // Polled here (throttled inside) so the panel shows the TV's real state
+        // without the UI thread ever waiting on a SOAP round trip.
+        cast.refreshStatus();
+        const now_state = cast.transportState();
+        const pos = cast.cast_position.load(.acquire);
+        const dur = cast.cast_duration.load(.acquire);
+        var pos_buf: [16]u8 = undefined;
+        var dur_buf: [16]u8 = undefined;
+        var line_buf: [80]u8 = undefined;
+        const status_line = std.fmt.bufPrint(&line_buf, "{s} · {s} / {s}", .{
+            switch (now_state) {
+                .playing => "Playing on TV",
+                .paused => "Paused on TV",
+                .stopped => "Stopped on TV",
+                .unknown => "TV state unknown",
+            },
+            cast.formatClock(&pos_buf, pos),
+            cast.formatClock(&dur_buf, dur),
+        }) catch "";
+        _ = dvui.label(@src(), "{s}", .{status_line}, .{
+            .color_text = @import("color_compat.zig").wrap(theme.colors.text_tertiary),
+            .font = dvui.themeGet().font_body.withSize(theme.font_size.small),
+            .margin = .{ .x = theme.spacing.sm, .y = 0, .w = theme.spacing.sm, .h = theme.spacing.xs },
+        });
+
+        const paused = now_state == .paused;
+        if (pickerOption(@src(), 9600, if (paused) icons.tvg.lucide.play else icons.tvg.lucide.pause, if (paused) "Play on TV" else "Pause on TV", paused)) cast.castTogglePause();
+        if (pickerOption(@src(), 9601, icons.tvg.lucide.rewind, "Back 30 seconds", false)) cast.castSeekBy(-30);
+        if (pickerOption(@src(), 9602, icons.tvg.lucide.@"fast-forward", "Forward 30 seconds", false)) cast.castSeekBy(30);
+
+        const volume = cast.cast_volume.load(.acquire);
+        const muted = cast.cast_muted.load(.acquire);
+        if (pickerOption(@src(), 9603, if (muted) icons.tvg.lucide.@"volume-x" else icons.tvg.lucide.volume, if (muted) "Unmute TV" else "Mute TV", muted)) cast.castToggleMute();
+        if (pickerOption(@src(), 9604, icons.tvg.lucide.minus, "Volume down", false)) cast.castVolumeStep(-5);
+        var vol_buf: [40]u8 = undefined;
+        const vol_label = if (volume < 0) "Volume up" else std.fmt.bufPrint(&vol_buf, "Volume up ({d}%)", .{volume}) catch "Volume up";
+        if (pickerOption(@src(), 9605, icons.tvg.lucide.plus, vol_label, false)) cast.castVolumeStep(5);
+
+        if (pickerOption(@src(), 9606, icons.tvg.lucide.unplug, "Stop casting", false)) {
+            cast.stopCast();
+            footer.closePickers();
+        }
+    } else {
+        const scanning = cast.is_scanning.load(.acquire);
+        if (scanning) {
+            _ = dvui.label(@src(), "Scanning the network…", .{}, .{
+                .color_text = @import("color_compat.zig").wrap(theme.colors.text_secondary),
+                .font = dvui.themeGet().font_body.withSize(theme.font_size.small),
+                .margin = .{ .x = theme.spacing.sm, .y = theme.spacing.xs, .w = theme.spacing.sm, .h = theme.spacing.xs },
+            });
+        }
+
+        const count = @min(cast.device_count, cast.devices.len);
+        var i: usize = 0;
+        while (i < count) : (i += 1) {
+            const dev = &cast.devices[i];
+            const name = txt.safeUtf8(dev.name[0..dev.name_len]);
+            const ip = txt.safeUtf8(dev.ip[0..dev.ip_len]);
+            var row_buf: [128]u8 = undefined;
+            const label = if (ip.len > 0)
+                std.fmt.bufPrint(&row_buf, "{s}  ·  {s}", .{ name, ip }) catch name
+            else
+                name;
+            const selected = active_idx != null and active_idx.? == i;
+            if (pickerOption(@src(), 9700 + i, icons.tvg.lucide.tv, label, selected)) {
+                cast.auto_cast_next_scan = false;
+                cast.castActiveTo(i);
+                footer.closePickers();
+            }
+        }
+
+        if (count == 0 and !scanning) {
+            _ = dvui.label(@src(), "No TV found yet.", .{}, .{
+                .color_text = @import("color_compat.zig").wrap(theme.colors.text_tertiary),
+                .font = dvui.themeGet().font_body.withSize(theme.font_size.small),
+                .margin = .{ .x = theme.spacing.sm, .y = theme.spacing.xs, .w = theme.spacing.sm, .h = theme.spacing.xs },
+            });
+        }
+
+        if (pickerOption(@src(), 9799, icons.tvg.lucide.@"refresh-cw", if (scanning) "Scanning…" else "Scan again", false)) {
+            // A rescan replaces the list; the panel stays open and fills in.
+            cast.scanDevices();
+        }
+    }
+
+    if (!open) footer.closePickers();
 }
 
 pub fn renderLangPickerPopover() void {

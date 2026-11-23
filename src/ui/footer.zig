@@ -33,7 +33,7 @@ const cast_click_guard_window_ms: i64 = 800;
 
 // Active toolbar dropdown — only one open at a time. We use stable id values
 // derived from the picker kind. -1 = none.
-pub const PickerKind = enum(i32) { none = -1, chapter = 0, aspect = 1, audio = 2, sub = 3, lang = 4, playlist = 5, ar = 6, subs = 7, audio_device = 8, quality = 9, more = 10 };
+pub const PickerKind = enum(i32) { none = -1, chapter = 0, aspect = 1, audio = 2, sub = 3, lang = 4, playlist = 5, ar = 6, subs = 7, audio_device = 8, quality = 9, more = 10, cast = 11 };
 // NOTE: `.subs` (the Find-Subtitles panel) is NOT driven by `open_picker` —
 // its open state is `state.app.sub_picker_open`, which auto-search and the
 // keyless engine also set. It has a PickerKind purely so its chip records an
@@ -62,7 +62,7 @@ pub fn mediaLayoutForTest() MediaLayoutForTest {
 /// chip is laid out. The drop-up panels anchor to this: they float ABOVE their
 /// chip with no backdrop, so they need to know where the chip actually landed.
 /// Indexed by @intFromEnum(PickerKind); .none (-1) has no slot.
-pub var picker_anchor: [11]dvui.Rect.Natural = @as([11]dvui.Rect.Natural, @splat(.{}));
+pub var picker_anchor: [12]dvui.Rect.Natural = @as([12]dvui.Rect.Natural, @splat(.{}));
 
 pub fn anchorFor(kind: PickerKind) dvui.Rect.Natural {
     const i = @backingInt(kind);
@@ -1854,13 +1854,15 @@ pub fn renderLiquidGlassOverlay() void {
             const cast = @import("../services/cast.zig");
             const scanning = cast.is_scanning.load(.acquire);
             const casting = cast.is_casting.load(.acquire);
-            const known = cast.device_count > 0;
-            const tint = if (casting or known) theme.colors.accent else player_text;
+            const session = cast.session_active.load(.acquire);
+            const known = cast.device_count;
+            const tint = if (casting or session or known > 0) theme.colors.accent else player_text;
             if (playerButtonIcon(@src(), "cast-tv", icons.tvg.lucide.cast, .{}, .{}, .{
                 .color_fill = @import("color_compat.zig").wrap(playerControlFill(false)),
                 .color_fill_hover = @import("color_compat.zig").wrap(playerControlHover()),
                 .color_fill_press = @import("color_compat.zig").wrap(playerControlFill(true)),
                 .color_text = @import("color_compat.zig").wrap(if (scanning) player_text_muted else tint),
+                .data_out = &wd,
                 .border = dvui.Rect.all(0),
                 .corners = dvui.CornerRect.all(theme.radius.sm),
                 .gravity_y = 0.5,
@@ -1871,11 +1873,18 @@ pub fn renderLiquidGlassOverlay() void {
                 const cast_click_now_ms = @import("../core/io_global.zig").milliTimestamp();
                 if (cast_click_now_ms - cast_click_guard_ms >= cast_click_guard_window_ms) {
                     cast_click_guard_ms = cast_click_now_ms;
-                    if (casting) {
-                        cast.stopCast();
-                    } else if (known) {
-                        // Not index 0: a local mock or Chromecast proxy can be listed
-                        // first and the click then looks like it did nothing.
+                    if (session) {
+                        // Already on the TV: the chip opens the remote panel
+                        // (pause, seek, volume, stop) instead of silently
+                        // stopping the TV.
+                        togglePicker(.cast);
+                    } else if (known > 1) {
+                        // More than one renderer: let the user pick, which is
+                        // also how a mock or proxy listed first gets skipped.
+                        togglePicker(.cast);
+                    } else if (known == 1) {
+                        // The common case stays one click: a single TV is cast
+                        // to straight away, no picker in between.
                         cast.castActiveTo(cast.preferredDevice());
                     } else {
                         cast.auto_cast_next_scan = true;
@@ -1883,6 +1892,8 @@ pub fn renderLiquidGlassOverlay() void {
                     }
                 }
             }
+            // The cast panel drops up from this chip; record where it landed.
+            recordAnchor(.cast, wd.borderRectScale().r);
             if (scanning) dvui.spinner(@src(), .{ .min_size_content = .{ .w = 10, .h = 10 }, .color_text = .{ .color = theme.colors.accent } });
         }
 
@@ -2583,6 +2594,7 @@ pub fn renderLiquidGlassOverlay() void {
     pickers.renderAudioDevicePickerPopover(active_p);
     pickers.renderLangPickerPopover();
     pickers.renderPlaylistPickerPopover(active_p);
+    pickers.renderCastPopover();
 }
 
 // ── Persistent NOW-PLAYING media bar ──
