@@ -25,6 +25,12 @@ const pickers = @import("pickers.zig");
 // time label.
 var time_show_remaining: bool = false;
 
+// The Cast button is a toggle (cast / stop). A duplicated activation inside one
+// tap started a cast and then immediately stopped it, so the TV only flickered
+// for a second and the click looked dead. Ignore re-activations in this window.
+var cast_click_guard_ms: i64 = 0;
+const cast_click_guard_window_ms: i64 = 800;
+
 // Active toolbar dropdown — only one open at a time. We use stable id values
 // derived from the picker kind. -1 = none.
 pub const PickerKind = enum(i32) { none = -1, chapter = 0, aspect = 1, audio = 2, sub = 3, lang = 4, playlist = 5, ar = 6, subs = 7, audio_device = 8, quality = 9, more = 10 };
@@ -1862,15 +1868,19 @@ pub fn renderLiquidGlassOverlay() void {
                 .min_size_content = .{ .w = 20, .h = 20 },
                 .max_size_content = .{ .w = 20, .h = 20 },
             })) {
-                if (casting) {
-                    cast.stopCast();
-                } else if (known) {
-                    // Not index 0: a local mock or Chromecast proxy can be listed
-                    // first and the click then looks like it did nothing.
-                    cast.castActiveTo(cast.preferredDevice());
-                } else {
-                    cast.auto_cast_next_scan = true;
-                    cast.scanDevices();
+                const cast_click_now_ms = @import("../core/io_global.zig").milliTimestamp();
+                if (cast_click_now_ms - cast_click_guard_ms >= cast_click_guard_window_ms) {
+                    cast_click_guard_ms = cast_click_now_ms;
+                    if (casting) {
+                        cast.stopCast();
+                    } else if (known) {
+                        // Not index 0: a local mock or Chromecast proxy can be listed
+                        // first and the click then looks like it did nothing.
+                        cast.castActiveTo(cast.preferredDevice());
+                    } else {
+                        cast.auto_cast_next_scan = true;
+                        cast.scanDevices();
+                    }
                 }
             }
             if (scanning) dvui.spinner(@src(), .{ .min_size_content = .{ .w = 10, .h = 10 }, .color_text = .{ .color = theme.colors.accent } });
