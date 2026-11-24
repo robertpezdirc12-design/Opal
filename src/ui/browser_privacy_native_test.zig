@@ -110,6 +110,26 @@ const Fixture = struct {
         }
     }
 };
+/// WebKit compiles declarativeNetRequest rules after it reports the extension
+/// as loaded, so a single navigation can outrun the filter. Probe fresh pages
+/// until the filtered title shows up; this asserts the filter instead of the
+/// engine's rule-compilation timing. Returns true when the request was blocked.
+fn waitFiltered(blocked: []const u8, allowed: []const u8) !bool {
+    var url: [2048]u8 = undefined;
+    var title: [256]u8 = undefined;
+    var err: [256]u8 = undefined;
+    var loading: c_int = 0;
+    var found: c_int = 0;
+    for (0..1500) |_| {
+        native.api.opal_browser_test_pump();
+        _ = native.api.opal_browser_poll(&url, url.len, &title, title.len, &err, err.len, &loading, &found);
+        const text = std.mem.sliceTo(&title, 0);
+        if (loading == 0 and std.mem.eql(u8, text, blocked)) return true;
+        if (loading == 0 and std.mem.eql(u8, text, allowed)) return false;
+    }
+    std.debug.print("Browser filter timeout: title={s}, error={s}, loading={d}\n", .{ std.mem.sliceTo(&title, 0), std.mem.sliceTo(&err, 0), loading });
+    return error.Timeout;
+}
 fn navigate(port: u16, path: []const u8, expected: []const u8) !void {
     var url: [256:0]u8 = @splat(0);
     _ = try std.fmt.bufPrint(&url, "http://127.0.0.1:{d}/{s}", .{ port, path });
@@ -297,13 +317,29 @@ test "Native browser protections load actual extensions and block owned ad reque
     var response = try io.io().concurrent(Fixture.serve, .{ &server, &fixture });
     defer stopServer(&server, &response, &fixture);
     try navigate(server.socket.address.getPort(), "baseline", "Image allowed");
-    const before = fixture.images.load(.acquire);
+    try std.testing.expect(fixture.images.load(.acquire) > 0);
     var path: [1025:0]u8 = @splat(0);
     @memcpy(path[0..directory.len], directory);
     privacy.api.opal_extension_load(1, &path);
     try waitExtension(1);
-    try navigate(server.socket.address.getPort(), "blocked", "Image blocked");
-    try std.testing.expectEqual(before, fixture.images.load(.acquire));
+    var blocked = false;
+    for (0..20) |attempt| {
+        var probe: [256:0]u8 = @splat(0);
+        _ = try std.fmt.bufPrint(&probe, "http://127.0.0.1:{d}/blocked-{d}", .{ server.socket.address.getPort(), attempt });
+        var allowed_buf: [256]u8 = undefined;
+        var blocked_buf: [256]u8 = undefined;
+        const allowed_title = try std.fmt.bufPrint(&allowed_buf, "Image allowed /blocked-{d}", .{attempt});
+        const blocked_title = try std.fmt.bufPrint(&blocked_buf, "Image blocked /blocked-{d}", .{attempt});
+        const count_before = fixture.images.load(.acquire);
+        native.api.opal_browser_navigate(&probe);
+        blocked = try waitFiltered(blocked_title, allowed_title);
+        if (blocked) {
+            try std.testing.expectEqual(count_before, fixture.images.load(.acquire));
+            break;
+        }
+        for (0..25) |_| native.api.opal_browser_test_pump();
+    }
+    try std.testing.expect(blocked);
     var result: [256]u8 = undefined;
     try std.testing.expectEqualStrings("active", try evaluate("document.documentElement.dataset.opalExtension", &result));
     // The popup must fit its content, rather than a fixed 440x600 panel.
