@@ -660,13 +660,19 @@ pub fn renderCastPopover() void {
         if (pickerOption(@src(), 9601, icons.tvg.lucide.rewind, "Back 30 seconds", false)) cast.castSeekBy(-30);
         if (pickerOption(@src(), 9602, icons.tvg.lucide.@"fast-forward", "Forward 30 seconds", false)) cast.castSeekBy(30);
 
-        const volume = cast.cast_volume.load(.acquire);
-        const muted = cast.cast_muted.load(.acquire);
-        if (pickerOption(@src(), 9603, if (muted) icons.tvg.lucide.@"volume-x" else icons.tvg.lucide.volume, if (muted) "Unmute TV" else "Mute TV", muted)) cast.castToggleMute();
-        if (pickerOption(@src(), 9604, icons.tvg.lucide.minus, "Volume down", false)) cast.castVolumeStep(-5);
-        var vol_buf: [40]u8 = undefined;
-        const vol_label = if (volume < 0) "Volume up" else std.fmt.bufPrint(&vol_buf, "Volume up ({d}%)", .{volume}) catch "Volume up";
-        if (pickerOption(@src(), 9605, icons.tvg.lucide.plus, vol_label, false)) cast.castVolumeStep(5);
+        // Volume lives on RenderingControl, which not every renderer advertises.
+        // Hiding the rows beats offering buttons that can only answer with a
+        // "this TV does not expose volume" toast.
+        const volume_capable = if (active_idx) |idx| cast.devices[idx].hasVolume() else false;
+        if (volume_capable) {
+            const volume = cast.cast_volume.load(.acquire);
+            const muted = cast.cast_muted.load(.acquire);
+            if (pickerOption(@src(), 9603, if (muted) icons.tvg.lucide.@"volume-x" else icons.tvg.lucide.volume, if (muted) "Unmute TV" else "Mute TV", muted)) cast.castToggleMute();
+            if (pickerOption(@src(), 9604, icons.tvg.lucide.minus, "Volume down", false)) cast.castVolumeStep(-5);
+            var vol_buf: [40]u8 = undefined;
+            const vol_label = if (volume < 0) "Volume up" else std.fmt.bufPrint(&vol_buf, "Volume up ({d}%)", .{volume}) catch "Volume up";
+            if (pickerOption(@src(), 9605, icons.tvg.lucide.plus, vol_label, false)) cast.castVolumeStep(5);
+        }
 
         if (pickerOption(@src(), 9606, icons.tvg.lucide.unplug, "Stop casting", false)) {
             cast.stopCast();

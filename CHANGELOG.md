@@ -12,6 +12,11 @@ match the tag exactly.
 
 ## Unreleased
 
+## v0.9.9 — 2026-11-24
+
+- **The cast ends when the film does.** Reaching the end on the TV (or stopping it with the TV's own remote) now ends the session in Opal within a few seconds: the cast chip returns to its idle look, the remote panel goes back to the device list, and the local file share that fed the TV over the network is closed instead of staying open forever. The brief `STOPPED` a renderer reports while a new URL settles is ignored, and only a session that was genuinely playing can end this way.
+- **No volume buttons on TVs that cannot do it.** Some renderers advertise playback but no RenderingControl service; the cast remote now hides mute and volume there instead of offering buttons that could only answer with an error.
+
 ## v0.9.8 — 2026-11-23
 
 - **The TV remote, inside Opal.** While a DLNA renderer is playing, the cast icon now opens a panel that drives the television itself: play/pause, back and forward 30 seconds, volume up/down, mute and stop — plus a live readout of what the TV is doing and where it is in the film. The controls go over the same UPnP services the cast uses (`AVTransport` for transport and seek, `RenderingControl` for volume and mute), so nothing extra has to be installed on the TV.

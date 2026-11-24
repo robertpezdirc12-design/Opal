@@ -1855,6 +1855,11 @@ pub fn renderLiquidGlassOverlay() void {
             const scanning = cast.is_scanning.load(.acquire);
             const casting = cast.is_casting.load(.acquire);
             const session = cast.session_active.load(.acquire);
+            // The footer is the one surface that is drawn the whole time a cast
+            // runs: poll it (throttled to ~5 s) so a film that ends on the TV
+            // releases the session and the LAN file share instead of looking
+            // live forever.
+            if (session) cast.pollSession();
             const known = cast.device_count;
             const tint = if (casting or session or known > 0) theme.colors.accent else player_text;
             if (playerButtonIcon(@src(), "cast-tv", icons.tvg.lucide.cast, .{}, .{}, .{

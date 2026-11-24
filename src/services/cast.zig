@@ -894,6 +894,13 @@ pub var cast_duration: std.atomic.Value(u32) = std.atomic.Value(u32).init(0);
 /// `is_casting` only covers the moments the cast worker is pushing the URL, so
 /// the UI needs this separate, longer-lived flag.
 pub var session_active: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
+/// True once the renderer reported PLAYING/PAUSED for this session. A renderer
+/// also answers STOPPED for a moment while SetAVTransportURI settles, so only a
+/// session that was genuinely live may be ended by a later STOPPED.
+pub var cast_seen_live: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
+/// Consecutive STOPPED observations, with the time of the first one.
+pub var cast_stopped_streak: std.atomic.Value(u8) = std.atomic.Value(u8).init(0);
+pub var cast_stopped_since_ms: std.atomic.Value(i64) = std.atomic.Value(i64).init(0);
 
 var status_busy: std.atomic.Value(bool) = std.atomic.Value(bool).init(false);
 var status_last_ms: std.atomic.Value(i64) = std.atomic.Value(i64).init(0);
@@ -969,14 +976,72 @@ fn transportStateCode(text: []const u8) u8 {
     return @intFromEnum(TransportState.unknown);
 }
 
-/// Poll the renderer for transport state, position and volume. Throttled to
-/// roughly once a second and never concurrent with itself: the cast panel calls
-/// this every frame while it is open, and each SOAP round trip is a real HTTP
-/// request to the TV.
+/// Two consecutive STOPPED polls, far enough apart and only after the renderer
+/// was seen playing, mean the film ended on the TV (or its own remote stopped
+/// it). Kept pure so the grace rules are tested without a renderer.
+pub fn sessionEnded(seen_live: bool, stopped_streak: u8, stopped_for_ms: i64, casting: bool) bool {
+    return seen_live and !casting and stopped_streak >= 2 and stopped_for_ms >= 1500;
+}
+
+/// Release everything Opal owns for a renderer session: the LAN share that
+/// serves a local file, the session flag and the status the UI draws from.
+fn clearSessionState() void {
+    session_active.store(false, .release);
+    lan_bridge.stopShare();
+    cast_transport.store(@intFromEnum(TransportState.unknown), .release);
+    cast_position.store(0, .release);
+    cast_duration.store(0, .release);
+    cast_seen_live.store(false, .release);
+    cast_stopped_streak.store(0, .release);
+    cast_stopped_since_ms.store(0, .release);
+}
+
+/// The TV ended the media itself; there is nothing left to command remotely.
+fn endSession(message: []const u8) void {
+    clearSessionState();
+    state.showToast(message);
+}
+
+/// Fold one transport observation into the session liveness rules.
+fn noteTransport(code: u8) void {
+    switch (if (code <= @intFromEnum(TransportState.stopped)) @as(TransportState, @enumFromInt(code)) else TransportState.unknown) {
+        .playing, .paused => {
+            cast_seen_live.store(true, .release);
+            cast_stopped_streak.store(0, .release);
+            cast_stopped_since_ms.store(0, .release);
+        },
+        .stopped => {
+            const now = io_global.milliTimestamp();
+            const streak = cast_stopped_streak.load(.acquire);
+            const next: u8 = if (streak == std.math.maxInt(u8)) streak else streak + 1;
+            if (next == 1) cast_stopped_since_ms.store(now, .release);
+            cast_stopped_streak.store(next, .release);
+            const since = cast_stopped_since_ms.load(.acquire);
+            if (sessionEnded(cast_seen_live.load(.acquire), next, now - since, is_casting.load(.acquire))) {
+                endSession("Playback finished on TV");
+            }
+        },
+        .unknown => {},
+    }
+}
+
+/// Poll the renderer for transport state, position and volume. Throttled and
+/// never concurrent with itself: the cast panel calls this every frame while it
+/// is open, and each round trip is a real HTTP request to the TV.
 pub fn refreshStatus() void {
+    requestStatus(900);
+}
+
+/// Slower cadence for the footer, which only needs to notice the TV finishing.
+/// The throttle timestamp is shared, so an open panel's 1 s pace still wins.
+pub fn pollSession() void {
+    requestStatus(5_000);
+}
+
+fn requestStatus(min_interval_ms: i64) void {
     if (!session_active.load(.acquire)) return;
     const now = io_global.milliTimestamp();
-    if (now - status_last_ms.load(.acquire) < 900) return;
+    if (now - status_last_ms.load(.acquire) < min_interval_ms) return;
     if (status_busy.swap(true, .acquire)) return;
     status_last_ms.store(now, .release);
 
@@ -1007,7 +1072,11 @@ pub fn refreshStatus() void {
                 "<u:GetTransportInfo xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" ++
                 "<InstanceID>0</InstanceID></u:GetTransportInfo>";
             if (soapServiceResponse(av_url, "AVTransport:1", "GetTransportInfo", info_body, &info_buf, &info_status)) |resp| {
-                if (xmlValue(resp, "CurrentTransportState")) |st| cast_transport.store(transportStateCode(st), .release);
+                if (xmlValue(resp, "CurrentTransportState")) |st| {
+                    const code = transportStateCode(st);
+                    cast_transport.store(code, .release);
+                    noteTransport(code);
+                }
             }
 
             var pos_buf: [8192]u8 = undefined;
@@ -1268,6 +1337,9 @@ pub fn castTo(device_idx: usize, url: []const u8) void {
                     cast_muted.store(false, .release);
                     cast_transport.store(@intFromEnum(TransportState.playing), .release);
                     status_last_ms.store(0, .release);
+                    cast_seen_live.store(false, .release);
+                    cast_stopped_streak.store(0, .release);
+                    cast_stopped_since_ms.store(0, .release);
                     session_active.store(true, .release);
                     state.showToast("Casting to TV…");
                 } else {
@@ -1371,14 +1443,19 @@ pub fn stopCast() void {
             }
             // The LAN bridge served the local file for this cast; the TV is
             // stopped, so close it (no-op when the cast was a remote URL).
-            lan_bridge.stopShare();
             is_casting.store(false, .release);
-            session_active.store(false, .release);
-            cast_transport.store(@intFromEnum(TransportState.unknown), .release);
-            cast_position.store(0, .release);
-            cast_duration.store(0, .release);
+            clearSessionState();
             active_device_idx = null;
             state.showToast("Cast stopped");
         }
     }.worker, .{control_copy})) |t| workers.release(t) else |_| {}
+}
+
+test "Cast session end needs a live session two stopped polls and the grace window" {
+    try std.testing.expect(!sessionEnded(false, 2, 5000, false));
+    try std.testing.expect(!sessionEnded(true, 1, 5000, false));
+    try std.testing.expect(!sessionEnded(true, 2, 500, false));
+    try std.testing.expect(!sessionEnded(true, 2, 5000, true));
+    try std.testing.expect(sessionEnded(true, 2, 2000, false));
+    try std.testing.expect(sessionEnded(true, 9, 60_000, false));
 }
